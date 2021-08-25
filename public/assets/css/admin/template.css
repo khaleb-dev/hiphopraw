@@ -1,0 +1,17 @@
+@import 'sidebar.css';
+
+div#center{
+    
+
+}
+div#content{
+
+
+}
+div#center h2{
+    margin-bottom: 10px;
+    margin-top: 3px;
+}
+div#center h2 span {
+    display: inline;
+}

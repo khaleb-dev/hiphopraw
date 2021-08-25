@@ -1,0 +1,293 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+	float: left;
+}
+
+div#center div#sidebar-left{
+	width: 220px;
+	margin-right: 60px;
+}
+
+div#center div#content.with-sidebar-left{
+	width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+	padding: 0 0 0 0;
+	margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+	background: url("../../img/footer_bg.jpg");
+	margin: 0px 0px 5px 0px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+	padding: 0px 14px 14px 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+	background: url('../../img/small_star.png') no-repeat left center;
+	padding-left: 20px;
+	color: #e11e1c;
+	font-weight: bolder;
+	font-size: 18px;
+	font-family: arial, sans-serif;
+	text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+	display: block;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+	color: #e11e1c;
+	font-style: italic;
+	text-transform: uppercase;
+	font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+	font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+	color: #cccccc;
+	text-transform: capitalize;
+	font-size: 18px;
+	margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+	font-weight: bolder;
+	font-size: 14px;
+	color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+	background-image: none;
+	background-color: #f4f4f4;
+	border: solid 1px #e2e2e2;
+	color: #000;
+	font-size: 9px;
+	text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+	background-image: url("../../img/icons/add_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+	background-image: url("../../img/icons/message_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left div.content-box{
+	padding: 8px 13px;
+}
+
+div#center div#content.with-sidebar-left h3{
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #c4c4c4;
+}
+
+div#center div#content.with-sidebar-left div.items{
+	font-family: arial, sans-serif;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+	width: 148px;
+	margin-right: 24px;
+	margin-bottom: 21px;	
+}
+
+div#center div#content.with-sidebar-left div.items div.item.last {
+	margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+	margin: 8px 0 4px 0;
+	font-size: 12px;
+	color: #000;
+}
+
+div#center div#content.with-sidebar-left div.items div.item p.views{
+	font-size: 10px;
+	color: #afafaf;
+	margin: 2px 0 2px 0;
+	font-weight: lighter;
+}
+
+div#center div#content div#comments{
+	margin-top: 30px;
+	border-top: solid 2px #dcdcdc;
+	font-family: arial, sans-serif;
+}
+
+div#center div#content div#comments div.content-box{
+	color: #919191;
+}
+
+div#center div#content div#comments div.content-box h3{
+	font-size: 12px;
+	font-weight: lighter;
+	color: #c4c4c4;
+	margin-bottom: 5px;
+}
+
+div#center div#content div#comments div.content-box p#sign-in{
+	font-size: 12px;
+	background-color: #f5f5f5;
+	padding: 13px 10px;
+	margin-top: 0px;
+}
+
+div#center div#content div#comments div.content-box p#sign-in a{
+	color: #e11e1c;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+div#center div#content div#comments div.comment p{
+	margin: 0px 0px 2px 0px;
+	font-size: 10px;
+}
+
+div#center div#content div#comments div.comment p.commenter{
+	font-size: 14px;
+}
+
+div#center div#content div#comments div.comment a.commenter-thumb{
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
+
+div#center div#content div#comments div.comment div.comment-detail{
+	float: left;
+	width: 597px;
+}
+
+div#center div#content div#comments div.comment div.comment-detail h4{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+}
+
+div#center div#content div#comments div.comment div.comment-detail p.detail{
+	font-size: 12px;
+	background-color: #f5f5f5;
+	padding: 8px 10px;
+	margin-top: 0px;
+}
+
+div#center div#content div#comments div.comment div.comment-detail p.reply{
+	text-align: right;
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+div#center div#content div#comments div.comment div.comment-detail p.reply a{
+	color: #919191;
+	text-decoration: none;
+}
+
+div#center div#content div#comments div.comment div.comment-detail p.reply a:hover{
+	color: #e11e1c;
+}
+
+div#center div#content div#friends{
+	clear: both;
+	float: none;
+	margin: 30px 0 100px 0;
+	border-top: solid 2px #dcdcdc;
+}
+
+div#center div#content div#friends div.items.members div.item {
+	margin-right: 22px;
+	margin-bottom: 23px;
+	padding: 7px;
+	width: 107px;
+}
+
+div#center div#content div#friends div.items.members div.item.last{
+	margin-right: 0;
+}
+
+div#center div#content div#friends div.items.members h3{
+	font-size: 12px;
+	margin: 0 0 5px 0;
+}
+
+div#center div#friends p.more{
+	border-top: solid 2px #dcdcdc;
+	padding-top: 10px;
+}
+
+div#center div#friends p.more a{
+	text-decoration: none;
+}
+
+div#center p.more{
+	clear: both;
+	float: none;
+	margin: 10px 0 5px 0;
+}
+
+div#center p.more a{
+	display: block;
+	text-align: right;
+	color: #e11e1c;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#center div.bottom-section p.more{
+	width: 638px;
+	border-top: solid 2px #dcdcdc;
+	font-size: 18px;
+}
+
+div#center div.bottom-section p.more a{
+	text-decoration: none;
+}

@@ -1,0 +1,364 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+	float: left;
+}
+div#center div#sidebar-left{
+	width: 280px;
+   margin-right:20px;
+
+}
+div#center div#content.with-sidebar-left{
+	width: 800px;
+	background-color:#ffffff;
+}
+div#center div#sidebar-left div.sidebar-content.content-box{
+	padding: 0 0 0 0;
+	margin-bottom: 30px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+	background: url("../../img/footer_bg.jpg");
+	margin: 0px 0px 5px 0px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+	padding: 0px 14px 14px 14px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+	background: url('../../img/small_star.png') no-repeat left center;
+	padding-left: 20px;
+	color: #e11e1c;
+	font-weight: bolder;
+	font-size: 18px;
+	font-family: arial, sans-serif;
+	text-decoration: none;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+	display: block;
+	margin-bottom: 10px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	color: #afafaf;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+	color: #e11e1c;
+	font-style: italic;
+	text-transform: uppercase;
+	font-size: .8em;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+	font-size: 14px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: solid 1px #dcdcdc;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+	color: #cccccc;
+	text-transform: capitalize;
+	font-size: 18px;
+	margin: 10px 0 5px 0px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+	font-weight: bolder;
+	font-size: 14px;
+	color: #000;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 20px;
+}
+div#center div#sidebar-left a.button.grey{
+	background-image: none;
+	background-color: #f4f4f4;
+	border: solid 1px #e2e2e2;
+	color: #000;
+	font-size: 9px;
+	text-transform: none;
+}
+div#center div#sidebar-left a.button.add{
+	background-image: url("../../img/icons/add_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+div#center div#sidebar-left a.button.send-message{
+	background-image: url("../../img/icons/message_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+div#center div#content.with-sidebar-left h2{
+	margin-top: 0;
+}
+div#center div#content.with-sidebar-left h2 span{
+	display: block;
+	float: left;
+}
+div#center div#content.with-sidebar-left div#settings {
+	padding: 8px 13px;
+	font-family: arial, sans-serif;
+	color: #919191;
+	font-size: 14px;
+}
+div#center div#content.with-sidebar-left div#settings p label {
+	color:#797979;
+}
+div#center div#content.with-sidebar-left div#settings div.section{
+	margin-bottom: 30px;
+}
+div#center div#content.with-sidebar-left div#settings div.section #location-settings1 p label{
+	float:left;
+}
+div#center div#content.with-sidebar-left div#settings div.section .left-title{
+margin: 0 0 20px 0;
+
+	border-bottom: solid 3px #d1d1d1;
+	 font-weight:bold;
+	font-size: 17px;
+	color: #000;
+}
+.title p.middle-title-setting{
+    font-weight:bold;
+	color:#000;
+	font-size:16px;
+
+}
+.title p.middle-title{
+    margin-left:390px;
+	font-weight:bold;
+	color:#000;
+}
+div#center div#content.with-sidebar-left div#settings div.section .middle-title{
+ margin-left:390px;
+	font-weight:bold;
+	float:left;
+}
+div#center div#content.with-sidebar-left div#settings  #location-settings p label {
+float:left;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings #select1{
+	width: 130px;
+  height: 25px;
+    margin-bottom: 10px;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings #select1 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select2{
+	width: 130px;
+float:left;
+  height: 25px;
+    margin-bottom: 10px;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select2 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select3{
+	width: 130px;
+  height: 25px;
+    margin-bottom: 10px;
+	float:left;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select3 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select4{
+	width: 130px;
+  height: 25px;
+  float:left;
+    margin-bottom: 10px;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings1 #select4 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings2{
+float:left;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings3{
+float:left;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings4{
+float:left;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings5{
+
+width: 400px;
+
+  height: 25px;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings2 p lable{
+float:left;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings2 #select5{
+	width: 130px;
+
+  height: 25px;
+  float:left;
+    margin-bottom: 10px;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings2 #select5 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings4 #select6{
+	width: 130px;
+
+  height: 25px;
+  float:left;
+    margin-bottom: 10px;
+  overflow: hidden;
+  background: url('../../img/arrow_new.png') no-repeat right #edebec;
+
+  -moz-box-shadow:    inset 0 0 4px #c8c7c6;
+   -webkit-box-shadow: inset 0 0 4px #c8c7c6;
+   box-shadow:         inset 0 0 4px #c8c7c6;
+}
+div#center div#content.with-sidebar-left div#settings #location-settings4 #select6 select{
+	 background: transparent;
+  width: 150px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 25px;
+  -webkit-appearance: none;
+  color: #000;
+}
+div#center div#content.with-sidebar-left div#settings div.section img#profile-pic{
+	display: block;
+	float: left;
+	margin-right: 20px;
+}
+div#center div#content.with-sidebar-left div#settings div.section form#profile-pic-upload{
+	float: left;
+}
+div#center div#content.with-sidebar-left div#settings div.section form#profile-pic-upload a.button{
+	padding: 3px 10px;
+	text-transform: capitalize;
+	font-size: 12px;
+}
+div#center div#content.with-sidebar-left div#settings div.section form textarea{
+	width: 550px;
+}
+div#center div#settings p.back{
+	margin: 0 0 0 0;
+	margin-top:50px;
+}
+div#center div#settings p.back a{
+	color: #e11e1c;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+}
+div#center div.section form p.submit a.button{
+	text-transform: capitalize;
+	font-size: 14px;
+	padding: 3px 10px;
+}
+div#center div.section form p.submit a.skip{
+	text-decoration: none;
+	font-style: italic;
+	color: #919191;
+	font-size: 10px;
+	line-height: 40px;
+}
+div#center div#content.with-sidebar-left div#settings  input[type=text],
+div#center div#content.with-sidebar-left div#settings  input[type=password]{
+    width: 400px;
+    border: solid 1px #e5e5e5;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 1px 2px;
+    box-shadow: 1px 1px 5px 2px rgba(200, 200, 200, 0.4) inset;
+    background-color: #efefef;
+}
+
+.error{
+    margin-left: 140px;
+}

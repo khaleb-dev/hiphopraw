@@ -1,0 +1,1205 @@
+div#content > aside,
+div#content > div {
+  float: left;
+  margin-right: 28px;
+}
+div#content aside {
+  border-radius: 3px;
+  width: 195px;
+ 
+}
+div#content aside > div,
+div#content aside > nav {
+  border-radius: 3px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+}
+div#content aside > div:last-child,
+div#content aside > nav:last-child {
+  margin-bottom: 0px;
+}
+div#content aside > div div.content,
+div#content aside > nav div.content {
+
+}
+div#content aside > nav {
+ margin-left:0px;
+}
+div#content aside > nav  a {
+  border-bottom: 1px solid #34cf95;
+    color: #5E676B;
+    display: block;
+    font-size: 15px;
+    padding: 15px 0 15px 15px;
+    text-decoration: none;
+}
+div#content aside > nav div#collection a {
+  display: block;
+  border-radius: 3px;
+  font-size: 15px;
+  
+  padding: 5px 0;
+  text-decoration: none;
+  color: #ffffff;
+}
+div#content aside > nav a:hover {
+  color: #0c58a4;
+}
+div#content aside > nav a i {
+  color: #004793;
+}
+div#content aside > nav a:last-child {
+  margin-bottom: 0px;
+}
+div#content aside#left-sidebar div#profile-summary div.content {
+  text-align: center;
+  border: solid 1px #e0e0e0;
+    border-radius: 3px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile_name{
+  background-color: #34cf95;
+  text-align: center;
+  font-weight: normal;
+  color:#ffffff;
+  font-size:16pt;
+ padding: 5px 5px 10px 5px;
+}
+iv#content aside#left-sidebar div#profile-summary div.content div#states {
+ padding-top:5px;
+  padding-left:20px;
+text-align: left;
+  font-weight: normal;
+  margin-bottom:3px;
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile-pic img {
+  width:174px;
+  height:124px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#date {
+ padding-top:5px;
+ margin-left:5px;
+ margin-right:5px;
+ margin-bottom:10px;
+ border-top:1px solid;
+ padding-left:15px;
+text-align: left;
+  font-weight: normal;
+ 
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content a {
+ display: block;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 13px;
+  margin-top: 5px;
+}
+div#content aside#left-sidebar nav#profile-nav div#collection {
+ background-color:#34cf95;
+  font-weight: normal;
+   color:#ffffff;
+  font-size:14pt;
+  border-radius: 3px;
+   padding: 10px 5px 6px 10px;
+ }
+ div#content aside#left-sidebar nav#profile-nav  {
+ 
+    border: solid 1px #e0e0e0;
+    border-radius: 3px;
+  
+ }
+ div#content aside#left-sidebar nav#profile-nav i.profile:after
+ {
+ content: url("../../img/my_profile.png");
+ margin-right:20px;
+
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.circle:after
+ {
+ content: url("../../img/cirlcle.png");
+ padding-right:5px;
+ float:right;
+  }
+div#content aside#left-sidebar nav#profile-nav i.my_photos:after
+ {
+ content: url("../../img/my_photo.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_events:after
+ {
+ content: url("../../img/my_event.png");
+ padding-right:20px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_Referrals:after
+ {
+ content: url("../../img/myFavourites.png");
+ padding-right:15px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_comment:after
+ {
+ content: url("../../img/comments.png");
+ padding-right:15px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_hellos:after
+ {
+ content: url("../../img/my_hello.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_favorites:after
+ {
+ content: url("../../img/my_favorait.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_friends:after
+ {
+ content: url("../../img/my_friend.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_setting:after
+ {
+ content: url("../../img/my_setting.png");
+ padding-right:20px;
+ float:left;
+  }
+div#content aside#left-sidebar div#profile-summary div.content a:hover {
+   color: #ffffff;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#states {
+ padding-top:5px;
+ padding-left:35px;
+text-align: left;
+  font-weight: normal;
+  margin-bottom:3px;
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content div#date {
+ padding-top:5px;
+ margin-left:5px;
+ margin-right:5px;
+ margin-bottom:10px;
+ border-top:1px solid;
+ padding-left:15px;
+text-align: left;
+  font-weight: normal;
+ 
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#upgrade-your-account div#upgrade1 h3 {
+  background-image: url("../../img/upgradenew.png");
+  background-position: 5px 10px;
+  background-repeat: no-repeat;
+  padding: 10px 0px 10px 20px;
+  background-color: #34cf95;
+  color: #ffffff;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+ 
+  margin: 0 0 0 0;
+}
+div#content aside#left-sidebar div#upgrade-your-account{
+  text-align: center;
+   border: solid 1px #e0e0e0;
+    border-radius: 3px;
+	width:195px;
+	height:305px;
+}
+div#content aside#left-sidebar div#upgrade-your-account div#upgrade1{
+  background-image: url("../../img/whats_going_on.png");
+  border-radius: 3px;
+ 
+}
+div#content aside#left-sidebar div#upgrade-your-account p {
+  font-size: 12px;
+  margin: 0 0 0 0;
+  padding-left:5px;
+  padding-right:5px;
+  color:#313943;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul {
+  border-radius: 3px;
+  font-size: 12px;
+  list-style-position: inside;
+  padding: 5px 8px;
+  background-color: #f9f9f9;
+  border-color: #e8e8e8;
+  
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li {
+   line-height: 30px;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li a {
+  color: #454e59;
+  text-decoration: none;
+}
+div#content aside#left-sidebar div#upgrade-your-account a.button, a.button {
+  border-radius: 3px;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 3px 5px;
+    border: solid 1px #34cf95;
+    font-weight: bolder;
+    width:150px;
+    margin-left:20px;
+	margin-right:20px;
+    background-color:#34cf95;
+    display: block;
+    text-align: center;
+}
+
+
+div#content aside#right-sidebar {
+  margin-right: 0px;
+   border:4px solid;
+  border-color:#d4d4d4;
+}
+div#content aside#right-sidebar div#friends-online div.content div#members h4{
+ background-color: #34cf95;
+ color:#ffffff;
+ border-radius:3px;
+ width:175px;
+ margin-left:0px;
+ margin-top:0px;
+}
+div#content aside#left-sidebar div#upgrade-your-account a.button:hover, a.button:hover {
+ text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  
+  border: solid 1px #34cf95;
+}
+div#content aside#right-sidebar {
+  margin-right: 0px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend {
+  background-color: #f9f9f9;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend img {
+  display: block;
+  float: left;
+  border: solid 1px #ffffff;
+  margin-right: 5px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details {
+  float: left;
+  width: 90px;
+  font-size: 12px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details a {
+  color: #0c58a4;
+  text-decoration: none;
+  display: block;
+  line-height: 12px;
+  margin-bottom: 3px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details > a.location {
+  color: #000000;
+  font-size: 10px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details p.icons {
+  margin: 3px 0;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details p.icons a {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;
+  padding: 3px 5px;
+  color: #0c58a4;
+}
+div#content aside#right-sidebar div.ad {
+  padding: 0 0 0 0;
+}
+div#content aside#right-sidebar div.ad img {
+  display: block;
+   padding-left:5px;
+}
+
+
+
+div#content div#middle {
+    width: 675px;
+}
+div#content div#middle section {
+    border-radius: 3px;
+    background-color: #ffffff;
+    border: solid 1px #e0e0e0;
+    margin-bottom: 20px;
+}
+div#content div#middle section h2 {
+    padding: 0px 20px 0px 10px;
+    margin: 0px 0px;
+   line-height: 20px;
+    background-color:#34cf95;
+    color: #0c58a4;
+    font-family: arial, sans-serif;
+
+    border-radius: 3px;
+    font-weight: normal;
+    color:#ffffff;
+    font-size:16pt;
+    padding: 5px 5px 5px 10px;
+
+}
+
+div#content div#middle section h2 a {
+    display: block;
+    float: right;
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'pt sans', arial, sans-serif;
+    font-style: italic;
+    line-height: 20px;
+    text-decoration: none;
+}
+div#content div#middle section h2 a i {
+    color: #0c58a4;
+}
+div#content div#middle section div.content {
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #e8e8e8;
+}
+div#content div#middle section#latest-members div.content div.member {
+    border-radius: 3px;
+    float: left;
+    width: 133px;
+    margin-right: 17px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #e8e8e8;
+    border: solid 1px #cfcfcf;
+}
+div#content div#middle section#latest-members div.content div.member:nth-child(4n+4) {
+    margin-right: 0px;
+}
+div#content div#middle section#latest-members div.content div.member img {
+    display: block;
+    border: solid 2px #ffffff;
+}
+div#content div#middle section#latest-members div.content div.member p {
+    font-size: 12px;
+    margin: 0 0 5px 0px;
+}
+div#content div#middle section#latest-members div.content div.member p.location {
+    font-size: 10px;
+    color: #0c58a4;
+}
+div#content div#middle section#latest-members div.content div.member p.icons a {
+    display: inline-block;
+    border-radius: 3px;
+    background-color: #ffffff;
+    border: solid 1px #e0e0e0;
+    padding: 3px 5px;
+    color: #003682;
+}
+div#content div#middle section#latest-friend-requests div.content {
+    position: relative;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider {
+    width: 560px;
+    margin: 0 31px 0 38px;
+    height: 175px;
+    overflow: hidden;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides {
+    width: 1120px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request {
+    float: left;
+    width: 133px;
+    margin-right: 7px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request img {
+    display: block;
+    margin: 0 auto;
+    border: solid 2px #ffffff;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p {
+    font-size: 12px;
+    margin: 0 0 5px 0;
+    padding: 0 5px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.location {
+    font-size: 10px;
+    color: #0c58a4;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:first-child {
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 10px;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #0c58a4;
+    border: solid 1px #004793;
+    float: left;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:first-child:hover {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: #1d69b5;
+    border: solid 1px #2e7ac6;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:last-child {
+    border-radius: 3px;
+    color: #000000;
+    font-size: 10px;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #9c9c9c;
+    border: solid 1px #8b8b8b;
+    float: right;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:last-child:hover {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: #adadad;
+    border: solid 1px #bebebe;
+}
+div#content div#middle section#latest-friend-requests div.content i {
+    display: inline-block;
+    position: absolute;
+    background-color: #d7d7d7;
+    font-size: 20px;
+    padding: 20px;
+    color: #000000;
+    top: 60px;
+}
+div#content div#middle section#latest-friend-requests div.content i.fa-arrow-right {
+    right: 0px;
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+    padding-right: 5px;
+}
+div#content div#middle section#latest-friend-requests div.content i.fa-arrow-left {
+    left: 0px;
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+    padding-left: 5px;
+}
+div#content div#middle section#latest-friend-requests div.content i:hover {
+    color: #0c58a4;
+}
+div#content div#middle section#events div#event-list {
+    padding: 10px;
+}
+div#content div#middle section#events div#event-list div.event {
+    float: left;
+    width: 290px;
+    background-color: #e8e8e8;
+    border: solid 1px #e0e0e0;
+    padding: 10px;
+    margin: 0 14px 14px 0;
+}
+
+#events h2 small{
+    color: #006db9;
+    font-size: 14px;
+}
+div#content div#middle section#events div#event-list div.event img {
+    display: block;
+    float: left;
+    margin-right: 5px;
+}
+div#content div#middle section#events div#event-list div.event div.details {
+    float: left;
+    font-size: 12px;
+    width: 170px;
+}
+div#content div#middle section#events div#event-list div.event div.details h3 {
+    font-weight: normal;
+    font-size: 14px;
+    color: #000000;
+    margin: 0 0 5px 0;
+}
+div#content div#middle section#events div#event-list div.event div.details p {
+    margin: 0 0 5px 0;
+}
+div#content div#middle section#events div#event-list div.event div.details p.date {
+    font-size: 10px;
+    color: #004793;
+}
+div#content div#middle section#events div#event-list div.event div.details p.text {
+    font-size: 10px;
+    color: #696969;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more {
+    margin-top: 10px;
+    text-align: right;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more a {
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #0c58a4;
+    border: solid 1px #004793;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more a:hover {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: #1d69b5;
+    border: solid 1px #2e7ac6;
+}
+div#content div#middle div.event-list{
+    border-radius: 3px;
+    background-color: #e8e8e8;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+    min-height: 220px;
+}
+
+div#content div#middle div.event-list img{
+    float: left;
+    width: 263px;
+    height: 171px;
+    background-color: #000;
+    margin: 10px;
+}
+
+div#content div#middle div.event-list a{
+    font-size: small;
+    display: inline;
+    margin-left: 550px;
+}
+
+div#content div#middle div.event-list h3{
+    color: #4c4c4c;
+}
+
+div#content div#middle div.event-list span{
+    color: #0065b5;
+    font-weight: bold;
+}
+
+hr{
+    width:650px;
+    border: 1px solid #ebebeb;
+}
+
+div#content div#middle section a.next{
+    display: block;
+    text-align: right;
+    margin: 10px 15px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'pt sans', arial, sans-serif;
+    font-style: italic;
+    line-height: 20px;
+    text-decoration: none;
+    clear: both;
+}
+
+div.notify{
+    border: 1px solid red;
+    text-align: center;
+}
+div.notify p{
+    background: left center url(../../img/icons/exclamation.png) no-repeat;
+    padding: 10px;
+    width: 600px;
+    margin: 0 auto;
+
+}
+
+div.notify p a{
+    text-decoration: none;
+    color: #393939;
+    font-size: small;
+}
+div.notify p span{
+    font-size: 14px;
+    color: red;
+}
+/* the following css is used to format the middle section of the dating package
+==============================================================================
+*/
+
+div#content div#middle section#detailed-dating-package-section  {
+    border-radius: 3px;
+    margin:  0px 0px 20px 0px;
+    width: 880px;
+    float:left;
+}
+
+div#content div#middle section#detailed-dating-package-section div#schedule h2  {
+   background-color:#34cf95;
+   width:850px;
+   color:#ffffff;
+   padding:5px 5px 10px 24px;
+}
+div#content div#middle section#detailed-dating-package-section  div#package h2{
+background-color:#34cf95;
+width:850px;
+color:#ffffff;
+padding:5px 5px 10px 24px;
+}
+div#content div#middle section#detailed-dating-package-section  div#refere h2{
+background-color:#34cf95;
+width:850px;
+color:#ffffff;
+padding:5px 5px 10px 24px;
+}
+div#content div#middle section#detailed-dating-package-section h2  {
+    display: block;
+    float: left;
+}
+
+div#content div#middle section#detailed-dating-package-section div#check-invitation-button  {
+    display: block;
+    float: right;
+    margin: 10px 10px 0px 0px;
+}
+div#content div#middle section#detailed-dating-package-section div#check-invitation-button a  {
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: small;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #0c58a4;
+    border: solid 1px #004793;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  {
+    border-radius: 3px;
+     font-size: 14px;
+    width: 879px;
+    float:left;
+    padding: 5px;
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package-none  {
+    border-radius: 1px;
+    background-color: #e8e8e8;
+    margin:10px;
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+    color:red;
+    width: 860px;
+    float:left;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package div#top   {
+    font-size: smaller;
+    margin:10px;
+    margin-bottom:5px;
+    width:480px;
+    height:260px;
+    overflow: hidden;
+
+
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package .form-label {
+    margin-left:20px;
+    font-weight: bold;
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package img  {
+    float: left;
+    margin:0px;
+    width: 360px;
+    padding-bottom:1px;
+    padding-right: 15px;
+    height: 260px;
+
+
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package div#top div#title  {
+    font-size:18px;
+    font-weight: 500;
+    color:#424242;
+
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package div#top h3  {
+    font-size:16px;
+    color: #34cf95;
+    margin-top:6px;   
+    margin-bottom:2px;
+
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#top p{
+    padding:2px;
+    text-align: justify;
+    margin-top:0px;
+	font-size:14px;
+
+
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#top p.dating-package-description {
+    height: 130px;
+    overflow-y: auto;
+    padding-bottom: 5px;
+    padding-right: 10px;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#top p strong{
+    font-weight:650;
+    font-size:14px;
+    color:#1C1C1C;
+    margin-top:4px;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left{
+    width:410px;
+    margin:10px;
+    float:left;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left .checkin-time-label{
+    display: block;
+    width:200px;
+    margin:10px 10px 0px 10px; 
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left .checkin-time{
+    width:300px;
+    margin:0px 10px 10px 10px;
+    height:30px;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left .description-label{
+    display: block;
+    width:200px;
+    margin:10px 10px 5px 10px; 
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left .description{
+    display: block;
+    font-size: 13px;
+    height: 140px;
+    line-height: 20px;
+    margin: 10px;
+    overflow-y: auto;
+    padding-right: 10px;
+    text-align: justify;
+    width: 380px;
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-left .price{
+    display: block;
+
+    color:#34cf95;
+
+    font-size:18px;
+    width:200px;
+    text-align: right;
+    float:right;
+    margin:10px;
+
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#schedule-right{
+    width:420px;
+    margin:10px 10px 10px 0px;
+    float:right;
+}
+
+.ui-datepicker {
+    float:right;
+    width:392px;  
+    height: auto;  
+    margin: 0px;  
+    font-size: 10px;
+    font-weight: normal;
+    font-family: sans-serif, arial; 
+    border:none;
+    border-radius:0px;
+
+}
+.ui-datepicker a {
+   
+}
+
+
+/* DatePicker Table */
+.ui-datepicker table {
+    width: 100%;
+    
+}
+.ui-datepicker-header {
+    background-color: #34cf95;  
+    color:#ffffff;
+    font-weight: bold; 
+    font-size: 18px;
+    border-radius: 0px;
+
+
+}
+.ui-datepicker-title {
+    text-align: center;
+}
+.ui-datepicker-prev, .ui-datepicker-next {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-image: url('../../img/dating_packages/arrow.png'); 
+    background-repeat: no-repeat;
+   
+}
+.ui-datepicker-prev {
+    float: left;
+    background-position: center -30px;
+}
+
+.ui-datepicker-next {
+    float: right;
+    background-position: center 0px;
+}
+.ui-datepicker thead {
+    background-color: #BDEDDB;
+
+}
+.ui-datepicker th {
+    text-transform: uppercase;
+    font-size: 8pt;
+    padding: 5px 0;
+   
+    
+}
+.ui-datepicker tbody td {
+    padding: 0;
+    border-right: 1px solid #bbb;
+}
+.ui-datepicker tbody td:last-child {
+    border-right: 0px;
+}
+.ui-datepicker tbody tr {
+    border-bottom: 1px solid #bbb;
+}
+.ui-datepicker tbody tr:last-child {
+    border-bottom: 1px;
+     border-bottom: 1px solid #bbb;
+}
+.ui-datepicker td span, .ui-datepicker td a {
+    font-weight: bold;  
+    text-align: center;  
+    width: 50px;  
+    height: 23px;  
+    line-height: 24px; 
+
+}
+.ui-datepicker-calendar .ui-state-default {
+    background:#fff; 	
+
+}
+.ui-datepicker-calendar .ui-state-hover {
+    background: #f7f7f7;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    border: 2px solid #34cf95;   
+    position: relative;  
+    margin: -1px; 
+}
+.ui-datepicker-unselectable .ui-state-default {
+    background: #f4f4f4;
+    color: #b4b3b3;
+}
+.ui-datepicker-calendar td:first-child .ui-state-active {
+    width: 51px;
+    margin-left: 0;
+}
+.ui-datepicker-calendar td:last-child .ui-state-active {
+    width: 51px;
+    margin-right: 0;
+}
+.ui-datepicker-calendar tr:last-child .ui-state-active {
+    height: 24px;
+    margin-bottom: 0;
+}
+
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#send-invitation-button {
+    margin:10px;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  div#send-invitation-button a {
+     padding: 0px 10px 0px 10px;
+    margin: 0px 0px;
+    line-height: 20px;
+    background-color:#34cf95;
+    color: #0c58a4;
+    font-family: arial, sans-serif;
+    border-radius: 3px;
+    font-weight: bold;
+    color:#ffffff;
+    font-size:12pt;
+    padding: 5px 5px 5px 10px;
+    text-decoration: none;
+
+    padding: 3px 5px;
+    background-color: #34cf95;
+    border: solid 1px #34cf95;
+
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package div#book-me-link {
+    display: block;
+    float: right;
+    margin-top: 20px;
+}
+
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package div#book-me-link a{
+    background-color: #34cf95;
+    border: 1px solid #34cf95;
+    border-radius: 3px;
+    color: #ffffff;
+    font-family: arial,sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0;
+    padding: 3px 20px;
+    text-decoration: none;
+}
+
+
+
+.inputbox-email{
+    border: 10px solid #D8D8D8;
+    padding:2px;
+    margin-left:20px;
+    margin-right:10px;
+    width:800px;
+    height:20px;
+}
+.inputbox-message{
+    border: 10px solid #D8D8D8;
+    padding:2px;
+    margin-left:20px;
+    margin-right:10px;
+    width:800px;
+    height:50px;
+}
+.title{
+    font-size:18px;
+    font-weight: normal;
+}
+.button{
+    border-radius: 3px;
+    font-weight: bolder;
+    font-size: 14px;
+    background-color:#34cf95;
+    color:white;
+    border: none;
+    width:150px;
+    height:30px;
+    float:right;
+    margin:10px;
+    
+}
+.search-para{
+    text-align: right;
+}
+
+
+/* The following code does the dialog box for the invite module
+makes the modal invisible for the user*/
+#invite {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events:none;
+}
+/* The following code makes the modal appear and enables mouse pointer to be active */
+ /* The following code does the dialog box for the invite module
+makes the modal invisible for the user*/
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events:none;
+}
+/* The following code makes the modal appear and enables mouse pointer to be active */
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite:target {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+/*The following code formats the invitation dialog(modal form)*/
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite section#invitation-dialog {
+    margin: 10% auto;
+    width:650px;
+    height:320px;
+    background-color:#ffffff;
+    position: relative;
+    z-index: 9999;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite section#invitation-dialog header {
+    width:630px;
+    height:20px;
+    padding:10px;
+    background-color:#000000;
+    color:#ffffff;
+    font-weight: bolder;
+    font-family: steinerlight;
+    position: relative;
+    z-index: 20;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package  #invite section#invitation-dialog .invite-content div#picture img{
+    margin:10px;
+    float: left;
+    width: 140px;
+    height: 110px;
+    padding-right: 5px;
+    //background: no-repeat url('../../img/dating_packages/dating_package_1.jpg');
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite section#invitation-dialog .invite-content div#short-description{
+    margin:10px 5px 5px 0px;
+    border-radius: 1px;
+    background-color:#FFFFFF;
+    padding: 3px;
+    font-size: 14px;
+    width: 450px;
+    height:110px;
+    float:left;
+    text-align: justify;
+}
+div#content div#middle section#detailed-dating-package-section div#detailed-dating-package #invite section#invitation-dialog .invite-content div#title{
+    margin:0px 5px 0px 10px;
+    border-radius: 1px;
+    background-color:#FFFFFF;
+    padding: 2px;
+    font-size: 14px;
+    color:#4D4C4C;
+    width: 450px;
+    height:20px;
+    float:left;
+}
+.hr-line{
+    color:#FFFFFF;
+    width: 460px;
+}
+#invite section#invitation-dialog .invite-form h2{
+    padding: 0px 10px 0px 10px;
+    margin: 0px 0px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0c58a4;
+    font-family: arial, sans-serif;
+    width:600px;
+    height:20px;
+}
+#invite section#invitation-dialog .invite-form{
+    margin:1px 5px 10px 10px;
+    border-radius: 2px;
+    background-color:#F3F3F3;
+    padding: 3px;
+    font-size: 14px;
+    width: 620px;
+    height:110px;
+    float:left;
+    //pointer-events:none;
+}
+#invite section#invitation-dialog .invite-form .invite-name{
+    margin:10px 5px 10px 10px;
+    border-radius: 1px;
+    padding: 3px;
+    font-size: 14px;
+    width: 600px;
+    height:25px;
+    float:left;
+}
+#invite section#invitation-dialog .invite-form .invite-button{
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color:#34cf95;
+    margin:5px 5px 5px 10px;
+    color:white;
+    border: none;
+    width:200px;
+    height:30px;
+    float:left;
+    font-family:serif;
+}
+/* closes the modal form enabling the user to exit without sending */
+.back {
+    color:white;
+    font-weight:1000;
+    font-size: 10px;
+    background-color:transparent;
+    margin:3px;
+    text-align: center;
+    padding:0px;
+    border-style:solid;
+    border-color: #FFFFFF;
+    width:12px;
+    height:12px;
+    float:right;
+    font-family:times;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+}
+.check_invitation {
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    background-color:#0c58a4;
+    margin:5px 20px 5px 10px;
+    padding:5px;
+    color:white;
+    border: none;
+    width:130px;
+    height:20px;
+    float:right;
+    font-family:serif;
+    text-align: center;
+}
+.check_invitation a{
+    color:white;
+}
+
+#invite .overlay {
+    background-color: #000;
+    background: rgba(0,0,0,.5);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}

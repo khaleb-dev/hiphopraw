@@ -1,0 +1,21 @@
+div#center div#content.narrow div.content-box form p.submit{
+    text-align: right;
+}
+
+div#center div#content.narrow div.content-box div.other-way-to-get-intouch{
+    margin: 5px 0 10px 0;
+}
+
+div#center div#content.narrow div.content-box div.other-way-to-get-intouch p{
+    font-size: 14px;
+    font-style: italic;
+}
+
+div#center div#content.narrow div.content-box div.other-way-to-get-intouch p span{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+div#center div#content.narrow div.content-box form textarea {
+	width: 515px;
+}

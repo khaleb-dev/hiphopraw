@@ -1,0 +1,7 @@
+.widefat {width: 50%; margin-bottom:10px;}
+.widefat  input{
+	width:100%;
+}
+.widefat th{
+	width:100px;
+}

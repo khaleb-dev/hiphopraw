@@ -1,0 +1,254 @@
+#center #content .my-friends {
+    height: auto !important;
+    min-height: 350px;
+    width: 800px;
+    background: rgb(9,9,9);
+    margin-left: 20px;
+    border-bottom: 4px solid #ff0000;
+    padding-top: 10px;
+}
+
+#center #content .my-friends .latest-friends {
+    width: 780px;
+    height: 224px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    background-color: rgb(17,17,17);
+}
+
+#center #content .my-friends .latest-friends #arrow {
+    padding-top: 70px;
+    float: left;
+}
+
+#center #content .my-friends .latest-friends .friends-pic {
+    padding-top: 20px;
+    float: left;
+    width: 143px;
+    height: 137px;
+    margin-right: 20px;
+}
+
+#center #content .my-friends .latest-friends #right-arrow {
+    padding-top: 70px;
+    float: right;
+}
+
+#center #content .my-friends .latest-friends .friends-pic #name-of-member {
+    float: left;
+    background-color: rgb(30, 35, 41);
+    padding-left: 9px;
+    font-size: 14.606px;
+    font-family: "Source Sans Pro";
+    color: rgb(255, 255, 255);
+
+    width: 126px;
+    height: 25px;
+}
+
+#center #content .my-friends .latest-friends .friends-pic #accept-reject {
+    background-color: rgb(238, 0, 0);
+    float: left;
+
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 135px;
+    height: 24px;
+
+}
+
+#center #content .my-friends .latest-friends .friends-pic #accept-reject #accept {
+    float: left;
+    font-size: 12px;
+    font-family: "Source Sans Pro";
+    color: rgb(255, 255, 255);
+    padding-left: 10px;
+    padding-right: 10px;
+    -webkit-transform: matrix(0.58306782424991, 0, 0, 0.58235294117647, 0, 0);
+    -ms-transform: matrix(0.58306782424991, 0, 0, 0.58235294117647, 0, 0);
+
+}
+
+#center #content .my-friends .latest-friends .friends-pic #accept-reject #reject1 {
+
+    font-size: 12px;
+    font-family: "Source Sans Pro";
+    color: rgb(255, 255, 255);
+    -webkit-transform: matrix(0.58306782424991, 0, 0, 0.58235294117647, 0, 0);
+    -ms-transform: matrix(0.58306782424991, 0, 0, 0.58235294117647, 0, 0);
+    width: 60px;
+    overflow: hidden;
+}
+
+.title p.middle-title-setting {
+    font-weight: bold;
+
+    color: #fff;
+    padding-left: 10px;
+    font-size: 16px;
+    float: left;
+
+}
+
+.title p.middle-title {
+    float: right;
+    margin-right: 20px;
+    font-size: 12px;
+    font-family: "Arial";
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+
+.my_friend1 {
+    float: left;
+    padding-top: 5px;
+    width: 800px;
+
+}
+
+.back {
+    margin-top: 15px;
+    padding-left: 170px;
+}
+
+.back p a {
+
+    font-size: 12px;
+    font-family: "Arial";
+    color: #ec3839;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    -moz-transform: matrix(0.95796460176991, 0, 0, 0.95764353865742, 0, 0);
+    -webkit-transform: matrix(0.95796460176991, 0, 0, 0.95764353865742, 0, 0);
+    -ms-transform: matrix(0.95796460176991, 0, 0, 0.95764353865742, 0, 0);
+
+}
+
+.my_friend1 p.middle-title-setting {
+    font-weight: bold;
+    color: #000;
+    margin-right: 400px;
+    padding-left: 14px;
+    float: left;
+    font-size: 15px;
+    font-family: "Arial";
+    color: rgb(160,160,160);
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+
+}
+
+.my_friend1 p.middle-title-squer {
+    margin: 5px 40px;
+    float: left;
+    font-size: 12.2px;
+    font-family: "Arial";
+    color: rgb(163, 163, 163);
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+
+.my_friend1 p.middle-title-squer a {
+
+    color: rgb(163, 163, 163);
+
+}
+
+.my_friend1 p.middle-title {
+    margin:0 40px;
+    border-radius: 2px;
+    background-color: rgb(34, 34, 34);
+    font-size: 13px;
+    padding: 5px;
+    font-family: "Arial";
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+#center #content .my-friends .all-friend {
+    width: 780px;
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+.all-friend1 {
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+
+}
+
+#name-of-member {
+    float: left;
+    background-color: rgb(30, 35, 41);
+    padding: 6px 9px;
+    font-size: 14.606px;
+    font-family: "Source Sans Pro";
+    color: rgb(255, 255, 255);
+    width: 137px;
+    height: 33px;
+}
+
+.title .middle-title-squer input {
+    float: right;
+    margin-right: 10px;
+    width: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(183, 183, 183);
+    background-color: rgb(255, 255, 255);
+
+    top: 98px;
+    width: 18px;
+    height: 16px;
+    z-index: 174;
+}
+
+#visible-friends {
+    float: left;
+    overflow: hidden;
+    width: 652px;
+    height: 224px;
+    margin-left: 25px;
+}
+
+#friends-items {
+    position: relative;
+    margin-top: 10px;
+    overflow: hidden;
+    width: 4000px;
+    height: 224px;
+}
+
+.no-message-data {
+    padding-top: 90px;
+    color:#fff;
+}
+
+.request {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    z-index: 1000;
+}
+
+#pic1 img {
+    width: 155px;
+    height: 130px;
+}
+
+div.actions a {
+    text-decoration: none;
+    color: #000;
+}
+

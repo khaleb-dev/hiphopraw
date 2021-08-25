@@ -1,0 +1,398 @@
+.my-contest-gallery #submit-video{
+    margin:10px 10px 15px;
+    border-bottom:2px solid rgb(60,60,60);
+}
+.my-contest-gallery #submit-video a{
+    font-size: 15px;
+    font-family: "Arial";
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -webkit-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -ms-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    text-decoration:none;
+
+}
+.my-contest-gallery #submit-video #chk_new{
+    margin-left:40px;
+    margin-right:10px;
+    margin-top:auto;
+}
+.my-contest-gallery #submit-video .select{
+    margin-right:20px;
+    font-size: 13px;
+
+    font-family: "Arial";
+    color: rgb( 117, 117, 117 );
+    font-weight: bold;
+    text-decoration:none;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+    -webkit-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+    -ms-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+}
+.my-contest-gallery #submit-video .button1{
+    font-size: 13px;
+    font-family: "Arial";
+    color: rgb( 255, 255, 255 );
+    font-weight: bold;
+    background-color: rgb( 255, 0, 0 );
+    /*    width: 90px;*/
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:2px;
+    padding-bottom:2px;
+    height: 18px;
+    border-radius:3px;
+    text-decoration:none;
+
+}
+.my-contest-gallery .video-title-contest{
+    padding-top:15px;
+    width:185px;
+    height:150px;
+    padding-left:10px;
+    margin-bottom:10px;
+    float:left;
+}
+.my-contest-gallery .video-title-contest #video{
+    float:left;
+    width:185px;
+}
+.my-contest-gallery a{
+    text-decoration:none;
+}
+.my-contest-gallery .video-title-contest #title-video a{
+    font-size: 10.5px;
+    font-family: "Arial";
+    color: rgb( 236, 56, 57 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -webkit-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -ms-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+
+}
+.my-contest-gallery .video-title-contest #promo a{
+    font-size: 11.241px;
+    font-family: "Arial";
+    color: rgb( 236, 56, 57 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -webkit-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -ms-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+}
+.my-contest-gallery .video-title-contest #enter-contest #chk_new{
+    margin-right:10px;
+}
+.my-contest-gallery .video-title-contest #enter-contest #enter-video-contest1{
+    font-size: 14.765px;
+    font-family: "Arial";
+    color: rgb( 136, 136, 136 );
+    -moz-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+    -webkit-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+    -ms-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+
+}
+.my-contest-gallery #submit-video-entry{
+    border-top:1px solid #e3e3e3;
+    padding-top:20px;
+    margin-top:30px;
+    padding-left:220px;
+    float:left;
+    width:370px;
+
+
+}
+.my-contest-gallery #submit-video-entry a{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb( 227, 227, 227 );
+    border-radius: 3px;
+    background-color: rgb( 241, 241, 241 );
+    width: 183px;
+    font-weight:bold;
+    height: 34px;
+    padding:5px;
+    font-size: 12.5px;
+    font-family: "Arial";
+    color: rgb( 238, 0, 0 );
+    text-transform: uppercase;
+    text-align: center;
+
+
+}
+
+#center{
+    width:1200px;
+}
+.right-image{
+    margin-left:10px;
+
+    float:right;
+    width:170px;
+    padding-left:5px;
+}
+#image1-right {
+    float:left;
+    text-decoration:none;
+    margin-bottom:5px;
+    border-bottom:1px solid #e3e3e3;
+
+}
+.right-image #image1-right a{
+    font-size: 11.167px;
+    font-family: "Arial";
+    color: rgb( 117, 117, 117 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.95796460176991,0,0,0.94332919835782,0,0);
+    -webkit-transform: matrix( 0.95796460176991,0,0,0.94332919835782,0,0);
+    -ms-transform: matrix( 0.95796460176991,0,0,0.94332919835782,0,0);
+}
+#image1-right1{
+    border-bottom:1px solid #e3e3e3;
+    float:left;
+    padding-bottom:10px;
+    width:190px;
+    margin-top:5px;
+}
+#image2-right1{
+    float:left;
+    margin-top:10px;
+    width:190px;
+    border-bottom:1px solid #e3e3e3;
+    padding-bottom:10px;
+}
+#image3-right1{
+    float:left;
+    margin-top:10px;
+    width:190px;
+
+}
+#contest-details{
+    margin: 15px;
+    background-color: rgb(29,29,29);
+}
+#contest-details h3{
+    font-size: 16px;
+    color: #c4c4c4;
+}
+#contest-details .ful-details{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+#contest-details table tr{
+    border-bottom: 1px solid rgb(9,9,9);
+}
+#contest-details table td{
+    padding: 15px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.my-contest-table .type{width:20%;}
+.my-contest-table .title{width:40%;}
+.my-contest-table .date{width:20%;}
+.my-contest-table .status{width:20%;}
+#videos-container{
+    background: url('../../img/contest/contest-mainbg.jpg') 100% 100% no-repeat;
+    padding:0;
+    margin:0 10px 30px;
+    height: 300px;
+    background-size: 100% 100%;
+}
+#videos-container .inner-wrapper{
+    width:100%;
+    padding: 0;
+}
+#videos-container .inner-wrapper .vid-con,#videos-container .inner-wrapper .model-con{
+    position: relative;
+    width: 50%;
+    height: 300px;
+}
+#videos-container .inner-wrapper .vid-con img,#videos-container .inner-wrapper .model-con img{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+#videos-container .white-btn{
+    padding:3px 15px;
+    position: absolute;
+    bottom: 45px;
+    left: 117px;
+}
+#videos-container .vid-con .white-btn{
+    border: 1px solid rgb(255,0,0);
+}
+#videos-container .white-btn:hover{
+    text-decoration: none;
+    background: rgba(56,56,56,.9);
+    color:#fff;
+}
+
+
+.contest-winner{
+    width:100%;
+    height:64px;
+    background-color:#e3e3e3;
+    box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -webkit-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -moz-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -o-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+
+}
+.slide-show{
+    width:100%;
+    height:198px;
+
+    background-color:#161616;
+}
+.slide-show #left-arrow-contest{
+    margin-left:20px;
+    padding-top:50px;
+    float:left;
+}
+.slide-show .all-image{
+    width:1106px;
+    float:left;
+    margin-left:20px;
+    margin-top:20px;
+    height:165px;
+    float:left;
+
+
+}
+.slide-show .all-image #left-image{
+    height:163px;
+    width:353px;
+    float:left;
+}
+.slide-show .all-image #middle-image{
+    height:163px;
+    width:353px;
+    margin-left:15px;
+    float:left;
+}
+.slide-show .all-image #right-image{
+    margin-left:15px;
+    float:left;
+}
+.slide-show #right-arrow-contest{
+
+    padding-top:50px;
+    float:left;
+}
+.contest-winner #row-winer{
+    float:right;
+    margin-right:150px;
+    margin-top:20px;
+}
+.contest-winner #row-winer a{
+    font-size: 13.5px;
+    font-family: "Arial";
+    color: rgb( 255, 0, 0 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    -webkit-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    -ms-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    text-decoration:none;
+
+}
+.contest-gallery{
+
+    width:100%;
+    min-height:400px;
+    background-color:#f1f1f1;
+    padding-left:100px;
+}
+
+.contest-gallery .date-gallery #date{
+    height:30px;
+    padding-top:40px;
+    width:1100px;
+
+    border-bottom:1px solid #e3e1e1;
+}
+.contest-gallery .date-gallery #date a{
+    font-size: 26px;
+    font-family: "Arial";
+    color: rgb( 39, 39, 39 );
+    font-weight: bold;
+
+}
+.winner-share-gallery #winner-share {
+
+}
+
+.contest-model{
+   
+}
+.item {
+    display: block;
+    float:left;
+    margin:10px 10px;
+}
+.item h3 a{
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+}
+#submit-video a.red-btn{ 
+    padding: 3px 10px;
+    color: #fff;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    background: #fe0000;
+}
+#submit-video  a.check-all{
+    font-size: 12px;
+    font-family: "Arial";
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -webkit-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -ms-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    text-decoration:none;
+}
+#contest-view-more p {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}
+.rounded-corners{
+    border:none;
+}
+ hr{
+    border-color:#e6e6e6;
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+.ellipse_11 {
+  border-radius: 50%;
+  background-color: rgb( 255, 0, 0 );
+  position: absolute;
+  left: 491px;
+  top: 651px;
+  width: 7px;
+  height: 7px;
+  z-index: 102;
+}
+.my-contest-table{
+    table-layout: fixed;
+    white-space: nowrap;
+}
+h3.model-name{
+    max-width: 172px;
+}
+#hiphop-contest-list table td{
+    height: 250px;
+}

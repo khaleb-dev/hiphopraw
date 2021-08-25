@@ -1,0 +1,214 @@
+div#center div#content div.content-box {
+    margin-bottom: 50px;
+}
+
+div#center div.half span.button {
+    display: block;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 25px;
+    box-shadow: 2px 3px 10px 2px rgba(100, 100, 100, 0.4);
+}
+
+div#center div.half span.button input[type=submit] {
+    background-color: transparent;
+    border: none;
+    color: #E11E1C;
+    font-weight: bold;
+}
+
+div#center div.half.text {
+    color: #AFAFAF;
+    font-size: 14px;
+}
+
+div#center div.half div#sign-in-button {
+    border-top: solid 3px #E11E1C;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+
+div#center form div.half p span.error {
+    font-size: .8em;
+}
+
+#login-sign-up-form-overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+    display: none;
+}
+
+.login-sign-up-container {
+    width: 950px;
+    /*height: 515px;*/
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+    display: block;
+    background: white;
+    z-index: 10000;
+    margin-top: 150px;
+}
+
+#title_bar {
+    background: red;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+#title-bar-left-text {
+    float: left;
+    font-size: 26px;
+    font-family: "Arial";
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding: 10px 15px;
+
+}
+
+#title-bar-right-text {
+    font-size: 20px;
+    font-family: "Dense";
+    color: rgb(255, 0, 0);
+    background: black;
+    padding: 8px 10px;
+    float: right;
+    text-transform: uppercase;
+    margin-bottom: auto;
+    margin-top: 6px;
+}
+
+.white {
+    color: white
+}
+
+#join-hiphopraw {
+    color: black;
+    font-size: 32px;
+    font-family: "Arial";
+    color: #fff;
+    font-weight: bold;
+    line-height: 0.531;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.light-gray-background {
+    background: rgb(216, 216, 216);
+}
+
+.stripe1 {
+    height: 1px;
+
+}
+
+.signup-separator {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 294px;
+    height: 32px;
+}
+
+.half p label {
+    display: inline-block;
+}
+
+.text p{
+    color: rgb(105,105,105);
+}
+
+.black{
+    color: black;
+}
+
+#submit-form-button{
+    text-decoration: none;
+    color: white;
+}
+
+#submit-form-button:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.submit-button-background{
+    padding-top: 50px;
+    padding-bottom: 15px;
+    width: 400px;
+    font-size: 26px;
+    -moz-transform: matrix( 0.92135822612608,0,0,0.92135822612608,0,0);
+    -webkit-transform: matrix( 0.92135822612608,0,0,0.92135822612608,0,0);
+    -ms-transform: matrix( 0.92135822612608,0,0,0.92135822612608,0,0);
+}
+
+div.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#sign-up-submit-button{
+    background-image: url("../../img/sign-up-join-hhr.png");
+    width: 375px;
+    height: 50px;
+}
+form p select.choose-state{
+    background: #ebebeb;
+    box-shadow: 0px 1px 5px 1px #bfbfbf inset;
+    width: 260px;
+    border: solid 1px #efefef;
+    height: 28px;
+    padding: 2px 5px;
+}
+
+.error{
+    margin-left: 105px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: none;
+}
+.submit-wait{
+    width: 100%;
+    height: 5px;
+    margin-top: -15px;
+}
+
+.success-dialog, .error-dialog {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+#login-form{
+    margin-left: 100px;
+}
+
+#cancel-signup{
+    color: grey;
+    display: block;
+}

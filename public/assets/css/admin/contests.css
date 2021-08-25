@@ -1,0 +1,459 @@
+
+
+.row0{
+    background-color:transparent;
+}
+.row1{
+    background-color:#CCCCCC;
+}
+.row2{
+    color: red;
+    border-bottom:1px solid #CCCCCC;
+}
+.title{
+    margin-bottom: 0px;
+    height: 20px; 
+
+}
+.title p{
+    margin-bottom: 0px;
+    bottom: 0;
+       
+}
+hr.divider{
+     margin-top: 0px;
+     padding-top: 0px;
+     position: relative;
+     width: 696px;
+
+}
+hr.divider1{
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 50px;
+    border:1px solid red;
+}
+th {
+    border: 0;
+}
+
+/*div#center{
+    background: #fff;
+    width: 974px;
+    margin: 0 auto;
+    padding-left: 8px;
+    padding-bottom: 20px;
+}
+
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+    float: left;
+}
+
+div#center div#sidebar-left{
+    width: 220px;
+    margin-right: 60px;
+}
+
+div#center div#content.with-sidebar-left{
+    width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+    padding: 0 0 0 0;
+    margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+    background: url("../../img/footer_bg.jpg");
+    margin: 0px 0px 5px 0px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+    padding: 0px 14px 14px 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+    background: url('../../img/small_star.png') no-repeat left center;
+    padding-left: 20px;
+    color: #e11e1c;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+    display: block;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+    margin: 0px 0px 5px 0px;
+    font-size: 12px;
+    font-family: arial, sans-serif;
+    color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+    color: #e11e1c;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+    font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+    color: #cccccc;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+    font-weight: bolder;
+    font-size: 14px;
+    color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+    border-bottom: solid 1px #dfdfdf;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+    float: left;
+    color: #e11e1c;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+    background-image: none;
+    background-color: #f4f4f4;
+    border: solid 1px #e2e2e2;
+    color: #000;
+    font-size: 9px;
+    text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+    background-image: url("../../img/icons/add_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+    background-image: url("../../img/icons/message_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left h3{
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #c4c4c4;
+}
+
+div#center div#content.with-sidebar-left div.items{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+    margin-bottom: 15px;
+    margin-right: 28px;
+}
+
+div#center div#content.with-sidebar-left div.items div.item:last-child {
+    margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+    color: #000000;
+    font-size: 14px;
+    margin: 0 0 0 5px;
+    text-align: left;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a{
+    text-decoration: none;
+    color: #000;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a:hover{
+    color: #E11E1C;
+}
+
+div#center div#content.with-sidebar-left div.items div.item p.views{
+    font-size: 10px;
+    color: #afafaf;
+    margin: 2px 0 2px 0;
+    font-weight: lighter;
+}*/
+form{
+    margin-bottom: 0px;
+}
+div#center div#content div#contest{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content div h2 {
+    margin-top: 0px;
+}
+
+div#content-index {
+    border-bottom: 2px solid #C4C4C4;
+    margin-bottom: 10px;
+}
+
+div#content-index > p {
+    float: left;
+    color: #C4C4C4;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+div#content-index ul {
+    color: #C4C4C4;
+    float: right;
+    font-size: 10px;
+    list-style: none outside none;
+    margin-bottom: 1px;
+    margin-right: 2px;
+    padding-top: 5px;
+}
+
+div#content-index ul li {
+    border-right: 1px solid #C4C4C4;
+    float: left;
+    line-height: 0.8em;
+    margin: 0 0 0 1px;
+    padding: 0 4px;
+}
+
+div#content-index ul li a {
+    text-decoration: none;
+    color: #C4C4C4;
+}
+
+div#content-index ul li a:hover {
+    color: #E92B2D;
+}
+
+div#content-index ul li#description {
+    border: none;
+    color: #E11E1C;
+}
+
+div#contest p.highlight-box {
+    color: #E11E1C;
+    font-family: ihatecomicsans,sans-serif;
+    letter-spacing: 1px;
+    margin: 10px 0 30px;
+}
+
+.side-menu-item {
+    color: #e11e1c;
+}
+
+div.actions{
+    font-size: .7em;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+
+div.actions a{
+    color: #999;
+    text-decoration: none;
+    display: block;
+    width: 49.5%;
+}
+
+div.actions a:hover{
+    color: #e11e1c;
+}
+
+div.actions a.green:hover{
+    color: #008000;
+}
+
+div.actions a i{
+    display: inline-block;
+    margin-right: 2px;
+    color: #e11e1c;
+    font-size: .7em;
+    line-height: 16px;
+}
+
+div.actions a.green i{
+    color: #008000;
+}
+div#contest .content-box{
+    height: 123px;
+    margin-bottom: 0px;  
+}
+div#contest .content-box form{
+    height: 123px;
+}
+div#contest .content-box p {
+    margin: 9px;
+    
+}
+
+div#contest .content-box p label {
+    text-align: left;
+    width: 70px;
+}
+
+div#contest .content-box p select {
+    width: 200px;
+}
+
+div#contest .horizontal-separator {
+    border-bottom: 2px solid #DCDCDC;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+div#contest input[type="text"],
+div#contest select {
+    border-radius: 0px;
+    padding: 0px;
+}
+
+div#contest label {
+    color: #818181;
+    display: block;
+    float: left;
+    font-family: arial,sans-serif;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 3px;
+}
+
+div#contest-time div#beginning-time {
+    float: left
+}
+
+div#contest-time div#end-time {
+    float: right
+}
+
+div#contest-time div#beginning-time label {
+    width: 110px;
+}
+
+div#contest-name input[type="text"] {
+    background: none repeat scroll 0 0 #F6F6F6;
+    width: 350px;
+}
+
+#contest div#create-contest {
+    padding-top: 20px;
+    text-align: center;
+}
+
+div#create-contest input[type="submit"] {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: medium none;
+    padding: 8px 18px;
+}
+
+.contest-main .divider{
+	margin-bottom:20px;
+}
+.contest-all-tbl{
+	background:#1d1d1d; 
+	color:#d6d6d6;
+	border:1px solid #030303;
+}
+.contest-all-tbl thead{
+background:#1a1a1a;
+color:#5b5b5b;
+}
+.contest-all-tbl tr td{
+border-color:#030303;
+}
+.contest-all-tbl tbody tr:hover td{
+	background:#1d1d1d !important;
+}
+.contest-dot{
+	display:inline-block;
+	width:12px;
+	height:10px;
+	margin-right:10px;
+}
+.contest-dot-red{
+	background:url('../../img/red-dot.png') no-repeat left center;
+}
+.contest-dot-white{
+	background:url('../../img/white-dot.png') no-repeat left center;
+}
+.green{
+	color:#04df47;
+}
+.new-contest-btn a{
+	padding:6px 20px;
+	font-size:14px;
+}
+.contest-main table th, .contest-main table td{
+    text-align: center;
+}
+#content>h2{
+    border-bottom: 2px solid rgb(51,51,51);
+}
+#category, #contest-time, #contest-name{
+        border: 2px solid #000;
+    background: #1d1d1d;
+    margin-top: 30px;
+}
+#category h2, #contest-time h2, #contest-name h2{
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #c4c4c4;
+    border-bottom: 2px solid #000;
+    padding: 10px 15px;
+}
+#category select, #contest-time input, #contest-name input{
+    background-color: rgb(20,20,20) !important;
+    color: rgb(63,63,63);
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 5px !important;
+    width: 300px !important;
+    height: 30px;
+    padding: 0px 5px !important;
+}
+#contest-time input{
+    width: 90px !important;
+    display: inline;
+}
+div#center div#content div.content-box{
+    margin-bottom: 0;
+    height: auto;
+    padding-left: 30px;
+}
+#contest-time table label{
+    color: #fff;
+}
+.back a{color: red;}

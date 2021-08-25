@@ -1,0 +1,99 @@
+div#center div#heading-with-ad div.content-box{
+	text-align: center;
+	padding: 0 10px;
+	font-size: 14px;
+}
+
+div#center div#content div#highlight.contest-how-to {
+	margin-top: 20px;	
+}
+
+div#center div#content div#highlight.contest-how-to div#highlight-background-image{
+	padding: 10px 26px 20px 26px;
+	background: url("../../img/how_to_screenshot.png") no-repeat 26px 45px;
+	height: 435px;
+}
+
+div#center div#content div#highlight.contest-how-to h1{
+	color: #e11e1c;
+	margin: 30px auto 0 auto;
+	font-size: 25px;
+	font-weight: bolder;
+	width: 70%;
+	text-align: center;
+	line-height: 25px;
+}
+
+div#center div#content div#highlight div#join-button{
+	width: 430px;
+	margin: 250px auto 30px auto;
+	padding: 5px 15px;
+	background: url("../../img/strike_double_bg.png") repeat-x center center;
+	text-align: center;
+}
+
+div#center div#content div#highlight div#join-button span{
+	display: inline-block;
+	background: url("../../img/footer_bg.jpg");
+	padding: 5px 20px;
+}
+
+div#center div#content div#highlight div#join-button a.button{
+	display: inline-block;
+	padding: 3px 20px 3px 20px;
+	font-size: 14px;
+}
+
+div#center div#content h2.star-heading {
+	text-align: center;
+	color: #000;
+}
+
+div#center div#content h2.star-heading span{
+	display: inline-block;
+	border: none;
+	padding: none;
+}
+
+div#center div#content h2.star-heading span.left-star{
+	background: url("../../img/star_left.png") no-repeat left top;
+	width: 48px;
+}
+
+div#center div#content h2.star-heading span.right-star{
+	background: url("../../img/star_right.png") no-repeat right top;
+	width: 50px;
+}
+
+div#center div#content div.heading-image{
+	text-align: center;
+}
+
+div#center div#content div.content-box {
+	margin-bottom: 50px;
+	padding: 22px;
+	font-style: italic;
+}
+
+div#center div#content div.content-box h3{
+	font-family: cardoregular, serif;
+	font-style: italic;
+	color: #e11e1c;
+	border-bottom: solid 1px #dfdfdf;
+	margin-top: 0;
+}
+
+div#center div#content div.content-box h3.normal{
+	color: #000;
+}
+
+div#center div#content div.content-box div.text {
+	float: left;
+	width: 536px;
+	margin-right: 33px;
+}
+
+div#center div#content div.content-box div.thumb {
+	float: left;
+	width: 360px;
+}

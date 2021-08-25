@@ -1,0 +1,114 @@
+div#center div#heading-with-ad div.content-box{
+	text-align: center;
+	padding: 0 10px;
+	font-size: 14px;
+}
+
+div#center div#content div#highlight div#steps{
+	width: 741px;
+	margin: 0 auto;	
+	padding-bottom: 30px;
+}
+
+div#center div#content div#highlight div#steps div{
+	width: 233px;	
+	float: left;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+div#center div#content div#highlight div#steps div.clear{
+	float: none;
+}
+
+div#center div#content div#highlight div#steps div.center{
+	margin: 0 20px;
+}
+
+div#center div#content div#highlight div#steps div h3{
+	background-color: #e11e1c;
+	font-size: 20px;
+	padding: 8px 0;
+	margin: 0 0 10px 0;
+	text-align: center
+}
+
+div#center div#content div#highlight div#steps div p{
+	margin: 5px 0;
+	font-size: 13px;
+	font-family: arial, sans-serif;
+	color: #efefef;
+	padding: 5px 10px;
+	text-align: left;
+}
+
+div#center div#content div#highlight div#join-button{
+	width: 741px;
+	margin: 5px auto 30px auto;
+	background: url("../../img/strike_double_bg.png") repeat-x center center;
+	text-align: center;
+}
+
+div#center div#content div#highlight div#join-button span{
+	display: inline-block;
+	background: url("../../img/footer_bg.jpg");
+	padding: 5px 20px;
+}
+
+div#center div#content div#highlight div#join-button a.button{
+	display: inline-block;
+	padding: 3px 20px 3px 20px;
+}
+
+div#center div#content h2.star-heading {
+	text-align: center;
+	color: #000;
+}
+
+div#center div#content h2.star-heading span{
+	display: inline-block;
+	border: none;
+	padding: none;
+}
+
+div#center div#content h2.star-heading span.left-star{
+	background: url("../../img/star_left.png") no-repeat left top;
+	width: 48px;
+}
+
+div#center div#content h2.star-heading span.right-star{
+	background: url("../../img/star_right.png") no-repeat right top;
+	width: 50px;
+}
+
+div#center div#content div.heading-image{
+	text-align: center;
+}
+
+div#center div#content div.content-box {
+	margin-bottom: 50px;
+	padding: 22px;
+	font-style: italic;
+}
+
+div#center div#content div.content-box h3{
+	font-family: cardoregular, serif;
+	font-style: italic;
+	color: #e11e1c;
+	border-bottom: solid 1px #dfdfdf;
+	margin-top: 0;
+}
+
+div#center div#content div.content-box h3.normal{
+	color: #000;
+}
+
+div#center div#content div.content-box div.text {
+	float: left;
+	width: 536px;
+	margin-right: 33px;
+}
+
+div#center div#content div.content-box div.thumb {
+	float: left;
+	width: 360px;
+}

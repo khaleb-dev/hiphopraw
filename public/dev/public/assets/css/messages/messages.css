@@ -1,0 +1,1037 @@
+div#content > aside,
+div#content > div {
+  float: left;
+  margin-right: 28px;
+}
+div#content aside {
+  border-radius: 3px;
+  width: 195px;
+
+ }
+div#content aside > div,
+div#content aside > nav {
+  border-radius: 3px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  position: relative;
+}
+div#content aside > div:last-child,
+div#content aside > nav:last-child {
+  margin-bottom: 0px;
+}
+div#content aside > div div.content,
+div#content aside > nav div.content {
+
+}
+div#content aside > nav {
+   margin-left:0px;
+}
+div#content aside > nav   a {
+   border-bottom: 1px solid #f3b82a;
+    color: #5E676B;
+    display: block;
+    font-size: 15px;
+    padding: 15px 0 15px 15px;
+    text-decoration: none;
+}
+div#content aside > nav div#collection a {
+  display: block;
+  border-radius: 3px;
+  font-size: 15px;
+  
+  padding: 5px 0;
+  text-decoration: none;
+  color: #ffffff;
+}
+div#content aside > nav a:hover {
+  color: #0c58a4;
+}
+div#content aside > nav a i {
+  color: #004793;
+}
+div#content aside > nav a:last-child {
+  margin-bottom: 0px;
+}
+div#content aside#left-sidebar div#profile-summary div.content {
+ text-align: center;
+  border: solid 1px #e0e0e0;
+    border-radius: 3px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile-pic img {
+  width:174px;
+  height:124px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile_name{
+  background-color: #f3b82a;
+ text-align: center;
+  font-weight: normal;
+  color:#ffffff;
+  font-size:16pt;
+  padding: 5px 5px 10px 5px;
+}
+iv#content aside#left-sidebar div#profile-summary div.content div#states {
+ padding-top:5px;
+  padding-left:20px;
+text-align: left;
+  font-weight: normal;
+  margin-bottom:3px;
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content div#date {
+ padding-top:5px;
+ margin-left:5px;
+ margin-right:5px;
+ margin-bottom:10px;
+ border-top:1px solid;
+ padding-left:15px;
+text-align: left;
+  font-weight: normal;
+ 
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content a {
+  display: block;
+  text-decoration: none;
+  color:#ffffff;
+  font-size: 13px;
+  margin-top: 5px;
+}
+div#content aside#left-sidebar nav#profile-nav div#collection {
+ background-color:#f3b82a;
+  font-weight: normal;
+   color:#ffffff;
+  font-size:14pt;
+    border-radius: 3px;
+     padding: 10px 5px 6px 10px;
+ }
+ div#content aside#left-sidebar nav#profile-nav  {
+ 
+    border: solid 1px #e0e0e0;
+    border-radius: 3px;
+ }
+ div#content aside#left-sidebar nav#profile-nav i.profile:after
+ {
+ content: url("../../img/my_profile.png");
+ margin-right:20px;
+
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.circle:after
+ {
+ content: url("../../img/cirlcle.png");
+ padding-right:5px;
+ float:right;
+  }
+div#content aside#left-sidebar nav#profile-nav i.my_photos:after
+ {
+ content: url("../../img/my_photo.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_events:after
+ {
+ content: url("../../img/my_event.png");
+ padding-right:20px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_Referrals:after
+ {
+ content: url("../../img/myFavourites.png");
+ padding-right:15px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_comment:after
+ {
+ content: url("../../img/comments.png");
+ padding-right:15px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_hellos:after
+ {
+ content: url("../../img/my_hello.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_favorites:after
+ {
+ content: url("../../img/my_favorait.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_friends:after
+ {
+ content: url("../../img/my_friend.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_setting:after
+ {
+ content: url("../../img/my_setting.png");
+ padding-right:20px;
+ float:left;
+  }
+div#content aside#left-sidebar div#profile-summary div.content a:hover {
+   color: #ffffff;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#states {
+ padding-top:5px;
+ padding-left:35px;
+text-align: left;
+  font-weight: normal;
+  margin-bottom:3px;
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content div#date {
+ padding-top:5px;
+ margin-left:5px;
+ margin-right:5px;
+ margin-bottom:10px;
+ border-top:1px solid;
+ padding-left:15px;
+text-align: left;
+  font-weight: normal;
+ 
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#upgrade-your-account div#upgrade1 h3 {
+  background-image: url("../../img/upgradenew.png");
+  background-position: 5px 10px;
+  background-repeat: no-repeat;
+  padding: 10px 0px 10px 20px;
+  background-color: #f3b82a;
+  color: #ffffff;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+ 
+  margin: 0 0 0 0;
+}
+div#content aside#left-sidebar div#upgrade-your-account{
+  text-align: center;
+   border: solid 1px #e0e0e0;
+    border-radius: 3px;
+	width:195px;
+	
+}
+
+div#content aside#left-sidebar div#upgrade-your-account p {
+   font-size: 12px;
+  margin: 0 0 0 0;
+  padding-left:5px;
+  padding-right:5px;
+  color:#313943;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul {
+  border-radius: 3px;
+  font-size: 12px;
+  list-style-position: inside;
+  padding: 5px 8px;
+  background-color: #f9f9f9;
+  border-color: #e8e8e8;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li {
+   line-height: 30px;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li a {
+   color: #454e59;
+  text-decoration: none;
+}
+
+div#content aside#left-sidebar div#upgrade-your-account a.button:hover, a.button:hover {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  
+  border: solid 1px #f3b82a;
+}
+a.button {
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #b10759;
+    border: 1px solid #b10759;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+	width:150px;
+	margin-left:15px;
+	margin-bottom:15px;
+}
+div#content aside#right-sidebar {
+    background-color: #D4D4D4;
+    margin-right: 0;
+   width: 185px;
+	padding:4px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend {
+  background-color: #f9f9f9;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend img {
+  display: block;
+  float: left;
+  border: solid 1px #ffffff;
+  margin-right: 5px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details {
+  float: left;
+  width: 90px;
+  font-size: 12px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details a {
+  color: #0c58a4;
+  text-decoration: none;
+  display: block;
+  line-height: 12px;
+  margin-bottom: 3px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details > a.location {
+  color: #000000;
+  font-size: 10px;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details p.icons {
+  margin: 3px 0;
+}
+div#content aside#right-sidebar div#friends-online div.content div.friend div.details p.icons a {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;
+  padding: 3px 5px;
+  color: #0c58a4;
+}
+div#content aside#right-sidebar div.ad {
+  padding: 0 0 0 0;
+}
+div#content aside#right-sidebar div.ad img {
+  display: block;
+}
+div#content div#middle {
+  width: 890px;
+  padding-left:70px;
+  position: relative;
+  border-left: 1px solid #9E9E9E;
+}
+div#content div#middle section {
+  /*border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;*/
+  margin-bottom: 20px;
+}
+div#content div#middle div#messages_header h2{
+    /*background-color: #f3b82a;
+	 border-radius: 3px;*/
+	font-weight: normal;
+ color:#000;
+ font-size:16pt;
+  
+
+}
+
+div#content div#middle section#event-detail-more div#messages_header h2 a.like{
+   padding-top:5px;
+	margin-right:90px;
+}
+iv#content div#middle section#event-detail-more div#messages_header a.square{
+ padding-right:30px;
+  padding-top:5px;
+}
+div#content div#middle section#event-detail-more div#messages_header h2 a.select{
+    padding-top:5px;
+	padding-left:10px;
+	
+}
+div#content div#middle section h2 {
+  padding: 0px 20px 0px 10px;
+  margin: 5px 0px;
+  font-size: 18px;
+  line-height: 20px;
+  color: #ffffff;
+  font-family: arial, sans-serif;
+}
+div#content div#middle section h2 a {
+  display: block;
+  float: right;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: normal;
+ line-height: 18px;
+  text-decoration: none;
+}
+div#content div#middle section h2 a i {
+  color: #0c58a4;
+}
+div#content div#middle section div.content {
+  border-radius: 3px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #e8e8e8;
+}
+div#content div#middle section#latest-members div.content div.member {
+  border-radius: 3px;
+  float: left;
+  width: 133px;
+  margin-right: 17px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #e8e8e8;
+  border: solid 1px #cfcfcf;
+}
+div#content div#middle section#latest-members div.content div.member:nth-child(4n+4) {
+  margin-right: 0px;
+}
+div#content div#middle section#latest-members div.content div.member img {
+  display: block;
+  border: solid 2px #ffffff;
+}
+div#content div#middle section#latest-members div.content div.member p {
+  font-size: 12px;
+  margin: 0 0 5px 0px;
+}
+div#content div#middle section#latest-members div.content div.member p.location {
+  font-size: 10px;
+  color: #0c58a4;
+}
+div#content div#middle section#latest-members div.content div.member p.icons a {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;
+  padding: 3px 5px;
+  color: #003682;
+}
+div#content div#middle section#latest-friend-requests div.content {
+  position: relative;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider {
+  width: 560px;
+  margin: 0 31px 0 38px;
+  height: 175px;
+  overflow: hidden;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides {
+  width: 1120px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request {
+  float: left;
+  width: 133px;
+  margin-right: 7px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request img {
+  display: block;
+  margin: 0 auto;
+  border: solid 2px #ffffff;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p {
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  padding: 0 5px;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.location {
+  font-size: 10px;
+  color: #0c58a4;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a {
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:first-child {
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #0c58a4;
+  border: solid 1px #004793;
+  float: left;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:first-child:hover {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: #1d69b5;
+  border: solid 1px #2e7ac6;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:last-child {
+  border-radius: 3px;
+  color: #000000;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #9c9c9c;
+  border: solid 1px #8b8b8b;
+  float: right;
+}
+div#content div#middle section#latest-friend-requests div.content div#slider div#slides div.request p.buttons a:last-child:hover {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: #adadad;
+  border: solid 1px #bebebe;
+}
+div#content div#middle section#latest-friend-requests div.content i {
+  display: inline-block;
+  position: absolute;
+  background-color: #d7d7d7;
+  font-size: 20px;
+  padding: 20px;
+  color: #000000;
+  top: 60px;
+}
+div#content div#middle section#latest-friend-requests div.content i.fa-arrow-right {
+  right: 0px;
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+  padding-right: 5px;
+}
+div#content div#middle section#latest-friend-requests div.content i.fa-arrow-left {
+  left: 0px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  padding-left: 5px;
+}
+div#content div#middle section#latest-friend-requests div.content i:hover {
+  color: #0c58a4;
+}
+div#content div#middle section#events div#event-list {
+  padding: 10px;
+}
+div#content div#middle section#events div#event-list div.event {
+  float: left;
+  width: 290px;
+  background-color: #e8e8e8;
+  border: solid 1px #e0e0e0;
+  padding: 10px;
+  margin: 0 14px 14px 0;
+}
+
+#events h2 small{
+    color: #006db9;
+    font-size: 14px;
+}
+div#content div#middle section#events div#event-list div.event img {
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+div#content div#middle section#events div#event-list div.event div.details {
+  float: left;
+  font-size: 12px;
+  width: 170px;
+}
+div#content div#middle section#events div#event-list div.event div.details h3 {
+  font-weight: normal;
+  font-size: 14px;
+  color: #000000;
+  margin: 0 0 5px 0;
+}
+div#content div#middle section#events div#event-list div.event div.details p {
+  margin: 0 0 5px 0;
+}
+div#content div#middle section#events div#event-list div.event div.details p.date {
+  font-size: 10px;
+  color: #004793;
+}
+div#content div#middle section#events div#event-list div.event div.details p.text {
+  font-size: 10px;
+  color: #696969;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more {
+  margin-top: 10px;
+  text-align: right;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more a {
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 12px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #0c58a4;
+  border: solid 1px #004793;
+}
+div#content div#middle section#events div#event-list div.event div.details p.learn-more a:hover {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: #1d69b5;
+  border: solid 1px #2e7ac6;
+}
+div#content div#middle div.event-list{
+  border-radius: 3px;
+  background-color: #f5f5f5;
+  padding: 5px;
+  font-size: 14px;
+  min-height: 220px;
+  /*margin-bottom:30px;*/
+}
+
+div#content div#middle div.event-list img{
+    float: left;
+    width: 95px;
+    height: 80px;
+    background-color: #000;
+    margin: 0px 10px 10px 10px;
+}
+
+div#content div#middle div.event-list a{
+    font-size: small;
+    display: inline;
+}
+
+div#content div#middle div.event-list h3{
+    color: #4c4c4c;
+}
+
+div#content div#middle div.event-list span{
+    font-weight: bold;
+}
+
+div#content div#middle div#bottom-buttons {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+hr{
+    width:650px;
+    border: 1px solid #ebebeb;
+}
+
+div#content div#middle section a.next{
+      display: block;
+      text-align: right;
+    margin: 10px 15px;
+      color: #000000;
+      font-size: 14px;
+      font-weight: normal;
+      font-family: 'pt sans', arial, sans-serif;
+      font-style: italic;
+      line-height: 20px;
+      text-decoration: none;
+    clear: both;
+  }
+
+div.notify{
+    border: 1px solid red;
+    text-align: center;
+}
+div.notify p{
+    background: left center url(../../img/icons/exclamation.png) no-repeat;
+    padding: 10px;
+    width: 600px;
+    margin: 0 auto;
+
+}
+
+div.notify p a{
+    text-decoration: none;
+    color: #393939;
+    font-size: small;
+}
+div.notify p span{
+    font-size: 14px;
+    color: red;
+}
+section#dating-package-section{
+    margin-top:20px;
+    min-height: 212px;
+}
+div#content div#middle div.dating-package{
+    border-radius: 3px;
+    background-color: #e8e8e8;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+    width: 300px;
+    min-height: 140px;
+}
+
+div#content div#middle div.dating-package:first-of-type{
+    float: left;
+    margin-left: 10px;
+}
+div#content div#middle div.dating-package:last-of-type{
+    float: right;
+    margin-right: 10px;
+}
+div#content div#middle div.dating-package div{
+    font-size: smaller;
+    background-color: #fff;
+    height: 90px;
+    overflow: hidden;
+    padding: 0 5px 0 0;
+}
+a.button {
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 3px 5px;
+    background-color: #f3b82a;
+    border: 1px solid #f3b82a;
+    font-weight: bolder;
+    display: block;
+    text-align: center;
+}
+div#content div#middle div.dating-package div img{
+    float: left;
+    width: 125px;
+    height: 90px;
+    padding-right: 5px;
+    background: no-repeat url('../../img/dating_packages/dating_package_1.jpg');
+}
+span.dating-package-title{
+    font-style: italic;
+    font-weight: bold;
+}
+
+#dating-package-section p{
+    float: left;
+}
+#dating-package-section p strong{
+    color: #4c4c4c;
+}
+#dating-package-section a.button{
+    display: block;
+    float: right;
+    margin-top: 15px;
+    font-size: small;
+}
+
+div.sub-nav ul{
+    list-style: none;
+    padding:0px;
+    margin:0px;
+    /*margin-top: -5px;
+    background-color: #eeeeee;*/
+}
+div.sub-nav ul li{
+position: relative; 
+float: left;
+background: #424242;
+margin-right:5px;
+width:293px;
+}
+div.sub-nav ul li:nth-child(3n){
+margin-right:0px;
+}
+
+div.sub-nav ul li a{
+  width: 100%;
+    display: inline-block;
+    padding: 10px 0px;
+    margin: 0px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+
+}
+
+div.sub-nav ul li a.active{
+    background-color: #35b0cf;
+    color: #ffffff;
+}
+
+div.controls{
+    width: 60px;
+    padding: 5px;
+    position: relative;
+    margin-top: -55px;
+    float: right;
+    clear: both;
+}
+div.controls form{
+    display: inline-block;
+}
+
+div.controls a.arrow span{
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background: no-repeat url(../../img/arrow.png);
+}
+
+.message-entry img{
+    clear: both;
+    float: left;
+    border:3px solid #ffffff;
+
+}
+.message-entry{
+    font-size: small;
+}
+.message-entry form{
+    display: inline-block;
+    float: right;
+    position: relative;
+    right: 0px;
+    margin-top: 10px;
+}
+.message-entry input{
+    display: inline-block;
+    float: right;
+    position: relative;
+    right: 0px;
+    margin-top: 0px;
+	margin-right: 10px;
+}
+div#message_dialog {
+  display: none;
+  position: absolute;
+  width: 835px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: #3c3c3c;
+  border: none;
+  padding: 0;
+}
+
+
+.message-entry p a{
+    font-weight: bold;
+    font-style: italic;
+    color: #f3b82a;
+    text-decoration: none;
+}
+div.message-entry span.message-info{
+    display: inline-block;
+    padding: 10px;
+    color: #676767;
+    font-style: italic;
+    width: 640px;
+    font-size: small;
+  
+}
+
+
+div.message-entry span.message{
+    color: #4c4c4c;
+}
+
+.delete-button{
+    margin: 10px 20px;
+    text-align: right;
+}
+#submit {
+ border-radius: 3px;
+  color: #ffffff;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #f3b82a;
+  border: solid 1px #f3b82a;
+  font-weight: bolder;
+  text-align: center;
+  
+}
+#submit2 {
+ border-radius: 3px;
+  color: #ffffff;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #f3b82a;
+  border: solid 1px #f3b82a;
+  font-weight: bolder;
+  text-align: center;
+   margin-left:10px;
+}
+#submit1{
+margin-right:70%;
+padding:0px;
+
+}
+
+i.inbox-icon:after {
+    content: url("../../img/icons/inbox-icon.png");
+    top:5px;
+    left:100px;
+    position: absolute;
+}
+i.sent-icon:after {
+    content: url("../../img/icons/sent-icon.png");
+    top:5px;
+    left:100px;
+    position: absolute;
+}
+i.trash-icon:after {
+    content: url("../../img/icons/trash-icon.png");
+    top:5px;
+    left:100px;
+    position: absolute;
+}
+#messages_header .pull-right .small{
+  font-size: 12px;
+  margin-right:5px;
+}
+.compose, .organge-btn{
+  position: relative;
+  background: #da6a45;
+  border:none;
+  padding:5px 30px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 15px;
+}
+i.compose-icon:after {
+    content: url("../../img/icons/compose.png");
+    top:5px;
+    left:5px;
+    position: absolute;
+}
+.message-wrapper{
+  background: #fff;
+  padding:30px 20px; 
+}
+.inbox-wrapper{
+  background: #fff url("../../img/icons/message-tab-arrow.png") 125px 0px no-repeat;
+}
+.sent-wrapper{
+  background: #fff url("../../img/icons/message-tab-arrow.png") 420px 0px no-repeat;
+}
+.trash-wrapper{
+  background: #fff url("../../img/icons/message-tab-arrow.png") 720px 0px no-repeat;
+}
+.message-wrapper .message{
+  padding-bottom:20px;
+  margin-bottom:20px;
+  border-bottom: 1px solid #ededed;
+}
+.message-wrapper .message:last-child{
+  padding-bottom:0px;
+  margin-bottom:0px;
+  border-bottom: none;
+}
+.message-wrapper .message .online-status{
+  line-height: 88px;
+  vertical-align: middle;
+  margin-right:15px;
+}
+.message-wrapper .message .user-avatar img{
+  width:88px;height:88px;
+}
+.message-wrapper .message .user-info{
+  margin-left:18px;
+  width: 156px;
+}
+.message-wrapper .message .user-info .name{
+  color: #d96a45;
+  font-size: 16px;
+}
+.message-wrapper .message .user-info .sub{
+  font-size: 14px;
+}
+.message-wrapper .message .user-info .bottom{
+  color: #d96a45;
+  font-size: 14px;
+}
+.message-wrapper .message .vertical-separtor{
+  margin:0px 20px;
+  border-right:2px #f2f2f2 solid;
+  width:10px;
+  height:42px;
+}
+.message-wrapper .message .message-intro{
+  width: 300px;
+}
+.message-wrapper .message .message-intro .message-subject{
+    margin-bottom:5px;
+}
+.message-wrapper .message .message-intro .message-subject a{
+  color: #34b0ce;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.message-wrapper .message .message-date .date{
+  font-size: 16px;
+}
+.message-wrapper .message .message-del{
+  background:#ebebeb ;
+  padding:1px 3px;
+  cursor: pointer;
+}
+
+.border-icon1{
+  position: absolute;
+  background: url("../../img/message-border-icon.jpg") no-repeat;top:100px;left:-28px;
+  width:60px;height:55px;
+}
+.border-circle-1{
+    left: -7px;
+    top: -12px;
+}
+.border-circle-2{
+bottom:-7px;left:-6px;
+}
+
+/* message detail page */
+.message-detail-wrapper .message .vertical-separtor{
+border:none;
+margin: 0px 5px;
+}
+.message-detail-wrapper .message .full-message{
+  width: 437px;
+}
+.message-detail-wrapper .message .full-message .message-subject{
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom:10px;
+}
+.message-detail-wrapper .message .message-del{
+  width:10px;
+  float: right;
+  margin-top:10px;
+}
+.message-detail-wrapper .message-reply .user-avatar{
+  margin-left:21px;
+}
+.reply-box {
+width: 890px;
+padding-left: 70px;
+margin-top: 20px;
+}
+.reply-box .reply-form-wrapper{
+  background: #fff;
+  padding:20px;
+}
+.reply-box .reply-form-wrapper .reply-form .label{
+  color: #9e9e9e;
+  font-size: 17px;
+  margin-right:15px;
+}
+.reply-box .reply-form-wrapper .reply-form .inputs{
+  width: 600px;
+  margin-right:10px;
+}
+.reply-box .reply-form-wrapper .reply-form .inputs input[type="text"]{
+  width: 590px;
+  padding:5px;
+  margin-top:0px;
+  background: #fafafa;
+  border-radius: 3px;
+  border:1px solid #f0f0f0;
+}
+.reply-box .reply-form-wrapper .reply-form .inputs input[type="submit"]{
+
+}
+.organge-btn{
+  padding:5px 30px;
+  background: #da6a45 url("../../img/icons/sent-icon.png") 5px 0 no-repeat;
+}
+.reply-form .right-option{
+
+}
+
+.reply-form .right-option a.add-person{
+  float:left;margin-left:20px;margin-top:3px;
+}
+.reply-form .right-option .vertical-sep{
+float:left;margin:0px 10px 0px 10px;border-left: 1px solid #ccc;height:35px;
+}
+.reply-form .right-option .submit-btn{
+  float:left;margin-top:0px;background: none;border:none;margin-top:3px;
+}

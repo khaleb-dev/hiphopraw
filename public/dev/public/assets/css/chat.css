@@ -1,0 +1,129 @@
+.chatbox {
+  position: fixed;
+  position: expression("absolute");
+  width: 420px;
+  display: none;
+  z-index: 1;
+}
+.chatbox div.chatboxhead {
+  background-color: #0C58A4;
+  border-left: 1px solid #0C58A4;
+  border-right: 1px solid #0C58A4;
+  color: #FFFFFF;
+  padding: 7px;
+}
+.chatbox div.chatboxhead div.chatboxtitle {
+  float: left;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.chatbox div.chatboxhead div.chatboxoptions {
+  float: right;
+}
+.chatbox div.chatboxhead div.chatboxoptions a {
+  color: #FFFFFF;
+  display: inline-block;
+  font-family: pt sans;
+  font-weight: bold;
+  margin-left: 5px;
+  text-decoration: none;
+}
+.chatbox div.chatboxcontent {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #EEEEEE;
+  border-left: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+  color: #333333;
+  font-family: arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.3em;
+  overflow: auto;
+  width: 418px;
+}
+.chatbox div.chatboxcontent div.chat-container {
+  border-right: 1px solid #CCCCCC;
+  float: left;
+  width: 230px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat {
+  border-bottom: 1px solid #EEEEEE;
+  height: 200px;
+  overflow: auto;
+  padding: 8px 8px 15px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat p.chat-msg {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat p.chat-msg span.user {
+  color: #262626;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat p.chat-msg span.blue-text {
+  color: #0C58A4;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat p.chat-msg span.message {
+  color: #949494;
+}
+.chatbox div.chatboxcontent div.chat-container div.chat p.chat-notification {
+  color: #9C9C9C;
+  font-size: 11px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 5px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chatboxinput {
+  padding: 5px;
+}
+.chatbox div.chatboxcontent div.chat-container div.chatboxinput .chatboxtextarea {
+  width: 213px;
+  height: 44px;
+  padding: 3px 0pt 3px 3px;
+  border: 1px solid #eeeeee;
+  margin: 1px;
+  overflow: hidden;
+}
+.chatbox div.chatboxcontent div.chat-container div.chatboxinput .chatboxtextareaselected {
+  border: 2px solid #0C58A4;
+  margin: 0;
+}
+.chatbox div.chatboxcontent div.users-container {
+  float: left;
+  width: 184px;
+}
+.chatbox div.chatboxcontent div.users-container div.add-user {
+  border-bottom: 1px solid #EEEEEE;
+  padding: 3px;
+}
+.chatbox div.chatboxcontent div.users-container div.add-user select {
+  border: 1px solid #D9D9D9;
+  padding: 3px;
+  width: 179px;
+}
+.chatbox div.chatboxcontent div.users-container div.add-user input {
+  border: 1px solid #D9D9D9;
+  padding: 3px;
+  width: 173px;
+}
+.chatbox div.chatboxcontent div.users-container div.add-user a {
+  background-color: #0C58A4;
+  border-radius: 3px;
+  color: #FFFFFF;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 1px;
+  padding: 5px 0;
+  text-align: center;
+  text-decoration: none;
+}
+.chatbox div.chatboxcontent div.users-container div.users {
+  color: #9C9C9C;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px;
+}

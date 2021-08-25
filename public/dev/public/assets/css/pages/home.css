@@ -1,0 +1,326 @@
+.clearfix {
+    display: block;
+}
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+}
+a {
+    -moz-outline: none 0;
+    outline: none 0;
+}
+img.header-bgcolor{
+    position: fixed;
+    right: 0px;
+    width:100%;
+    left: 0px;
+    min-height:4px;
+    z-index: 1031;
+}
+#top-section {
+    background-image: url("../../img/pages/home2/color.jpg");
+    background-repeat: no-repeat;
+    padding-bottom: 10px;
+}
+#top-section div#top-section-content {
+    margin: 0 auto;
+    padding-top: 10px;
+    width: 75%;
+}
+#top-section-content div#logo-container {
+    float: left;
+}
+#top-section-content div#login-container {
+    float: right;
+}
+#top-section-content div#login-container form.form-inline div {
+    float: left;
+}
+#top-section-content div#login-container div.username {
+    padding-right: 10px;
+}
+#top-section-content div#login-container div.password {
+    padding-right: 10px;
+}
+#top-section-content div#login-container div.login-btn-container {
+    padding-top: 21px;
+}
+#top-section-content div#login-container p {
+    font-family: arial;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+#top-section-content #login-container input {
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    font-family: arial;
+    font-size: 13px;
+    padding: 3px 5px;
+    width: 185px;
+}
+#top-section-content #login-container div.login-btn-container button {
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 10px;
+}
+#signup-container {
+    background-image: url("../../img/pages/home2/signup-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-bottom: 10px;
+}
+#signup-container div#signup-content {
+    margin: 0 auto;
+    padding-top: 10px;
+    display: table;
+    /*width: 75%;*/
+}
+#signup-container #signup-content div#left-section-content {
+    color: white;
+    float: left;
+    font-family: arial;
+    width: 475px;
+}
+#signup-container #signup-content div#left-section-content h3 {
+    font-size: 32px;
+}
+#signup-container #signup-content #left-section-content div.more-text {
+    display: none;
+}
+#signup-container #signup-content div#left-section-content p {
+    font-family: arial;
+    font-size: 17px;
+}
+#signup-container #signup-content #left-section-content p.more-less-button a {
+    cursor: pointer;
+    text-decoration: none;
+}
+#signup-container #signup-content div#right-section-content {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    float: right;
+    font-family: arial;
+    padding: 20px;
+    width: 463px;
+}
+#signup-container #signup-content #right-section-content p#get-started {
+    color: #34cf95;
+    font-size: 28px;
+    margin-bottom: 0;
+    text-align: center;
+}
+#signup-container #signup-content #right-section-content p#get-started span {
+    color: #f3b82a;
+}
+#signup-container #signup-content #right-section-content p#registration-text {
+    color: white;
+    font-size: 17px;
+    text-align: center;
+}
+#signup-container #signup-content #right-section-content form input {
+    border: 1px solid #ebebeb;
+    padding: 5px 10px;
+}
+#signup-container #signup-content #right-section-content form p.full-name .inline {
+    float: left;
+    margin-right: 2%;
+    width: 49%;
+}
+#signup-container #signup-content #right-section-content form p.full-name .inline.lastname {
+    margin-right: 0;
+}
+#signup-container #signup-content #right-section-content form input.full-row {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+#signup-container #signup-content #right-section-content form p.gender span {
+    color: white;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 20px;
+}
+#signup-container #signup-content #right-section-content button {
+    background-color: #40b5d1;
+    border: 1px solid #40b5d1;
+    color: white;
+    font-size: 23px;
+    text-transform: uppercase;
+    width: 100%;
+}
+#signup-container #signup-content #right-section-content form p.terms-text {
+    color: white;
+    font-size: 11px;
+    line-height: 13px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+#get-started-container div#get-started-content {
+    margin: 0 auto;
+    padding-bottom: 70px;
+    width: 75%;
+}
+#get-started-container div#get-started-content img.get-started-bgcolor{
+    vertical-align: top;
+    width: 100%;
+    z-index: 1031;
+}
+#get-started-content h1 {
+    display: block;
+    font-family: arial;
+    font-size: 42px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+#get-started-container div#get-started-content #get-started-list {
+    display: table;
+    margin: 0 auto;
+}
+#get-started-container div#get-started-content #get-started-list div {
+    background-color: #f5f5f5;
+    float: left;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    width: 234px;
+}
+#get-started-container div#get-started-content #get-started-list div.last-item {
+    margin-right: 0;
+}
+#get-started-list div p {
+    font-family: helvetica;
+    font-size: 14px;
+    height: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#get-started-list div h3 {
+    font-family: helvetica;
+    font-size: 23px;
+}
+#get-started-list div a {
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-family: helvetica;
+    font-size: 13px;
+    line-height: 45px;
+    padding: 8px 15px;
+    text-decoration: none;
+}
+#get-started-list div a.easy-to-join-btn {
+    background-color: #45b7d3;
+}
+#get-started-list div a.build-your-profile-btn {
+    background-color: #c0417f;
+}
+#get-started-list div a.my-dating-agent-btn {
+    background-color: #34cf95;
+}
+#get-started-list div a.chat-instantly-btn {
+    background-color: #f3b82a;
+}
+#footer-section {
+    background-color: #f7f7f7;
+    border-top: 1px solid #ededed;
+    padding-top: 20px;
+}
+#footer-section #footer-content {
+    margin: 0 auto;
+    width: 72%;
+}
+#footer-section #footer-content p {
+    float: left;
+    font-family: helvetica;
+    font-size: 13px;
+    line-height: 10px;
+    margin-bottom: 50px;
+    margin-right: 20px;
+}
+#footer-section #footer-content p.right {
+    float: right;
+    margin-right: 0;
+}
+#footer-section img.footer-bottom {
+    vertical-align: bottom;
+    width: 100%;
+}
+#footer-section #footer-content p a {
+    cursor: pointer;
+    text-decoration: none;
+}
+#profile-picture-section div.left img {
+    left: 229px;
+    position: relative;
+    top: -15px;
+}
+
+div.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    min-width: 1160px;
+}
+.modal-container {
+    display: none;
+    position: absolute;
+}
+.modal-dialog .modal-content .modal-header {
+    background-color: #2f2f2f;
+}
+.modal-dialog .modal-content .modal-header .close {
+    margin-top: -25px;
+    margin-right: -20px;
+}
+button.close {
+    padding:2px 3px;
+    cursor: pointer;
+    background: none repeat scroll 0% 0% #000;
+    border: 1px solid #f5f5f5;
+    border-radius:3px;
+}
+.close {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    float: right;
+    text-shadow: 0px 1px 0px #FFF;
+    opacity: 1;
+}
+.close:hover {
+    opacity: 1;
+    color: #fff;
+}
+.modal-dialog .modal-content .modal-header h3.modal-title{
+    color: #fff;
+}
+.modal-dialog .modal-content .modal-header{
+    background: #2f2f2f;
+}
+.modal-privacy{
+    max-height:500px;
+    overflow-x:hidden;
+    overflow-y:scroll;
+}
+.modal-dialog div.more-text {
+    display: none;
+    margin-bottom: 10px;
+}
+.modal-dialog p.more-less-button a {
+    cursor: pointer;
+    text-decoration: none;
+}

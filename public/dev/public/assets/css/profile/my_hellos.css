@@ -1,0 +1,539 @@
+div#content > aside,
+div#content > div {
+  float: left;
+margin-right: 28px;
+}
+div#content aside {
+  border-radius: 3px;
+ width: 195px;
+ 
+}
+div#content aside > div,
+div#content aside > nav {
+ border-radius: 3px;
+  margin-bottom: 20px;
+  
+}
+div#content aside > div:last-child,
+div#content aside > nav:last-child {
+ margin-bottom: 0px;
+}
+div#content aside > div div.content,
+div#content aside > nav div.content {
+ 
+}
+div#content aside > nav {
+  margin-left:0px;
+}
+div#content aside > nav a {
+ border-bottom: 1px solid #b10759;
+    color: #5E676B;
+    display: block;
+    font-size: 15px;
+    padding: 15px 0 15px 15px;
+    text-decoration: none;
+}
+div#content aside > nav a:hover {
+  color: #0c58a4;
+}
+div#content aside > nav a i {
+   color: #004793;
+}
+div#content aside > nav div#collection a {
+  display: block;
+  border-radius: 3px;
+  font-size: 15px;
+  
+  padding: 5px 0;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+div#content aside > nav a:last-child {
+  margin-bottom: 0px;
+}
+div#content aside#left-sidebar div#profile-summary div.content {
+  text-align: center;
+  border: solid 1px #e0e0e0;
+    border-radius: 3px;
+}
+div#content aside#left-sidebar div#profile-summary div.content a {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 13px;
+  margin-top: 5px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile-pic img {
+  width:174px;
+  height:124px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#profile_name{
+  background-color: #b10759;
+  text-align: center;
+  
+  font-weight: normal;
+  color:#ffffff;
+  font-size:16pt;
+  padding: 5px 5px 10px 5px;
+}
+div#content aside#left-sidebar div#profile-summary div.content div#states {
+ padding-top:5px;
+ padding-left:20px;
+text-align: left;
+  font-weight: normal;
+  margin-bottom:3px;
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar div#profile-summary div.content div#date {
+ padding-top:5px;
+ margin-left:5px;
+ margin-right:5px;
+ margin-bottom:10px;
+ border-top:1px solid;
+ padding-left:15px;
+text-align: left;
+  font-weight: normal;
+ 
+  font-size:10pt;
+ 
+}
+div#content aside#left-sidebar nav#profile-nav div#collection {
+background-color: #b10759;
+  font-weight: normal;
+   color:#ffffff;
+  font-size:14pt;
+ 
+  width:92%;
+   border-radius: 3px;
+     padding: 10px 5px 6px 10px;
+ }
+ div#content aside#left-sidebar nav#profile-nav  {
+ 
+    border: solid 1px #e0e0e0;
+    border-radius: 3px;
+ }
+ div#content aside#left-sidebar nav#profile-nav i.profile:after
+ {
+ content: url("../../img/my_profile.png");
+ margin-right:20px;
+
+ float:left;
+  }
+  
+div#content aside#left-sidebar nav#profile-nav i.my_photos:after
+ {
+ content: url("../../img/my_photo.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_events:after
+ {
+ content: url("../../img/my_event.png");
+ padding-right:20px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_Referrals:after
+ {
+ content: url("../../img/myFavourites.png");
+ padding-right:15px;
+ float:left;
+  }
+   div#content aside#left-sidebar nav#profile-nav i.my_comment:after
+ {
+ content: url("../../img/comments.png");
+ padding-right:15px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_hellos:after
+ {
+ content: url("../../img/my_hello.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_favorites:after
+ {
+ content: url("../../img/my_favorait.png");
+ padding-right:20px;
+ 
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_friends:after
+ {
+ content: url("../../img/my_friend.png");
+ padding-right:20px;
+ float:left;
+  }
+  div#content aside#left-sidebar nav#profile-nav i.my_setting:after
+ {
+ content: url("../../img/my_setting.png");
+ padding-right:20px;
+ float:left;
+  }
+div#content aside#left-sidebar div#profile-summary div.content a:hover {
+ color: #ffffff;
+}
+div#content aside#left-sidebar div#profile-summary div.content a#edit-profile {
+  background-color: #0C58A4;
+  border: 1px solid #004793;
+  border-radius: 3px;
+  color: #FFFFFF;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bolder;
+  margin-top: 10px;
+  padding: 4px 20px;
+  text-align: center;
+  text-decoration: none;
+}
+div#content aside#left-sidebar div#upgrade-your-account div#upgrade1 h3 {
+  background-image: url("../../img/upgradenew.png");
+  background-position: 5px 10px;
+  background-repeat: no-repeat;
+  padding: 10px 0px 10px 20px;
+  background-color:#b10759;
+  color: #ffffff;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+ 
+  margin: 0 0 0 0;
+}
+div#content aside#left-sidebar div#upgrade-your-account{
+  text-align: center;
+   border: solid 1px #e0e0e0;
+    border-radius: 3px;
+	width:195px;
+}
+div#content aside#left-sidebar div#upgrade-your-account div#upgrade1{
+ background-color: #b10759;
+  border-radius: 3px;
+ 
+}
+div#content aside#left-sidebar div#upgrade-your-account h3 {
+   background-image: url("../../img/attention.png");
+  background-position: 5px 10px;
+  background-repeat: no-repeat;
+  padding: 10px 10px 10px 40px;
+  background-color: #f9f9f9;
+  color: #0c58a4;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 0 0;
+}
+div#content aside#left-sidebar div#upgrade-your-account p {
+  font-size: 12px;
+  margin: 0 0 0 0;
+ padding-left:5px;
+  padding-right:5px;
+  color:#313943;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul {
+   border-radius: 3px;
+  font-size: 12px;
+  list-style-position: inside;
+  padding: 5px 8px;
+  background-color: #f9f9f9;
+  border-color: #e8e8e8;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li {
+  line-height: 30px;
+}
+div#content aside#left-sidebar div#upgrade-your-account ul li a {
+  color: #454e59;
+  text-decoration: none;
+}
+div#content aside#left-sidebar div#upgrade-your-account a.button {
+   border-radius: 3px;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 3px 5px;
+  border: solid 1px #b10759;
+  font-weight: bolder;
+  display: block;
+  text-align: center;
+  width:140px;
+  margin-bottom:25px;
+  margin-left:25px;
+}
+div#content div#middle section#my-hellos div#hello{
+ background-color: #b10759;
+	 border-radius: 3px;
+	font-weight: normal;
+ color:#ffffff;
+ font-size:16pt;
+  padding: 5px 5px 5px 10px;
+}
+div#content div#middle section#my-favorites div#favorites{
+ background-color: #b10759;
+	 border-radius: 3px;
+	font-weight: normal;
+ color:#ffffff;
+ font-size:16pt;
+  padding: 5px 5px 5px 10px;
+}
+div#content div#middle section#refer-friend div#refer{
+ background-color: #b10759;
+	 border-radius: 3px;
+	font-weight: normal;
+ color:#ffffff;
+ font-size:16pt;
+  padding: 5px 5px 5px 10px;
+
+}
+
+div#content aside#left-sidebar div#upgrade-your-account a.button:hover {
+   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color:#b10759;
+  border: solid 1px #b10759;
+}
+div#content div#middle section#my-hellos  i.messages:after
+{
+    content: url("../../img/messages_1.png");
+    float:middle;
+}
+div#content div#middle section#my-hellos  i.chat:after
+{
+    content: url("../../img/chat_03.png");
+    float:middle;
+}
+div#content div#middle section#my-hellos i.hello:after
+{
+    content: url("../../img/hello_01.png");
+    float:middle;
+}
+div#content div#middle section#my-hellos i.favorite:after
+{
+    content: url("../../img/favorite.png");
+    float:middle;
+}
+div#content div#middle section#my-favorites  i.messages:after
+{
+    content: url("../../img/messages_1.png");
+    float:middle;
+}
+div#content div#middle section#my-favorites  i.chat:after
+{
+    content: url("../../img/chat_03.png");
+    float:middle;
+}
+div#content div#middle section#my-favorites i.hello:after
+{
+    content: url("../../img/hello_01.png");
+    float:middle;
+}
+div#content div#middle section#my-favorites i.favorite:after
+{
+    content: url("../../img/favorite.png");
+    float:middle;
+}
+div#content aside#right-sidebar {
+   background-color: #D4D4D4;
+    margin-right: 0;
+   width: 185px;
+	padding:4px;
+}
+div#content aside#right-sidebar div#friends-online div.content div#members h4{
+ background-color: #b10759;
+ color:#ffffff;
+ border-radius:3px;
+
+ margin-left:0px;
+ margin-top:0px;
+}
+div#content aside#right-sidebar i.messages:after
+{
+    content: url("../../img/messages_online.png");
+    float:middle;
+}
+div#content aside#right-sidebar i.chat:after
+{
+    content: url("../../img/chat_online.png");
+    float:middle;
+}
+div#content aside#right-sidebar i.hello:after
+{
+    content: url("../../img/hello_online.png");
+    float:middle;
+}
+div#content aside#right-sidebar div.ad {
+  padding: 0 0 0 0;
+}
+div#content aside#right-sidebar div.ad img {
+  display: block;
+}
+div#content div#middle {
+  width: 675px;
+}
+div#content div#middle .clear {
+  clear: both;
+}
+div#content div#middle section {
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;
+  margin-bottom: 20px;
+}
+div#content div#middle section h2 {
+  padding: 0px 20px 0px 10px;
+  margin: 5px 0px;
+  font-size: 18px;
+  line-height: 20px;
+  font-family: arial, sans-serif;
+}
+div#content div#middle section h2 a {
+  display: block;
+  float: right;
+  color: #000000;
+  font-size: 14px;
+  font-weight: normal;
+  font-family: 'pt sans', arial, sans-serif;
+  font-style: italic;
+  line-height: 20px;
+  text-decoration: none;
+}
+div#content div#middle section h2 a i {
+  color: #0c58a4;
+}
+div#content div#middle section div.content {
+  border-radius: 3px;
+  padding: 10px;
+  margin: 10px;
+  
+}
+div#content div#middle section div.content div.member {
+  border-radius: 3px;
+  float: left;
+  margin-right: 14px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #e8e8e8;
+  border: solid 1px #cfcfcf;
+}
+div#content div#middle section div.content div.member:nth-child(4n+4) {
+  margin-right: 0px;
+}
+div#content div#middle section div.content div.member img {
+  display: block;
+  border: solid 2px #ffffff;
+}
+div#content div#middle section div.content div.member p {
+  font-family: helvetica;
+  font-size: 13px;
+  line-height: 12px;
+  margin: 2px 0 0;
+}
+div#content div#middle section div.content div.member p.location {
+  color: #0c58a4;
+  font-size: 10px;
+  height: 24px;
+  margin-bottom: 5px;
+}
+div#content div#middle section div.content div.member p.icons a {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #e0e0e0;
+  padding: 3px 5px;
+  color: #003682;
+}
+div#content div#middle section div.content p {
+  margin: 5px;
+  font-family: helvetica;
+}
+
+div#content div#middle div.event-list form#refer-friend-form{
+  border-radius: 3px;
+  background-color: #f5f5f5;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+div#content div#middle div.event-list button.button#refer-a-friend{
+   margin-left: 514px;
+   display: inline;
+   font-size: small;
+   background-color: #b10759;
+   color:#ffffff;
+   border: 1px solid #b10759;
+}
+div#content div#middle div.event-list button.button#refer-a-friend{
+    margin-left: 460px;
+    width: 165px;
+    padding-top:4px;
+    padding-bottom:4px;
+}
+
+div#content div#middle div.event-list input, textarea{
+    width: 625px;
+    height: 20px;
+    border: 10px solid #cccccc;
+    resize: none;
+}
+div#content div#middle div.event-list textarea{
+    height: 100px;
+}
+div#content div#middle div.event-list label{
+    color: #4c4c4c;
+    line-height: 1.4em;
+}
+
+div.public-profile-dialog-upgrade{
+ width:300px; 
+ overflow:hidden;
+ background-color:#0C58A4;
+ color:#ffffff; 
+}
+div.public-profile-dialog-upgrade form div#upgrade-content h5{
+  font-size: 13px;
+  padding-top:3px;
+}
+div.public-profile-dialog-upgrade form div#upgrade-content h5 span{
+  padding-left:90px;
+}
+div.public-profile-dialog-upgrade form div#upgrade-content p{
+  font-size: 11px;
+}
+div.public-profile-dialog-upgrade form div#upgrade-content p.submit{
+  padding-bottom:3px;
+  padding-left:120px;
+  
+}
+div.public-profile-dialog-upgrade form div#upgrade-content p,
+div.public-profile-dialog-upgrade form div#upgrade-content h5
+{
+  padding-left:20px;
+  padding-right:auto;
+ 
+}
+
+div#content div#middle div.sender-form form#find-friend-form{
+  border-radius: 3px;
+  background-color: #f5f5f5;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 14px;
+}
+div#content div#middle div.sender-form button.button#find-a-friend{
+   margin-left: 514px;
+   display: inline;
+   font-size: small;
+   background-color: #0C58A4;
+   color:#ffffff;
+   border: 1px solid #004793;
+}
+div#content div#middle div.sender-form button.button#find-a-friend{
+    margin-left: 460px;
+    width: 165px;
+    padding-top:4px;
+    padding-bottom:4px;
+}

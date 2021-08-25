@@ -1,0 +1,169 @@
+ #videos-container{
+ background-color:rgb(20,20,20);
+ min-width:1140px;
+ margin-left:auto;
+ margin-right:auto;
+ padding-bottom:25px;
+ }
+#videos-all-hiphop{
+height:68px;
+ }
+#videos-all-hiphop p{
+padding-left:55%;
+padding-top:35px;
+color:#ff0000;
+font-type:Arial;
+font-size:13pt;
+ }
+ #home-middle-playlist{
+background-color:#161616;	
+margin-top:0px;
+height:200px;
+}
+
+#scroller-container{
+width:1140px;
+margin-left:auto;
+margin-right:auto;
+position: relative;
+}
+#home-middle-left-scroller {
+    top: 60px;
+    position: relative;
+}
+
+#home-middle-player {
+    margin-left: 68px;
+    width: 900px;
+    margin-top: -45px;
+}
+#home-middle-player .ad-image{
+  margin-left: 0;
+}
+
+#home-middle-right-scroller {
+    float: right;
+    margin-top: -15px;
+    position: relative;
+}
+
+#home-date{
+margin-left:162px;
+margin-top:30px;
+height:20px;
+}
+#home-date{
+margin-top:30px;
+height:20px;
+margin-left:auto;
+margin-right:auto;
+width:982px;
+}
+
+#home-date p{
+font-type:Arial;
+/*font-size:22.49pt;*/
+font-size:18.49pt;
+padding-left:7px;
+}
+#home-date hr{
+    border-color:rgb(45,45,45);
+    margin-right:5px;
+}
+#videos-videos-row{
+margin-top:33px;
+width:980px;
+margin-left:auto;
+margin-right:auto;
+}
+.videos-video1,
+.videos-video2{
+/*width:526px;
+height:460px;*/
+width:485px;
+background-color:#000;
+padding-bottom:10px;
+}
+ .videos-video1{
+     margin-right:10px;
+ }
+#contest-images1,
+#contest-images2{
+/*width:500px;*/
+height:284px;
+margin-left:13px;	
+}
+.content{
+    color: #fff;
+}
+.videos-video2{
+/*margin-top:-460px;
+margin-left:590px;*/
+
+}
+
+.videos-video1 p,
+.videos-video2 p{
+padding-left:13px;
+}
+#videos-videos-row h4{
+padding-left:13px;
+padding-top:18px;
+font-size:16pt;
+font-type:Arial;
+}
+
+#videos-videos-row span#share-plus{
+position:relative;
+/*left:336px;*/
+left:325px;
+}
+.videos-video1 p:first-of-type,
+.videos-video2 p:first-of-type{
+font-size:14pt;
+font-type:Arial;
+padding-top:13px;
+color: red;
+}
+.videos-video1 p:first-of-type span,
+.videos-video2 p:first-of-type span{
+font-size:12pt;
+font-type:Arial;
+color:#888888;
+}
+.videos-video1 p:nth-of-type(2),
+.videos-video2 p:nth-of-type(2){
+padding-top:12px;
+font-size:10pt;
+font-type:Arial;
+padding-right:28px;
+}
+.videos-video1 p:nth-of-type(3),
+.videos-video2 p:nth-of-type(3){
+padding-top:18px;
+font-size:13pt;
+font-type:Arial;
+color:#c9c9c9;
+}
+
+#videos-view-more {
+margin-top:40px;
+
+}
+#videos-view-more p{
+text-align:center;
+margin:0;
+font-size:14pt;
+font-type:Myriad Pro;
+}
+#videos-view-more p a{	
+text-decoration:none;
+color:#fff;
+}
+.videos-row{
+float:left;
+margin-bottom:30px;
+}
+ #the_video {
+    padding-left: 100px;
+ }

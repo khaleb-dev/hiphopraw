@@ -1,0 +1,102 @@
+div#center div#content>h2{
+	font-family:  accentregular,arial, sans-serif;
+	font-size: 25px;
+	font-weight: lighter;
+	margin: 0 0 20px 0;
+	padding-bottom: 0px;
+	border-bottom: solid 2px #dcdcdc;
+}
+
+div#center div#content>h2 span{
+	font-family:  ihatecomicsans,arial, sans-serif;
+	font-size: 15px;
+	font-weight: lighter;
+	display: inline;
+	padding: 0 0 0 0;
+	background: none;
+	color: #e11e1c;
+	border: none;
+}
+
+div#center div#content div.items {
+	padding-bottom: 40px;
+}
+
+div#center div#content div.items div.battle {
+	width: 50%;
+	float: left;
+	border-bottom: solid 2px #e6e6e6;
+	padding-bottom: 20px;
+}
+
+div#center div#content div.items div.battle-group {
+	float: left;
+	padding: 10px;
+	background-color: #e6e6e6;
+}
+
+div#center div#content div.items div.item{
+	margin-bottom: 5px;
+	padding: 10px 10px 5px 10px;
+}
+
+div#center div#content div.items div.item.last{
+	margin-right: 0;
+}
+
+div#center div#content div.items div.item h3{
+	margin: 10px 0 2px 0;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: arial, sans-serif;
+}
+
+div#center div#content div.items div.item p{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	color: #afafaf;
+}
+
+div#center div#content div.items div.item p.views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	font-size: 10px;
+}
+
+div#center div#content div.items div.item div p.votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 20px;
+	border-top: solid 2px #e11e1c;
+}
+
+div#center div#content div.items div.item div p.icons{
+	float: right;
+}
+
+div#center div#content div.items div.item div p.icons a.button{
+	padding: 2px 5px;
+	font-weight: bold;
+	margin: 0 0 0 0;
+}
+
+div#center div#content div.items div.battle-group img.battle-vs{
+	display: block;
+	float: left;
+	margin: 50px 20px 0px 20px;
+}
+
+.dark-gradient {
+	background: #7c7c7c; /* Old browsers */
+	background: -moz-linear-gradient(top,  #7c7c7c 0%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7c7c7c), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #7c7c7c 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #7c7c7c 0%,#000000 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #7c7c7c 0%,#000000 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #7c7c7c 0%,#000000 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7c7c7c', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}

@@ -1,0 +1,735 @@
+div#center h2 span {
+    display: inline;
+}
+
+.container .header-slider {
+    width: 858px;
+    height: 240px;
+    margin: auto;
+}
+
+.container .header-slider #left {
+    margin-top: 80px;
+    float: left;
+
+}
+.container .header-slider #left img,.container .header-slider #right img{
+    width: 50px;
+}
+.container .header-slider #right {
+    margin-top: 80px;
+    float: right;
+
+}
+
+.container .header-slider #main-image {
+    width: 760px;
+    float: left;
+
+}
+
+
+#more-video p{
+    cursor:pointer;
+}
+#visible-top-videos {
+    float: left;
+    overflow: hidden;
+    width:757px;
+    height:230px;
+    margin-left:0px;
+}
+#top-videos-items {
+    position: relative;
+    margin-top:10px;
+    overflow: hidden;
+    width: 4000px;
+    height:230px;
+
+}
+#main-image img{
+    width:762px;
+    height:224px;
+}
+.content-box{
+    color:#fff;
+}
+.content-box img{
+    /* width: 100%; */
+    /*    height: 150px;*/
+}
+div#center div#content{
+    margin-top: 0px;
+    padding: 10px 15px;
+   background-color: rgb(9,9,9);
+}
+#vspng{
+    /*padding-left:10px;*/
+/*    padding-right:10px;*/
+    display: inline-block;
+    margin-top: 60px;    
+}
+#vspng img{;
+    display: inline-block;
+    zoom: 80%;
+}
+
+#advert-description {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid grey;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: #fff;
+}
+
+#advert-description p {
+    padding-top: 18px;
+    padding-left: 0px;
+    font-size: 20px;
+    font-type: Arial;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    padding: 5px 10px;
+}
+
+#advert-description span {
+    color: red;
+}
+
+#advert-description ins {
+    float: right;
+    text-decoration: none;
+}
+.preview-reader {
+    left: 75px;
+
+}
+.like-reader {
+    left: -75px;
+
+}
+
+.share-reader{
+    background-color: #000000;
+    max-width: 60px;
+    height: 20px;
+    font-weight: bold;
+    position: relative;
+    top: -20px;
+    z-index: 3;
+    color: #ffffff;
+    overflow: hidden;
+    left: -75px;
+}
+.real-video {
+    width: 210px;
+}
+.real-video img {
+    width: 210px;
+}
+.model-name {
+    top: 145px;
+    text-align: left;
+    /*padding-left: 10px;*/
+    text-transform: uppercase;
+    color:red;
+}
+
+.user-name-duration{
+    top: 160px;
+    text-align: left;
+    /*padding-left: 10px;*/
+    font-size: 11px;
+    color:grey;
+}
+.user-name-duration .model-name{
+    font-weight: bolder;
+    font-size: 11px;
+}
+.user-name-duration .how-long{
+    padding-right: 10px;
+}
+.votes-count{
+    display: block;
+    width: 220px;
+}
+.votes-count .vote-btn{
+    float: right;
+    max-height: 25px;
+    padding-right: 10px;
+}
+.votes-count .vote-btn input{
+    color: #fff;
+    background: #F00;
+    width: 150px;
+    margin-right: 25px;
+    height: 25px;
+    font-size: 12.5px; 
+    font-weight: bold;
+    border:none;
+}
+.votes-count .vote-text{
+    float: left;
+    text-align: left;
+    /*padding-left: 10px;*/
+    padding-top: 4px;
+}
+.videos{
+    height:175px;
+    width: 210px;
+}
+.videos span.play{
+    position:absolute;
+    width: 50px;
+    height: 50px;
+    top: 60px;
+    left: 80px;
+}
+
+.table-view{
+    width: 960px;
+    margin: auto;
+}
+.table-view table{
+    margin-top: 8px;
+}
+.table-view td{
+    float: left;
+} 
+#videos-all-hiphop{
+height:68px;
+background-color:#e3e3e3;
+ }
+#videos-all-hiphop p{
+padding-left:55%;
+padding-top:35px;
+color:#ff0000;
+font-type:Arial;
+font-size:13pt;
+ }
+ #home-middle-playlist{
+background-color:#161616;   
+margin-top:0px;
+height:200px;
+}
+#scroller-container{
+width:1190px;
+margin-left:auto;
+margin-right:auto;
+}
+#home-middle-left-scroller{
+top:60px;
+position:relative;  
+}
+#home-middle-player{
+margin-left:118px;
+width:1005px;
+margin-top:-45px;
+}
+#home-middle-player .ad-image{
+    float: left;
+    width: 322px;
+    height: 146px;
+    margin-left: 10px;
+}
+#home-middle-right-scroller {
+    float: right;
+    margin-top: -15px;
+    position:relative;
+}
+#home-date{
+border-left: 4px solid red;
+margin-left:162px;
+margin-top:30px;
+height:20px;
+}
+#home-date{
+border-left: 4px solid red;
+margin-top:30px;
+height:20px;
+margin-left:auto;
+margin-right:auto;
+width:982px;
+}
+
+#home-date p{
+font-type:Arial;
+/*font-size:22.49pt;*/
+font-size:18.49pt;
+padding-left:7px;
+}
+#home-date hr{
+    border-color:#e6e6e6;
+    margin-right:5px;
+}
+#videos-videos-row{
+margin-top:33px;
+width:980px;
+margin-left:auto;
+margin-right:auto;
+}
+.videos-video1,
+.videos-video2{
+/*width:526px;
+height:460px;*/
+width:485px;
+background-color:#ffffff;
+padding-bottom:10px;
+}
+ .videos-video1{
+     margin-right:10px;
+ }
+#contest-images1,
+#contest-images2{
+/*width:500px;*/
+height:284px;
+margin-left:13px;   
+}
+
+.videos-video2{
+/*margin-top:-460px;
+margin-left:590px;*/
+
+}
+
+.videos-video1 p,
+.videos-video2 p{
+padding-left:13px;
+}
+#videos-videos-row h4{
+padding-left:13px;
+padding-top:18px;
+font-size:16pt;
+font-type:Arial;
+}
+
+#videos-videos-row span#share-plus{
+position:relative;
+/*left:336px;*/
+left:325px;
+}
+.videos-video1 p:first-of-type,
+.videos-video2 p:first-of-type{
+font-size:14pt;
+font-type:Arial;
+padding-top:13px;
+}
+.videos-video1 p:first-of-type span,
+.videos-video2 p:first-of-type span{
+font-size:12pt;
+font-type:Arial;
+color:#888888;
+}
+.videos-video1 p:nth-of-type(2),
+.videos-video2 p:nth-of-type(2){
+padding-top:12px;
+font-size:10pt;
+font-type:Arial;
+padding-right:28px;
+}
+.videos-video1 p:nth-of-type(3),
+.videos-video2 p:nth-of-type(3){
+padding-top:18px;
+font-size:13pt;
+font-type:Arial;
+color:#c9c9c9;
+}
+
+#videos-view-more {
+margin-top:40px;
+
+}
+#videos-view-more p{
+text-align:center;
+margin:0;
+font-size:14pt;
+font-type:Myriad Pro;
+}
+#videos-view-more p a{  
+text-decoration:none;
+color:#000000;
+}
+.videos-row{
+float:left;
+margin-bottom:30px;
+}
+ #visible-banners {
+     width: 1005px;
+     margin-left:100px;
+ }
+ #videos-container{
+    background: url('../../img/contest/contest-mainbg.jpg') no-repeat;
+    background-size: 100% 100%;
+    padding:0;
+    margin:0;
+    height: 500px;
+}
+#videos-container .inner-wrapper{
+    width:1100px;
+    height: 500px;
+    margin:0 auto;
+    padding: 0px 0px; 
+    position: absolute;
+}
+#videos-container .inner-wrapper .vid-con{
+
+    margin-left:120px;
+    margin-right:250px;
+    margin-top: 60px;
+    position: absolute;
+}
+#videos-container .inner-wrapper .model-con{
+   margin-top: 60px;
+    margin-left:700px;
+    position: absolute;
+}
+.enter-link{
+    position: absolute;
+    bottom:20px;
+    left:85px;
+    background: rgba(56,56,56,.5);
+    padding:10px 20px;
+    color:#fff;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.enter-link:hover{
+    text-decoration: none;
+    background: rgba(56,56,56,.9);
+    color:#fff;
+}
+
+
+.contest-winner{
+    width:100%;
+    height:64px;
+    background-color:#e3e3e3;
+    box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -webkit-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -moz-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+    -o-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+
+}
+.slide-show{
+    width:100%;
+    height:198px;
+
+    background-color:#161616;
+}
+.slide-show #left-arrow-contest{
+    margin-left:20px;
+    padding-top:50px;
+    float:left;
+}
+.slide-show .all-image{
+    width:1106px;
+    float:left;
+    margin-left:20px;
+    margin-top:20px;
+    height:165px;
+    float:left;
+
+
+}
+.slide-show .all-image #left-image{
+    height:163px;
+    width:353px;
+    float:left;
+}
+.slide-show .all-image #middle-image{
+    height:163px;
+    width:353px;
+    margin-left:15px;
+    float:left;
+}
+.slide-show .all-image #right-image{
+    margin-left:15px;
+    float:left;
+}
+.slide-show #right-arrow-contest{
+
+    padding-top:50px;
+    float:left;
+}
+.contest-winner #row-winer{
+    float:right;
+    margin-right:150px;
+    margin-top:20px;
+}
+.contest-winner #row-winer a{
+    font-size: 13.5px;
+    font-family: "Arial";
+    color: rgb( 255, 0, 0 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    -webkit-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    -ms-transform: matrix( 0.99784176299311,0,0,1,0,0);
+    text-decoration:none;
+
+}
+.contest-gallery{
+
+    width:100%;
+    min-height:400px;
+    background-color:#f1f1f1;
+    padding-left:100px;
+}
+
+.contest-gallery .date-gallery #date{
+    height:30px;
+    padding-top:40px;
+    width:1100px;
+
+    border-bottom:1px solid #e3e1e1;
+}
+.contest-gallery .date-gallery #date a{
+    font-size: 26px;
+    font-family: "Arial";
+    color: rgb( 39, 39, 39 );
+    font-weight: bold;
+
+}
+.winner-share-gallery #winner-share {
+
+}
+
+.contest-model{
+   
+}
+
+ #submit-video{
+    padding-top:10px;
+    padding-left:10px;
+    padding-bottom:5px;
+    border-bottom:2px solid #e3e3e3;
+
+}
+ #submit-video a{
+    font-size: 15px;
+    font-family: "Arial";
+    color: rgb( 34, 34, 34 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -webkit-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    -ms-transform: matrix( 0.99956832239653,0,0,1,0,0);
+    text-decoration:none;
+
+}
+ #submit-video #chk_new{
+    margin-left:40px;
+    margin-right:10px;
+    margin-top:auto;
+}
+ #submit-video .select{
+    margin-right:20px;
+    font-size: 13px;
+
+    font-family: "Arial";
+    color: rgb( 117, 117, 117 );
+    font-weight: bold;
+    text-decoration:none;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+    -webkit-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+    -ms-transform: matrix( 0.6799125521736,0,0,0.6799125521736,0,0);
+}
+ #submit-video .button1{
+    font-size: 13px;
+    font-family: "Arial";
+    color: rgb( 255, 255, 255 );
+    font-weight: bold;
+    background-color: rgb( 255, 0, 0 );
+    /*    width: 90px;*/
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:2px;
+    padding-bottom:2px;
+    height: 18px;
+    border-radius:3px;
+    text-decoration:none;
+
+}
+.video-title-contest{
+    padding-top:15px;
+    width:185px;
+    height:150px;
+    padding-left:10px;
+    margin-bottom:10px;
+    float:left;
+}
+ .video-title-contest #video{
+    float:left;
+    width:185px;
+}
+ .video-title-contest #title-video a{
+    font-size: 10.5px;
+    font-family: "Arial";
+    color: rgb( 236, 56, 57 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -webkit-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -ms-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+
+}
+ .video-title-contest #promo a{
+    font-size: 11.241px;
+    font-family: "Arial";
+    color: rgb( 236, 56, 57 );
+    font-weight: bold;
+    text-transform: uppercase;
+    -moz-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -webkit-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+    -ms-transform: matrix( 0.8509318076424,0,0,0.85130007672891,0,0);
+}
+.video-title-contest #enter-contest #chk_new{
+    margin-right:10px;
+}
+ .video-title-contest #enter-contest #enter-video-contest1{
+    font-size: 14.765px;
+    font-family: "Arial";
+    color: rgb( 136, 136, 136 );
+    -moz-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+    -webkit-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+    -ms-transform: matrix( 0.71643792229855,0,0,0.69776595744681,0,0);
+
+}
+ #submit-video-entry{
+    border-top:1px solid #e3e3e3;
+    padding-top:20px;
+    margin-top:30px;
+    padding-left:220px;
+    float:left;
+    width:370px;
+
+
+}
+ #submit-video-entry a{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb( 227, 227, 227 );
+    border-radius: 3px;
+    background-color: rgb( 241, 241, 241 );
+    width: 183px;
+    font-weight:bold;
+    height: 34px;
+    padding:5px;
+    font-size: 12.5px;
+    font-family: "Arial";
+    color: rgb( 238, 0, 0 );
+    text-transform: uppercase;
+    text-align: center;
+
+
+}
+.title{
+    margin-bottom: 10px;    
+    color: #fff;
+}
+ hr.divider{
+    margin-top: 15px;
+    border:2px solid red;
+}
+ hr.votedivider{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border:2px solid red;
+}
+p.main-title, .title p.right-title{
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+    font-size:15px;
+}
+.title p.right-title{
+    font-family:Arial, sans-serif;
+    font-size:14px;
+}
+
+.title hr.divider{
+    margin: 0px;
+    border: none;
+    border-top: 1px solid rgb(51,51,51);
+}
+p.header-text{
+    color:#757575;
+    font-family:Arial, sans-serif;
+    font-size:10px;
+}
+
+.title hr.thin-divider{
+    margin-bottom:0;
+    border-color:#dddbdb;
+    border-bottom:none;
+}
+.separator{
+margin-bottom:50px;
+}
+.info{
+    margin-top: 15px;
+    margin-left: 350px;
+    color: #fff;
+}
+.info p{
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+    font-size:14px;
+
+}
+#hiphop-contest-list{
+    margin: -10px -15px;
+    background-color: rgb(20,20,20);
+}
+#hiphop-contest-list table table{
+    width: 100%;
+}
+div#center div#content div.content-box{
+    margin-bottom: 0;
+    padding: 5px;
+}
+#hiphop-contest-list table table tr{
+    border: 1px solid #000;    
+    background-color: rgb(29,29,29);
+}
+#hiphop-contest-list>table>tbody>tr>td:first-child{
+    padding-right: 30px;
+}
+#model-contest-list{
+    margin: -10px -15px;
+    background-color: rgb(20,20,20);
+}
+#model-contest-list table table{
+    width: 100%;
+}
+div#center div#content div.content-box{
+    margin-bottom: 0;
+    padding: 5px;
+}
+#model-contest-list table table tr{
+    border: 1px solid #000;    
+    background-color: rgb(29,29,29);
+}
+#model-contest-list>table>tbody>tr>td:first-child{
+    padding-right: 30px;
+}
+.voteforme-btn button{
+    border: none;
+}
+.voteforme-btn{
+    border-top: 1px solid #000;
+    margin-left: -6px;
+    margin-right: -6px;
+    padding-top: 8px;
+}
+#hiphop-contest-list .model-name{
+    position:absolute;
+    top:144px;
+}
+.content-box button.rounded-corners{
+    border: none;
+}

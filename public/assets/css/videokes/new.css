@@ -1,0 +1,128 @@
+#upload-video-form p input[type=text]{
+    width: 365px;
+}
+
+#upload-video-form p textarea{
+    width: 500px;
+}
+
+#upload-ur-video-header{
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    text-align: right;
+    border-bottom-color: rgb(227,227,227);
+    border-bottom-style: solid;
+    padding-bottom: 8px;
+}
+
+#upload-ur-video-header>span{
+    font-size: 14px;
+    font-family: "Arial";
+    color: rgb( 34, 34, 34 );
+}
+
+#upload-video-form{
+    width: 630px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+#upload-video-container{
+    width: 800px;
+    text-align: center;
+    float: right;
+    background: white;
+}
+
+#upload-video-container{
+    border-bottom-color: red;
+    border-bottom-style: solid;
+}
+
+form p span.with-margin, form p input.with-margin, form div.with-margin{
+    margin-left: 110px;
+}
+
+#submit{
+    background: red;
+    padding:  5px 13px;
+    text-transform: none;
+}
+
+form p span.error{
+    display: block;
+}
+
+#progress-bar-container{
+    height: 14px;
+    width: 505px;
+    background: rgb(226,226,226);
+    border-radius: 6px;
+    display: none;
+}
+
+#progress-bar{
+    height: 14px;
+    background: red;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+#progress-bar-yb-container{
+    height: 14px;
+    width: 505px;
+    background: rgb(226,226,226);
+    border-radius: 6px;
+    display: none;
+}
+
+#progress-bar-yb{
+    height: 14px;
+    background: red;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+#upload-complete-confirmation{
+    width: 800px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    display: none;
+}
+
+#upload-complete-confirmation h4{
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+#upload-complete-confirmation p{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+#thumb1 {
+    position: relative; width: 172px; height: 114px;
+}
+
+div.checkbox-inner{
+    background: none repeat scroll 0 0 transparent;
+    padding: 0 2px; 
+    position: absolute;
+    z-index: 30;
+}
+.thumbs {
+    float:left;
+}
+.thumb-set{
+    float:left;
+}
+#thumb-s-image{
+    float:left;
+}
+#thumb-choose{
+    color: red;
+}

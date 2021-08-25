@@ -1,0 +1,118 @@
+
+.nomargin{
+	margin:0px;
+}
+
+div#center div#content div#highlight p#tag-line{
+	font-size: 16px;
+	width: 60%;
+}
+
+div#center div#content div#highlight img#screenshot{
+	margin-top: -20px;
+}
+
+div#center div#content div#highlight p#description{
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	font-style: normal;
+}
+
+
+
+div#center div#content h2{
+	font-family:  accentregular,arial, sans-serif;
+	font-size: 25px;
+	font-weight: lighter;
+	margin: 0 0 5px 0;
+	padding-bottom: 0px;
+	border-bottom: solid 2px #dcdcdc;
+}
+
+div#center div.heading-with-ad div#heading-ad {
+	font-size: 14px;
+}
+
+
+div#center div.heading-with-ad div#heading-ad span{
+	display: inline-block;
+	font-family: accentregular, sans-serif;
+	color: #e11e1c;
+	font-weight: lighter;
+	line-height: 25px;
+}
+
+div#center div#content h2 span#roundtext{
+	font-family:  ihatecomicsans,arial, sans-serif;
+	font-size: 17px;
+	font-weight: bold;
+	display: inline;
+	padding: 0 0 0 0;
+	background: none;
+	color: #e11e1c;
+	border: none;
+}
+
+
+div#center div#content .graybox{
+	
+	background-color:#e6e6e6;
+	vertical-align: middle;
+	text-align: center;
+}
+
+
+
+div#center div#content .views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	font-size: 10px;
+}
+
+div#center div#content .votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	padding-top:20px;
+	line-height: 20px;
+}
+
+div#center div#content #membername{
+	margin: 2px 0 2px 0;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: arial, sans-serif;
+}
+
+div#center .votebutton{
+	padding: 5px;
+
+	text-transform: none;
+	font-size: 13px;
+	font-weight: bold;
+
+}
+
+
+
+div#center div.heading-with-ad div#heading-ad a.button{
+	padding: 3px 10px;
+	text-transform: none;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+div#center div#content div.content-box{
+	font-style: italic;
+	margin-bottom: 0px;
+}
+
+
+
+div#center div#content a.win-gifts-and-prizes {
+	display: block;
+	margin-bottom: 30px;
+}

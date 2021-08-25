@@ -1,0 +1,145 @@
+div#content {
+  border-radius: 3px;
+  margin: 20px 100px;
+  padding: 30px 0 0 0 !important;
+  background-color: #1a1a1a !important;
+  color: #ffffff;
+}
+div#content h1 {
+  margin: 0 30px 15px 30px;
+  color: #0c58a4;
+  font-weight: lighter;
+  font-size: 25px;
+  border-bottom: solid 1px #585858;
+  padding: 0px 0 5px 0;
+}
+div#content p {
+  font-size: 14px;
+  padding: 0 30px 0 30px;
+}
+div#content form {
+  background-color: #2b2b2b;
+  margin: 30px 0px 0px 0px;
+  padding: 10px 30px 10px 30px;
+}
+div#content form h2 {
+  margin: 0px;
+  padding-bottom: 10px;
+  font-family: "arial black", arial, sans-serif;
+  font-weight: bolder;
+  font-size: 25px;
+  text-transform: uppercase;
+  border-bottom: solid 1px #222222;
+}
+div#content form > div.form-elements {
+  float: left;
+  width: 50%;
+  border-top: solid 1px #333333;
+  padding-top: 10px;
+}
+div#content form > div.form-elements > p {
+  margin: 0 0 5px 0;
+  padding: 0 0 0 0;
+}
+div#content form > div.form-elements > p label {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  font-weight: bold;
+  font-family: 'pt sans', arial, sans-serif;
+  font-size: 14px;
+  margin-right: 10px;
+}
+div#content form > div.form-elements > p input[type=text],
+div#content form > div.form-elements > p input[type=password] {
+  border-radius: 3px;
+  border: solid 1px #777777;
+  padding: 3px 5px;
+  font-size: 14px;
+  width: 200px;
+}
+div#content form > div.form-elements > p input[type=text].short {
+  width: 80px;
+}
+div#content form > div.form-elements > p span.explain {
+  color: #0c58a4;
+  font-size: 12px;
+}
+div#content form > div.form-elements > p span.error {
+  display: block;
+  color: #b94a48;
+  margin: 5px 0;
+}
+div#content form > div.form-elements > p span.error.with-margin {
+  display: none;
+  margin-left: 135px;
+}
+div#content form > p.submit {
+  clear: both;
+  float: none;
+  width: auto;
+  height: auto;
+  text-align: right;
+  padding-right: 40px;
+  border-bottom: solid 1px #222222;
+  padding-bottom: 10px;
+  margin-bottom: 0px;
+}
+div#content form > p.submit span {
+  display: inline-block;
+  color: #9c9c9c;
+  font-size: 12px;
+  margin-right: 10px;
+}
+div#content form > p.submit span.error {
+  display: block;
+  color: #b94a48;
+  margin: 5px 0;
+}
+div#content form > p.submit span.error.with-margin {
+  display: none;
+  margin-left: 135px;
+}
+div#content form > p.submit input[type=submit] {
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 3px 5px;
+  background-color: #0c58a4;
+  border: solid 1px #004793;
+  font-weight: bold;
+}
+div#content form > p.submit input[type=submit]:hover {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: #1d69b5;
+  border: solid 1px #2e7ac6;
+}
+div#content form div#how-it-works {
+  border-top: solid 1px #333333;
+  padding-top: 10px;
+}
+div#content form div#how-it-works h2 {
+  text-align: center;
+  font-family: 'gillsans', arial, sans-serif;
+  padding: 20px 0px 20px 0px;
+  font-size: 40px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  border-bottom: solid 1px #444444;
+}
+div#content form div#how-it-works article {
+  border-radius: 5px;
+  background-color: #333333;
+  border: solid 1px #111111;
+  margin-bottom: 20px;
+}
+div#content form div#how-it-works article header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #0c58a4;
+  padding: 5px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

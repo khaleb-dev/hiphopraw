@@ -1,0 +1,343 @@
+
+.container {
+	width: 1140px;
+	margin: 0 auto;
+}
+
+
+.header {
+	border-top: 2px solid black;
+	background-color: white;
+	height: 3.5%;
+}
+
+.logo {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	
+	width : 200px;
+	height: 60px;
+	float: left;
+
+}
+.join-hiphop{
+	
+
+	margin-top: 20px;
+	margin-bottom: 2px;
+		
+}
+.center-top{
+	width: 300px;
+	height: 60px;
+	float: left;
+}
+
+.win-right {
+	
+	height: 60px;
+	width : 380px;
+	float:left;
+	
+}
+
+.left-banner{
+
+	width:400px;
+	float: left;
+
+}
+.mini-decor{
+	width:500px;
+	float: left;
+}
+.btn{
+	background-color: black;
+	width: 100px;
+	color: white;
+	
+}
+
+.get-started{
+	background-color: black;
+	width: 100px;
+	color: white;
+}
+.signup-right {
+
+	background: url(../../img/model_landing/signup-background.JPG) no-repeat 50% 50%;
+	
+	float: left;
+	background-size: cover;
+
+	
+	color: #fff;
+	text-align: center;
+	
+	
+}
+.content{
+
+	opacity:0.8;
+	width: 250px;
+	
+	
+}
+.btn-submit{
+background-color: black;
+		height: 45px;
+	margin: 14px 22px;
+    width: 200px;	
+	
+}
+.get-signup{
+color: white;
+ text-decoration:none;
+ text-underline: none;
+}
+a:hover
+{ 
+ text-decoration:none;
+ color: grey;
+}
+div.transparent-bar
+{
+  border-top: 3px solid red;
+  margin: -10px 3px -80px;
+  float: left;
+  background-color: #000000;
+  
+  opacity:0.6;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  width:400px;
+  height:100px;
+}
+div.transparent-bar p
+{
+  margin: 4%;
+
+  color: #FFFFFF;
+}
+
+.upload-section{
+	width: 400px;
+	float: left;
+	margin-left: 80px;
+}
+.pc-section{
+	width:300px;
+	float:left;
+}
+.cloud-row{
+	width:400px;
+	height:100px;
+}
+.cloud-like{
+	float:left;
+	width:100px;
+}
+.upload-text{
+	float:left;
+	width:200px;
+}
+
+.left-top-text{
+padding-top: 41px;
+width:450px;
+}
+.follow-container{
+	width: 300px;
+}
+
+.left-middle-text{
+	
+	
+}
+.white-button-container{
+	width: 300px;
+}
+.follow-container-white{
+float:left;
+width:500px;
+}
+.win-container{
+	margin-top: 100px;
+	margin-left: 150px;
+	width:450px;
+	float:right;
+	
+	
+}
+.winupload{
+	float:left;
+	width:300px;
+}
+
+.mobile-section{
+	float:left;
+	width:300px;
+}
+.connected-section{
+	float:left;
+	width: 500px;
+}
+.globe{
+	float:left;
+	margin-left:150px;
+}
+.connected{
+	float:left;
+	width: 200px;
+}
+.social-media img {
+	border-radius:50%;
+	-webkit-border-radius:50%;
+	-o-border-radius:50%;
+	-moz-border-radius:50%;
+	margin: 0px 0px 0px;
+
+
+}
+
+.row3{
+	background: #333 url(../../img/model_landing/rectangle.jpg) no-repeat 50% 50%;
+	background-size: cover;
+   	height: 100px;
+	color: #fff;
+	text-align: center;
+	padding-top: 31px;
+}
+.follow-button{
+	background-color: black;
+	
+	margin: -62px 120px 200px;
+	height: 45px;
+	
+    float: left;
+    width: 300px;
+    
+	
+}
+.model-name{
+	width: 100px;
+	margin-left: 50px;
+	float: left;
+	
+	margin-top: 6px;
+	
+}
+.follow{
+	width: 90px;
+	float: left;
+}
+.follow-button-middle{
+	background-color: white;
+	
+	margin: -60px 150px 200px;
+	height: 45px;
+	
+    float: left;
+    width:300px;	
+}
+.follow-text-container{
+	width:300px;
+	margin-left: 40px;
+	height:50px;
+}
+.model-name-white{
+	float:left;
+	margin-top: 10px;
+	margin: 12px;
+}
+.button-white{
+	float:left;
+	margin-top: 5px;
+	margin-left: 18px;
+	
+}
+
+.row2 {
+	background: #333 url(../../img/model_landing/femalepic.jpg) no-repeat 50% 50%;
+	background-size: cover;
+	height: 580px;
+	color: #fff;
+	text-align: center;
+	
+}
+.row5 {
+	background: #333 url(../../img/model_landing/bg-noise.jpg) no-repeat 50% 50%;
+	background-size: cover;
+	height: 465px;
+	color: #fff;
+	text-align: center;
+	padding-top: 56px;
+}
+
+.row6 {
+	
+	height: 460px;
+	background-color: white;
+	
+}
+
+.row4 {
+	background: #fff;
+	padding-top: 80px;
+}
+.footer {
+	background: url(../../img/model_landing/back-footer.jpg) no-repeat 50% 50%;
+	padding: 10px 0;
+	border-top: 1px solid red;
+}
+
+.success-dialog, .error-dialog {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    text-align: center;
+}
+div#notification-container {
+    display: none;
+    position: fixed;
+    top: -5px;
+    width: 100%;
+    min-height: 100px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #333;
+    border-bottom: solid 5px #E11E1C;
+    z-index: 100000000;
+    padding-top: 10px;
+}
+
+div#notification-container div.detail {
+    position: relative;
+    width: 1022px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+div#notification-container div.detail h3 {
+    color: #E11E1C;
+    font-family: "accentregular", sans-serif;
+    font-size: 25px;
+    font-weight: lighter;
+}
+
+div#notification-container div.detail a {
+    text-decoration: none;
+    color: #E11E1C;
+}
+
+div#notification-container div.detail strong {
+    text-transform: uppercase;
+}
+
+div#notification-container i.icon-remove-circle {
+    display: block;
+    position: absolute;
+    color: #E11E1C;
+    font-size: 30px;
+    top: 0px;
+    left: 1012px;
+    cursor: pointer;
+}

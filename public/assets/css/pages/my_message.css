@@ -1,0 +1,325 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+	float: left;
+}
+
+div#center div#sidebar-left{
+	width: 220px;
+	margin-right: 60px;
+}
+
+div#center div#content.with-sidebar-left{
+	width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+	padding: 0 0 0 0;
+	margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+	background: url("../../img/footer_bg.jpg");
+	margin: 0px 0px 5px 0px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+	padding: 0px 14px 14px 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+	background: url('../../img/small_star.png') no-repeat left center;
+	padding-left: 20px;
+	color: #e11e1c;
+	font-weight: bolder;
+	font-size: 18px;
+	font-family: arial, sans-serif;
+	text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+	display: block;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+	color: #e11e1c;
+	font-style: italic;
+	text-transform: uppercase;
+	font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+	font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+	color: #cccccc;
+	text-transform: capitalize;
+	font-size: 18px;
+	margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+	font-weight: bolder;
+	font-size: 14px;
+	color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+	background-image: none;
+	background-color: #f4f4f4;
+	border: solid 1px #e2e2e2;
+	color: #000;
+	font-size: 9px;
+	text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+	background-image: url("../../img/icons/add_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+	background-image: url("../../img/icons/message_icon.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left h2{
+	margin-top: 0;
+}
+
+div#center div#content.with-sidebar-left h2 span{
+	display: block;
+	float: left;
+}
+
+div#center div#content.with-sidebar-left h3{
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #c4c4c4;
+}
+
+div#center div#content div#messages{
+	font-family: arial, sans-serif;
+	margin-bottom: 100px;
+}
+
+div#center div#content div#messages h2 p{
+	float: right;
+	font-size: 12px;
+	margin: 0 0 0 0;
+	color: #e11e1c;
+	line-height: 25px;
+}
+
+div#center div#content div#messages h2 p a.button{
+	padding: 3px 5px;
+	font-size: 10px;
+	text-transform: capitalize;
+	line-height: 16px;
+}
+
+div#center div#content div#messages div.content-box{
+	color: #919191;
+}
+
+div#center div#content div#messages ul#messages-nav{
+	list-style: none;
+	margin: 0 0 30px 0;
+	padding: 0 0 0 0;
+}
+
+div#center div#content div#messages ul#messages-nav li{
+	float: left;
+	border-bottom: solid 4px #d1d1d1;
+	padding: 3px 20px 3px 20px;
+	margin-right: 0px;
+	text-align: center;
+}
+
+div#center div#content div#messages ul#messages-nav li.first{
+	padding: 3px 0;
+}
+
+div#center div#content div#messages ul#messages-nav li a{
+	color: #d1d1d1;
+	text-decoration: none;
+}
+
+div#center div#content div#messages ul#messages-nav li:hover,
+div#center div#content div#messages ul#messages-nav.inbox li#inbox,
+div#center div#content div#messages ul#messages-nav.sent li#sent,
+div#center div#content div#messages ul#messages-nav.drafts li#drafts,
+div#center div#content div#messages ul#messages-nav.trash li#trash{
+	border-bottom: solid 4px #e11e1c;
+}
+
+div#center div#content div#messages ul#messages-nav li:hover a,
+div#center div#content div#messages ul#messages-nav.inbox li#inbox a,
+div#center div#content div#messages ul#messages-nav.sent li#sent a,
+div#center div#content div#messages ul#messages-nav.drafts li#drafts a,
+div#center div#content div#messages ul#messages-nav.trash li#trash a{
+	color: #e11e1c;
+}
+
+div#center div#content div#messages div.content-box h3{
+	color: #cccccc;
+	text-transform: capitalize;
+	font-size: 16px;
+	margin: 0px 0 5px 0px;
+}
+
+div#center div#content div#messages div.content-box p#sign-in{
+	font-size: 12px;
+	background-color: #f5f5f5;
+	padding: 13px 10px;
+	margin-top: 0px;
+}
+
+div#center div#content div#messages div.content-box p#sign-in a{
+	color: #e11e1c;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+
+div#center div#content div#messages div.message{
+	border-bottom: solid 1px #d1d1d1;
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+}
+
+div#center div#content div#messages div.message p{
+	margin: 0px 0px 2px 0px;
+	font-size: 10px;
+}
+
+div#center div#content div#messages div.message div.sender-info{
+	float: left;
+	width: 63px;
+	margin-right: 10px;
+}
+
+div#center div#content div#messages div.message div.sender-info span{
+	display: block;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 3px;
+}
+
+
+div#center div#content div#messages div.message p.sender{
+	font-size: 12px;
+	background-color: #f5f5f5;
+	padding: 8px 10px;
+}
+
+div#center div#content div#messages div.message a.sender-thumb{
+	display: block;	
+}
+
+div#center div#content div#messages div.message div.message-detail{
+	float: left;
+	width: 597px;
+}
+
+div#center div#content div#messages div.message div.message-detail div.conversation p.detail{
+	font-size: 12px;	
+	margin: 0px 0px 0px 0px;
+	padding: 5px 10px;
+	line-height: 15px
+}
+
+div#center div#content div#messages div.message div.message-detail div.conversation p.detail span.sender,
+div#center div#content div#messages div.message div.message-detail div.conversation p.detail span.reciever{
+	font-weight: bold;
+}
+
+div#center div#content div#messages div.message div.message-detail div.conversation p.detail span.reciever{
+	color: #e11e1c;
+}
+
+div#center div#content div#messages div.message div.message-detail p.view-more{
+	text-align: right;
+	margin: 10px 0px;
+	font-size: 10px;
+}
+
+div#center div#content div#messages div.message div.message-detail p.view-more a{
+	color: #919191;
+	text-decoration: none;
+	display:inline-block;
+}
+
+div#center div#content div#messages div.message div.message-detail p.view-more a:hover{
+	color: #e11e1c;
+}
+
+div#center div#content div#messages div.message div.message-detail p.view-more input{
+	display: inline-block;
+	margin-left: 10px;
+}
+
+div#center p.more{
+	clear: both;
+	float: none;
+	margin: 10px 0 5px 0;
+}
+
+div#center p.more a{
+	display: block;
+	text-align: right;
+	color: #e11e1c;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#center div#messages p.back{
+	margin: 0 0 0 0;
+}
+
+div#center div#messages p.back a{
+	color: #e11e1c;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+}

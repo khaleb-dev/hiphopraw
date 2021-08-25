@@ -1,0 +1,217 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+	float: left;
+}
+
+div#center div#sidebar-left{
+	width: 220px;
+	margin-right: 60px;
+}
+
+div#center div#content.with-sidebar-left{
+	width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+	padding: 0 0 0 0;
+	margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+	background: url("../../img/footer_bg.jpg");
+	margin: 0px 0px 5px 0px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+	padding: 0px 14px 14px 14px;
+}
+
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+	background: url('../../img/small_star.png') no-repeat left center;
+	padding-left: 20px;
+	color: #e11e1c;
+	font-weight: bolder;
+	font-size: 18px;
+	font-family: arial, sans-serif;
+	text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+	display: block;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+	font-weight: bolder;
+	font-size: 18px;
+	color: #000;
+	text-align: center;
+	margin: 5px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.button{
+	width: 90%;
+	text-align: center;
+	display: block;
+	margin: 0 auto;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+	border-bottom: solid 1px #dfdfdf;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+	float: left;
+	color: #e11e1c;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 20px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.icons{
+	float: right;
+}
+
+div#center div#sidebar-left p.view-all{
+	margin-top: 20px;
+	border-bottom: solid 1px #cfcfcf;
+	font-size: 12px;
+	text-align: right;
+}
+
+div#center div#sidebar-left p.view-all a{
+	color: #e11e1c;
+	text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content h4.big-cropper-star{
+	background: url("../../img/big_cropped_star.png") no-repeat top left;
+	line-height: 40px;
+	padding: 10px 0  0 74px;
+	font-size: 13px;
+	margin: 40px 0 0 0;
+}
+
+div#center div#sidebar-left div.sidebar-content div.facebook-fan p{
+	font-family: arial, sans-serif;
+	color: #afafaf;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+div#center div#sidebar-left div.sidebar-content div.facebook-fan img{
+	display: block;
+	width: 153px;
+	margin: 0 auto;
+}
+
+div#center div#content h2{
+	font-family:  accentregular,arial, sans-serif;
+	font-size: 25px;
+	font-weight: lighter;
+	margin: 0 0 20px 0;
+	padding-bottom: 0px;
+	border-bottom: solid 2px #dcdcdc;
+}
+
+div#center div#content h2 span{
+	font-family:  ihatecomicsans,arial, sans-serif;
+	font-size: 15px;
+	font-weight: lighter;
+	display: inline;
+	padding: 0 0 0 0;
+	background: none;
+	color: #e11e1c;
+	border: none;
+}
+
+div#center div#content.with-sidebar-left div.items{
+	font-family: arial, sans-serif;
+	min-height: 650px;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+	width: 151px;
+	padding: 8px;
+	margin-right: 9px;
+	margin-bottom: 21px;	
+}
+
+div#center div#content.with-sidebar-left div.items div.item:nth-child(4n+4) {
+	margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+	margin: 8px 0 4px 0;
+	font-size: 12px;
+    height: 20px;
+    overflow: hidden;
+}
+
+div#center div#content.with-sidebar-left div.items div.item p.views{
+	font-size: 10px;
+	color: #afafaf;
+	margin: 2px 0 2px 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a{
+	text-decoration: none;
+	color: #000;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a:hover{
+	color: #E11E1C;
+}
+
+div#category-search-form input[type=text]{
+	width: 170px;
+}
+
+div#category-search-form select{
+	font-size: 16px;
+	height: 28px;
+	padding: 3px;
+	display: block;
+	float: left;
+	margin-top: 5px;
+	width: 150px;	
+}
+
+div#category-search-form input[type=submit]{
+	display: block;
+	float: left;
+	font-size: 14px;
+	height: 28px;
+	padding: 3px 5px;
+	background: #E11E1C;
+	border: none;
+	color: #fff;
+	text-transform: capitalize;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+div#category-search-form p span.searched{
+	font-size: 10px;
+	color: #afafaf;
+	font-style: italic;
+}
+

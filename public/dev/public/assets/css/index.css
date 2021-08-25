@@ -1,0 +1,226 @@
+#img.source-image {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+section#content div#checkout-Content {
+    display: inline-block;
+    float:top;
+    width: 79%;
+    margin: 0 50px;
+    height: 50px; }
+section#content div#checkout-Content div#twitter-icon {
+    display: block;
+    float:left;
+    width: 5%;
+    margin: 0 0px;
+    background-image: url("../img/home/twitericon.png"); 
+    height: 50px; }
+
+section#content div#checkout-Content div#box {
+    display: block;
+    float:right;
+    width: 95%;
+    margin: 4.5px 0px;
+    background: white;
+    height: 39px; }
+section#content div#checkout-Content div#box  p {
+    width: 95%;
+    margin-top: 1%;
+    margin-left: 3%;
+    margin-right: 3%;
+    color:#a5a5a5;
+    text-transform:none;
+    font-style: italic;}
+section#content div#line {
+    display: inline-block;
+    float:top;
+    width: 80.5%;
+    margin: 3% 3%;
+    padding: 0.4% 0px;
+    background-image: url("../img/home/homeline.png"); 
+    background-repeat: no-repeat; 
+    height: 9px; }
+
+section#content div#welcome {
+    display: inline;
+    float: left;
+    width: 55%;
+    margin: 0 0px;
+    background: #ffffff;
+    height: 590px; 
+}
+section#content div#welcome div#hello-container {
+    background-repeat: no-repeat; 
+    background-image: url("../img/home/hellorightshadowimage.png");
+    background-position: center right;
+    color: #efefef;
+    font-family: 'PT Sans Caption';
+    font-size: 85px;
+    text-transform:none;
+    margin: 0 25px;
+}
+section#content div#welcome div#hello-container div#hello {
+    display: inline;
+    float: left;
+    width: 220px;
+    margin: 0px 25px;
+    height: 83px; }
+
+section#content div#welcome-text-link {
+    color: #404040;
+    font-family: "PT Sans Caption";
+    font-size: 31px;
+    margin: 0px 30px;
+    height: 22px; }
+section#content div#welcome h1{
+    font-family: "PT Sans Caption";
+    font-size: 31.55px;
+    color: #404040;
+    background: none;
+    text-transform: none;
+    margin: 0 25px;
+}
+section#content div#welcome h1 span{
+    color: #0270d2;
+}
+
+section#content div#welcome  div#tmyw-welcome-text-paragrap {
+    display: inline-block;
+    width: 100%;
+    margin: 0px 0px;
+    height: 450px; }
+section#content div#welcome  div#tmyw-welcome-text-paragrap p{
+    margin: 0px 30px;
+    color:#b7b7b7;
+    text-align: justify;
+    font-family: GillSans;
+    font-size: 17.45px;
+    text-transform:none;
+    font-style: normal;
+}
+section#content div#welcome div#find {
+    display: inline-block;
+    background: #e0e0e0;
+    background-repeat: no-repeat; 
+    background-image: url("../img/logo_man52.png");
+    background-position: center left;
+    color: #525151;
+    font-family: 'PT Sans Caption';
+    font-size: 48.65px;
+    width: 100%;
+    /*height: 80px;*/
+    padding-top:3.5%;
+    padding-left:10%;
+}
+section#content div#welcome  div#doted-line {
+    display: inline-block;
+    background: #e0e0e0;
+    width: 100%;
+    margin: 0px 0px;
+    background-repeat: repeat-x; 
+    background-image: url("../img/dotted_br_gray.png");
+    height: 7px; }
+section#content div#welcome  div#find-text {
+    display: inline-block;
+    background: #e0e0e0;
+    font-family: "PT Sans";
+    font-size: 12.5px;
+    color: #696969;
+    width: 100%;
+    padding-top: 10px;
+    height: 72px; }
+
+/*-------------------------------------------Right side----------------------------------------*/
+section#content div#playercontainer {
+    display: inline;
+    float: left;
+    width: 35%;
+    margin-left:  5%;
+    height: auto; }
+section#content div#playercontainer div#player {
+    display: inline-block;
+    width:420px;
+    margin-bottom: 40px;
+    background-repeat: no-repeat; 
+    background-image: url("../img/home/player.png");
+    background-size: 100% 100%;
+    height: 343px; }
+section#content div#playercontainer div#learn-more {
+    display: inline-block;
+    position: inherit;
+    width:420px;
+    margin-top: 40px;
+    background-repeat: no-repeat; 
+    background-image: url("../img/home/learnmore.png");
+    background-size: 100% 100%;
+    height: 237px; }
+section#content div#playercontainer div#contact {
+    display: inline-block;
+    width:95%;
+    margin-top: 20%;
+    margin-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+    font-family: "PT Sans Caption";
+    font-size: 150%;
+    background-repeat: no-repeat; 
+    background-image: url("../img/home/contact.png");
+    height: auto; }
+section#content div#playercontainer div#contact a{
+    color: #ffffff;
+    font-weight: normal;
+    font-style: normal;
+}
+section#content div#playercontainer div#learn-more div#learn-more-link{
+    display: inline-block;
+    width:24%;
+    /*height: auto;*/
+    margin-top: 15%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    padding-top: 1%;
+    padding: 1% 5% 1% 1%;
+    padding-left: 8px;
+    background: #ffffff;
+    border-radius: 5px;
+    font-family: "PT Sans Caption";
+    font-size: 100%;
+}
+section#content div#playercontainer div#learn-more  div#learn-more-link a{
+    color: #1559a2;
+    font-style: italic;
+}
+
+section#content div#bottom-text-Container {
+    display: inline-block;
+    width:104%;
+    margin-left: -4.0%;
+    margin-top: 100px;
+    /*margin-left:-90px;*/
+    background: #1e1e1e;
+    height: 100px; }
+section#content div#bottom-text{
+    display: inline-block;
+    width:100%;
+    padding-top: 1%;
+    font-style: italic;
+    font-family: Helvetca;
+    font-size: 15px;
+    text-transform:none;
+    text-align: center;
+    color: #ffffff;
+}
+section#content div#tmyw-bottom-logo-container{
+    display: inline-block;
+    width:100%;
+    padding-top: 20px;
+    font-family: "PT Sans Caption";
+    font-size: 10px;
+    text-transform:none;
+    text-align: center;
+    color: #616161;
+    height: 30px;
+}

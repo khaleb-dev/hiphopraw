@@ -1,0 +1,286 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+    float: left;
+}
+
+div#center div#sidebar-left{
+    width: 220px;
+    margin-right: 60px;
+}
+
+div#center div#content.with-sidebar-left{
+    width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+    padding: 0 0 0 0;
+    margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+    background: url("../../img/footer_bg.jpg");
+    margin: 0px 0px 5px 0px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+    padding: 0px 14px 14px 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+    background: url('../../img/small_star.png') no-repeat left center;
+    padding-left: 20px;
+    color: #e11e1c;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+    display: block;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+    margin: 0px 0px 5px 0px;
+    font-size: 12px;
+    font-family: arial, sans-serif;
+    color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+    color: #e11e1c;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+    font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+    color: #cccccc;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+    font-weight: bolder;
+    font-size: 14px;
+    color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+    border-bottom: solid 1px #dfdfdf;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+    float: left;
+    color: #e11e1c;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+    background-image: none;
+    background-color: #f4f4f4;
+    border: solid 1px #e2e2e2;
+    color: #000;
+    font-size: 9px;
+    text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+    background-image: url("../../img/icons/add_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+    background-image: url("../../img/icons/message_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left div#friends {
+    margin-bottom: 100px;
+    padding: 8px 13px;
+}
+
+div#center div#content.with-sidebar-left > div > h3{
+    margin: 0 0 10px 0;
+    padding-bottom: 6px;
+    font-size: 16px;
+    color: #c4c4c4;
+    border-bottom: solid 2px #cfcfcf;
+}
+
+div#center div#content.with-sidebar-left p{
+    margin: 0 0 0 0;
+    float: left;
+}
+
+div#center div#content.with-sidebar-left div.items{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+    margin-right: 28px;
+    margin-bottom: 15px;	
+}
+
+div#center div#content.with-sidebar-left div.items div.item:nth-child(5n+5) {
+    margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+    margin: 8px 0 0px 0;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+
+div#center div#content.with-sidebar-left div.items div.item form{
+}
+
+div#center div#content div#edit-friends-button-container.hidden { 
+    display: none;
+}
+
+div#center div#content div#edit-friends-button-container a.button{
+    display: block;
+    float: right;
+    text-transform: capitalize;
+    font-size: 12px;
+    padding: 3px 5px;
+    margin: 0 0 0 0;
+}
+
+div#center div#content div#new-friends,
+div#center div#content div#manage-friends{
+    margin-bottom: 20px;
+}
+
+div#center div#content p.paging{
+    float: right;
+    color: #afafaf;
+    text-align: right;
+    font-size: 10px;
+    font-weight: lighter;
+    line-height: 20px
+}
+
+div#center div#content p.pageing span{
+    color: #e11e1c;
+}
+
+div#center div#content p.pageing a{
+    color: #afafaf;
+    text-decoration: none;
+}
+
+div#center p.more{
+    clear: both;
+    float: none;
+    margin: 10px 0 5px 0;
+}
+
+div#center p.more a{
+    color: #e11e1c;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+div#center div#friends p.back{
+    float: left;
+    margin: 0 0 0 0;
+}
+
+div#center div#friends p.back a{
+    color: #e11e1c;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+div#center div#friends p.more{
+    clear: none;
+    float: right;
+}
+
+div#manage-friends div.item form{
+    display: none;
+}
+
+div.actions{
+    font-size: 11px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+
+form.pending div.actions{
+    display: none;
+}
+
+div.actions a{
+    color: #999;
+    text-decoration: none;
+    display: block;
+    width: 49.5%;
+}
+
+div.actions a:hover{
+    color: #e11e1c;
+}
+
+div.actions a.green:hover{
+    color: #008000;
+}
+
+div.actions a i{
+    display: inline-block;
+    margin-right: 2px;
+    color: #e11e1c;
+    line-height: 16px;
+}
+
+div.actions a.green i{
+    color: #008000;
+}
+
+div.actions a:first-child{
+    float: left;
+}
+
+div.actions a:last-child{
+    float: right;
+    text-align: right;
+}
+
+div#button-action{
+    padding: 5px 10px;
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: 1px 1px 6px 1px rgba(100, 100, 100, 0.3);
+    color: #e11e1c;
+    font-family: 'ihatecomicsans', sans-serif;
+    font-size: .9em;
+}

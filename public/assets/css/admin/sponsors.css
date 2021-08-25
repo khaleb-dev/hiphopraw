@@ -1,0 +1,396 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+    float: left;
+}
+
+div#center div#sidebar-left{
+    width: 280px;
+}
+
+div#center div#content.with-sidebar-left{
+    width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+    padding: 0 0 0 0;
+    margin-bottom: 30px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+    background: url('../../img/small_star.png') no-repeat left center;
+    padding-left: 20px;
+    color: #e11e1c;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+    display: block;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+    margin: 0px 0px 5px 0px;
+    font-size: 12px;
+    font-family: arial, sans-serif;
+    color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+    color: #e11e1c;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+    font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+    color: #cccccc;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+    font-weight: bolder;
+    font-size: 14px;
+    color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+    border-bottom: solid 1px #dfdfdf;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+    float: left;
+    color: #e11e1c;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+    background-image: none;
+    background-color: #f4f4f4;
+    border: solid 1px #e2e2e2;
+    color: #000;
+    font-size: 9px;
+    text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+    background-image: url("../../img/icons/add_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+    background-image: url("../../img/icons/message_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left h3{
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #c4c4c4;
+}
+
+div#center div#content.with-sidebar-left div.items{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+    margin-bottom: 15px;
+    margin-right: 28px;	
+}
+
+div#center div#content.with-sidebar-left div.items div.item:last-child {
+    margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+    color: #000000;
+    font-size: 14px;
+    margin: 0 0 0 5px;
+    text-align: left;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a{
+    text-decoration: none;
+    color: #000;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a:hover{
+    color: #E11E1C;
+}
+
+div#center div#content.with-sidebar-left div.items div.item p.views{
+    font-size: 10px;
+    color: #afafaf;
+    margin: 2px 0 2px 0;
+    font-weight: lighter;
+}
+
+div#center div#content div#sponsors{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content div h2 {
+    margin-top: 0px;
+}
+
+div#content-index {
+    border-bottom: 2px solid #C4C4C4;
+    margin-bottom: 10px;
+}
+
+div#content-index > p {
+    float: left;
+    color: #C4C4C4;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+div#content-index ul {
+    color: #C4C4C4;
+    float: right;
+    font-size: 10px;
+    list-style: none outside none;
+    margin-bottom: 1px;
+    margin-right: 2px;
+    padding-top: 5px;
+}
+
+div#content-index ul li {
+    border-right: 1px solid #C4C4C4;
+    float: left;
+    line-height: 0.8em;
+    margin: 0 0 0 1px;
+    padding: 0 4px;
+}
+
+div#content-index ul li a {
+    text-decoration: none;
+    color: #C4C4C4;
+}
+
+div#content-index ul li a:hover {
+    color: #E92B2D;
+}
+
+div#content-index ul li#description { 
+    border: none;
+    color: #E11E1C;
+}
+
+.side-menu-item {
+    color: #e11e1c;
+}
+
+div.actions{
+    font-size: .7em;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+
+div.actions a{
+    color: #999;
+    text-decoration: none;
+    display: block;
+    width: 49.5%;
+}
+
+div.actions a:hover{
+    color: #e11e1c;
+}
+
+div.actions a.green:hover{
+    color: #008000;
+}
+
+div.actions a i{
+    display: inline-block;
+    margin-right: 2px;
+    color: #e11e1c;
+    font-size: .7em;
+    line-height: 16px;
+}
+
+div.actions a.green i{
+    color: #008000;
+}
+
+div.actions a:first-child{
+    float: left;
+    border-right: 0px solid #cfcfcf;
+}
+
+div#center div#content form input[type="text"] {
+    box-shadow: none;
+    margin-bottom: 2px;
+    width: 300px;
+    border-radius: 5px;
+}
+div#center div#content form input[type="file"]{
+    font-style: italic;
+}
+div#save-sponsor input[type="submit"] {
+    margin-left: 120px;
+    padding: 8px 20px;
+}
+
+p#search-sponsor {
+    margin-top: 30px
+}
+
+p#search-sponsor label {
+    text-align: left;
+    width: 115px;
+    
+    color: #818181;
+    display: block;
+    float: left;
+    font-family: arial,sans-serif;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 3px;
+}
+
+div#center div#content form div p label {
+    width: 115px;
+}
+
+div#center div#content form p#search-sponsor input[type="text"] {
+    background: none repeat scroll 0 0 transparent;
+    border-color: #C7C7C7;
+    border-radius: 0 0 0 0;
+    height: 18px;
+    width: 300px;
+}
+
+p#search-sponsor input[type="submit"] {
+    border: medium none;
+    border-radius: 0 0 0 0;
+    margin-bottom: 2px;
+    margin-left: -4px;
+    margin-top: 0;
+    padding: 4px 10px;
+}
+
+div#sponsors table {
+    margin-bottom: 20px;
+    margin-left: 4px;
+    width: 100%;
+}
+
+div#sponsors table thead {
+    text-align: center;
+}
+
+div#sponsors table .table-heading {
+    background-color: #EFEFEF;
+    height: 30px;
+}    
+
+div#sponsors table td {
+    padding: 5px 8px 5px 0;
+}
+
+div#sponsors table .text-left {
+    text-align: left;
+}
+
+div#sponsors table .text-right {
+    text-align: right;
+    padding-right: 20px;
+}
+
+div#sponsors table tbody tr {
+    border-bottom: 1px solid #C7C7C7;
+}
+/*@ nati*/
+#sponsors{
+border:1px solid #000;
+background:#1d1d1d;
+}
+.sponor-title{
+border-bottom:1px solid #000;
+padding:10px 15px;
+}
+.publish-sponsor-btn{
+	padding:5px 15px;
+	border:none;
+}
+#sponsors .text-field{
+	background:#141414;
+	color:#4d4d4d !important;
+	border:none;
+}
+#sponsors input[type="file"]{
+	color:#4c4c4c !important;
+}
+#sponsors label{
+	color:#ffffff;
+	margin-right:10px;
+}
+div#sponsors table.contest-all-tbl{
+	margin:20px 0;
+	border-top:1px solid #030303;
+	border-bottom:1px solid #030303;
+}
+div#sponsors table.contest-all-tbl tbody tr{
+	border-bottom:1px solid #030303;
+}
+div#sponsors table.contest-all-tbl tbody tr td{
+	padding:10px 10px;
+}
+/* copied from contests.css, can b merged */
+.contest-all-tbl{
+	background:#1d1d1d; 
+	color:#d6d6d6;
+	
+}
+.contest-all-tbl thead{
+background:#1a1a1a;
+color:#5b5b5b;
+}
+.contest-all-tbl tr td{
+border-color:#030303;
+}
+.contest-all-tbl tbody tr:hover td{
+	background:#1d1d1d !important;
+}
+.contest-dot{
+	display:inline-block;
+	width:12px;
+	height:10px;
+	margin-right:10px;
+}
+.contest-dot-red{
+	background:url('../../img/icons/red-dot.png') no-repeat left center;
+}
+.contest-dot-white{
+	background:url('../../img/icons/white-dot.png') no-repeat left center;
+}
+.green{
+	color:#04df47;
+}
+/* end of css */
+

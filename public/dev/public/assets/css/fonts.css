@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'gillsans';
+    src: url('../fonts/gillsans/gillsans.eot');
+    src: url('../fonts/gillsans/gillsans.eot') format('embedded-opentype'),
+        url('../fonts/gillsans/gillsans.woff') format('woff'),
+        url('../fonts/gillsans/gillsans.ttf') format('truetype'),
+        url('../fonts/gillsans/gillsans.svg#gillsans') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'helvetica';
+    src: url("../fonts/helvetica/helvetica.eot");
+    src: url("../fonts/helvetica/helvetica.eot?#iefix") 
+        format("embedded-opentype"), url("../fonts/helvetica/helvetica.woff") 
+        format("woff"), url("../fonts/helvetica/helvetica.ttf") 
+        format("truetype"), url("../fonts/helvetica/helvetica.svg#Helvetica") 
+        format("svg");
+    font-weight: normal;
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'pt sans';
+    src: url('../fonts/ptsans/ptsans.eot');
+    src: url('../fonts/ptsans/ptsans.eot') format('embedded-opentype'),
+        url('../fonts/ptsans/ptsans.woff') format('woff'),
+        url('../fonts/ptsans/ptsans.ttf') format('truetype'),
+        url('../fonts/ptsans/ptsans.svg#PT Sans') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'pt sans caption';
+    src: url('../fonts/ptsanscaption/ptsancaption.eot');
+    src: url('../fonts/ptsanscaption/ptsancaption.eot') format('embedded-opentype'),
+        url('../fonts/ptsanscaption/ptsancaption.woff') format('woff'),
+        url('../fonts/ptsanscaption/ptsancaption.ttf') format('truetype'),
+        url('../fonts/ptsanscaption/ptsancaption.svg#PT Sans Caption') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'steiner light';
+    src: url('../fonts/steinerlight/steinerlight.eot');
+    src: url('../fonts/Ssteinerlight/steinerlight.eot') format('embedded-opentype'),
+        url('../fonts/steinerlight/steinerlight.woff') format('woff'),
+        url('../fonts/steinerlight/steinerlight.ttf') format('truetype'),
+        url('../fonts/steinerlight/steinerlight.svg#steinerlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "denseregular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/denseregular/dense-regular-webfont.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/denseregular/dense-regular-webfont.woff2") format("woff2"),
+    url("../fonts/denseregular/dense-regular-webfont.woff") format("woff"),
+    url("../fonts/denseregular/dense-regular-webfont.ttf") format("truetype"),
+    url("../fonts/denseregular/dense-regular-webfont.svg#denseregular") format("svg");
+}

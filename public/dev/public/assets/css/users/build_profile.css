@@ -1,0 +1,314 @@
+#wrapper div#content div#build-profile-container div#advertizment {
+    text-align: center;
+}
+#wrapper div#content div#build-profile-container div#advertizment p {
+    font-family: arial;
+    font-size: 14px;
+    margin-right: 100px;
+    margin-top: 0;
+    text-align: right;
+}
+#wrapper div#content div#build-profile-container #profile-picture-section {
+    margin: 30px auto 0;
+    width: 960px;
+}
+#wrapper div#content div#build-profile-container #profile-picture-section div.left{
+    border-bottom: 1px solid #9e9e9e;
+    border-right: 1px solid #9e9e9e;
+    float: left;
+    height: 190px;
+    width: 235px;
+}
+#profile-picture-section div.left img.line-end {
+    left: 229px;
+    position: relative;
+    top: -55px;
+}
+#profile-picture-section div.left img.profile-circle {
+    background-color: #f2f2f2;
+    left: 192px;
+    position: relative;
+    top: 50px;
+}
+#wrapper div#content div#build-profile-container #profile-picture-section div.right{
+    float: left;
+    margin-left: 150px;
+}
+#wrapper div#content div#build-profile-container #profile-picture-section div.right img {
+    background-color: white;
+    padding: 10px;
+}
+#wrapper div#content div#build-profile-container #profile-picture-section div.right p {
+    background-color: white;
+    font-family: arial;
+    font-size: 17px;
+    margin-bottom: 0;
+    margin-top: -13px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+#wrapper div#content #build-profile-container div#bottom-section {
+    border-left: 1px solid #9e9e9e;
+    margin: -1px auto;
+    padding-top: 25px;
+    width: 960px;
+}
+
+#wrapper div#content #build-profile-container div#bottom-section div#get-started-content img.line-end {
+    left: -7px;
+    position: relative;
+    top: 75px;
+}
+#wrapper div#content #build-profile-container div#bottom-section img.hi-circle {
+    background-color: #f2f2f2;
+    left: -27px;
+    position: relative;
+    top: -300px;
+}
+#wrapper div#content #build-profile-container div#bottom-section div#welcome-message,
+#wrapper div#content #build-profile-container div#bottom-section #complete-profile-container{
+    margin: 30px auto 0;
+    width: 667px;
+}
+#wrapper div#content #build-profile-container div.active {
+    display: block;
+}
+#wrapper div#content #build-profile-container div.inactive {
+    display: none;
+}
+#wrapper div#content #build-profile-container div#bottom-section #welcome-message h3,
+#wrapper div#content #build-profile-container div#bottom-section #complete-profile-container h3{
+    background-color: black;
+    color: white;
+    font-family: arial;
+    font-size: 17px;
+    font-style: italic;
+    margin-bottom: 0;
+    padding: 10px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content #welcome-message p {
+    background-color: white;
+    font-family: arial;
+    font-size: 15px;
+    margin-top: 0;
+    padding: 15px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content div#get-started-today {
+    background-color: #f3b82a;
+    margin: 20px auto 0;
+    padding: 5px;
+    text-align: center;
+    width: 658px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content #get-started-today a {
+    border: 3px solid white;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    text-decoration: none;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content div#additional-info {
+    font-family: arial;
+    font-size: 17px;
+    font-style: italic;
+    margin: 0 auto;
+    text-align: center;
+    width: 667px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content div#additional-info p {
+    color: #8e8e8e;
+}
+#wrapper div#content #build-profile-container div#bottom-section #get-started-content div#additional-info p.signup {
+    color: #f3b82a;
+}
+
+#complete-profile-container form {
+    margin: 0;
+}
+#form-inner-container {
+    background-color: white;
+    margin: 0;
+    padding: 15px;
+}
+
+#complete-profile-container form div {
+    margin-bottom: 20px;
+}
+#complete-profile-container form div p {
+    color: #424242;
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+#complete-profile-container form input {
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    font-family: arial;
+    font-size: 13px;
+    padding: 3px 5px;
+    margin-right: 10px;
+    width: 185px;
+}
+#complete-profile-container form select {
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    font-family: arial;
+    font-size: 13px;
+    margin-right: 10px;
+    padding: 3px 5px;
+}
+#complete-profile-container form textarea {
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    font-family: arial;
+    font-size: 13px;
+    height: 80px;
+    margin-right: 10px;
+    padding: 3px 5px;
+    width: 620px;
+}
+#complete-profile-container form p.gray-text {
+    color: #878787;
+    font-family: arial;
+    font-size: 13px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+#complete-profile-container form select option.empty-text {
+    display: none;
+}
+#complete-profile-container form div select.month-field {
+    width: 185px;
+}
+#complete-profile-container form div select.day-field {
+    width: 90px;
+}
+#complete-profile-container form div select.year-field {
+    width: 125px;
+}
+#complete-profile-container div#upload-button-container span.file-name {
+    background-color: #ededed;
+    border-radius: 3px;
+    color: #757575;
+    display: inline-block;
+    font-family: arial;
+    font-size: 13px;
+    padding: 7px 15px;
+    width: 190px;
+}
+#complete-profile-container div#upload-button-container div.left {
+    float: left;
+    margin-bottom: 0;
+    width: 310px;
+}
+#complete-profile-container div#upload-button-container div.right {
+    color: #878787;
+    float: right;
+    font-family: arial;
+    font-size: 13px;
+    margin-bottom: 0;
+    padding-top: 10px;
+    width: 310px;
+}
+#complete-profile-container div#upload-button-container a.upload-button {
+    background-color: #424242;
+    border: 1px solid #424242;
+    border-radius: 3px;
+    color: white;
+    display: inline-block;
+    font-family: arial;
+    font-size: 15px;
+    margin-left: 5px;
+    padding: 3px 10px;
+}
+#complete-profile-container form div#upload-button-container {
+    margin-bottom: 0;
+}
+#upload-button-container p.field-header {
+    font-family: arial;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #complete-profile-content div#finish-button-container {
+    background-color: #f3b82a;
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+    width: 456px;
+}
+#wrapper div#content #build-profile-container div#bottom-section #complete-profile-content #finish-button-container a {
+    border: 3px solid white;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    text-decoration: none;
+}
+#wrapper div#content #build-profile-container div#bottom-section div#complete-profile-content img.line-end {
+    left: -7px;
+    position: relative;
+    top: 75px;
+}
+
+#wrapper div#content #build-profile-container #finish-container {
+    padding-top: 40px;
+}
+#wrapper div#content #build-profile-container #finish-container #finish-content {
+    border-left: 1px solid #9e9e9e;
+    margin: 0 auto;
+    padding-bottom: 60px;
+    text-align: center;
+    width: 960px;
+}
+#wrapper div#content #build-profile-container #finish-container #finish-content p {
+    background-color: white;
+    margin: 0 auto;
+    width: 700px;
+    font-family: arial;
+}
+#wrapper div#content #build-profile-container #finish-container #finish-content p.bottom {
+    color: #424242;
+    font-size: 15px;
+    padding: 10px 0;
+}
+#wrapper div#content #build-profile-container #finish-container #finish-content p.top {
+    font-size: 28px;
+    color: #464446;
+    padding-top: 10px
+}
+#wrapper div#content #build-profile-container #finish-container i.blue {
+    color: #34b0cf;
+}
+#wrapper div#content #build-profile-container #finish-container i.pink {
+    color: #bb2c6b
+}
+#wrapper div#content #build-profile-container #finish-container i.green {
+    color: #34cf95;
+}
+#wrapper div#content #build-profile-container #finish-container i.yellow {
+    color: #f3b82a
+}
+
+#wrapper div#content #build-profile-container #finish-container img.line-end {
+    left: 93px;
+    position: relative;
+    top: -41px;
+}
+#wrapper div#content #build-profile-container #finish-container img.thumbs-up-circle {
+    background-color: #f2f2f2;
+    left: 57px;
+    position: relative;
+    top: -195px;
+}
+

@@ -1,0 +1,194 @@
+#videos-container{
+   
+    padding:0;
+    margin:0;
+}
+#videos-container .inner-wrapper{
+    width:1100px;
+    margin:0 auto;
+    padding:200px 0px;
+
+}
+#videos-container .inner-wrapper .vid-con{
+    margin-left:20px;
+    margin-right:85px;
+    position: relative;
+}
+#videos-container .inner-wrapper .model-con{
+    margin-left:100px;
+    position: relative;
+}
+.enter-link{
+    position: absolute;
+    bottom:50px;
+    left:180px;
+    background: rgba(56,56,56,.5);
+    padding:5px 15px;
+    color:#fff;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.enter-link:hover{
+    text-decoration: none;
+    background: rgba(56,56,56,.9);
+    color:#fff;
+}
+ .contest-winner{
+width:1349px;
+height:64px;
+background-color:#e3e3e3;
+box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+-webkit-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+-moz-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+-o-box-shadow: inset 0px 0px 10px 0px #ABABAB,5px 5px 5px 1px #DDDDDD;
+
+}
+.slide-show{
+width:1349px;
+height:198px;
+
+background-color:#161616;
+}
+.slide-show #left-arrow-contest{
+margin-left:20px;
+padding-top:50px;
+float:left;
+}
+ .all-image{
+ position: relative;
+ width: 1106px;
+ left: -15px;
+ top: 0px;
+}
+
+
+.scrolling-image{
+margin-left: 15px;
+width:353px;
+float:left;
+}
+
+.slide-show #right-arrow-contest{
+
+padding-top:50px;
+float:left;
+}
+.contest-winner #row-winer{
+float:right;
+margin-right:150px;
+margin-top:20px;
+}
+.contest-winner #row-winer a{
+ font-size: 13.5px;
+  font-family: "Arial";
+  color: rgb( 255, 0, 0 );
+  font-weight: bold;
+  text-transform: uppercase;
+   -moz-transform: matrix( 0.99784176299311,0,0,1,0,0);
+  -webkit-transform: matrix( 0.99784176299311,0,0,1,0,0);
+  -ms-transform: matrix( 0.99784176299311,0,0,1,0,0);
+  text-decoration:none;
+
+}
+.contest-gallery{
+
+width:1240px;
+min-height:1500px;
+background-color:#f1f1f1;
+padding-left:100px;
+}
+.contest-gallery .date-gallery #date{
+height:30px;
+padding-top:40px;
+width:1100px;
+float:left;
+border-bottom:1px solid #e3e1e1;
+}
+.contest-gallery .date-gallery #date a{
+  font-size: 26px;
+  font-family: "Arial";
+  color: rgb( 39, 39, 39 );
+  font-weight: bold;
+  text-decoration:none;
+ 
+}
+.winner-share-gallery{
+width:518px;
+height:363px;
+margin-top:20px;
+background-color:#fff;
+padding-left:10px;
+margin-right:40px;
+float:left;
+}
+.winner-share-gallery .winner-share  {
+
+padding-top:10px;
+padding-right:20px;
+}
+.winner-share-gallery .winner-share a{
+  font-size: 12px;
+  font-family: "Arial";
+  color: rgb( 0, 0, 0 );
+  font-weight: bold;
+ }
+ .winner-share-gallery .winner-share #left{
+text-transform: uppercase;
+ padding-bottom:10px;
+ float:left;
+ }
+ .winner-share-gallery .winner-share #right{
+ 
+  padding-bottom:10px;
+ float:right;
+
+ }
+ .winner-share-gallery  #ready a{
+  font-size: 11.481px;
+  font-family: "Arial";
+  float:left;
+  color:#000;
+ padding-left:50px;
+ padding-top:10px;
+ text-decoration:none;
+  color: rgb( 0, 0, 0 );
+  font-weight: bold;
+  -moz-transform: matrix( 1.47845385807395,0,0,1.48069483023498,0,0);
+  -webkit-transform: matrix( 1.47845385807395,0,0,1.48069483023498,0,0);
+  -ms-transform: matrix( 1.47845385807395,0,0,1.48069483023498,0,0);
+  }
+ #contest-more a{
+float:left;
+margin-left:450px;
+margin-top:50px;
+  font-size: 13.975px;
+  font-weight:bold;
+  font-family: "Myriad Pro";
+  color: rgb( 0, 0, 0 );
+  text-transform: uppercase;
+  line-height: 1.661;
+text-decoration:none;
+  -moz-transform: matrix( 1.1449343790019,0,0,1.1449343790019,0,0);
+  -webkit-transform: matrix( 1.1449343790019,0,0,1.1449343790019,0,0);
+  -ms-transform: matrix( 1.1449343790019,0,0,1.1449343790019,0,0);
+
+
+}
+#visible-banners-contest {
+    float: left;
+    overflow: hidden;
+    width: 1106px;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+
+#banner-contest-items {
+    height: 165px;
+    overflow: hidden;
+    position: relative;
+    width: 5000px;
+    top: 0px;
+}
+
+ 

@@ -1,0 +1,370 @@
+@import "//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css";
+div.sub-nav ul{
+    display: block;
+    list-style: none;
+    float: left;
+    padding: 10px 0 10px 0px;
+    width: 100%;
+    margin-top: -8px;
+   
+}
+div.sub-nav ul li {
+
+}
+
+div.sub-nav ul li a{
+
+    display: inline-block;
+    padding: 5px 10px;
+   font-weight:bold;
+    float: left;
+    color: #aaacad;
+	
+    text-decoration: none;
+	 background-color: #eeeeee;
+}
+div.sub-nav ul li a.active-link{
+    background-color: #eeeeee;
+    background-color: rgb(245, 245, 245);
+	color: #004793;
+}
+div#content div#main-content{
+	color:black;
+    margin-top:32px;
+    background-color: white;
+    border: 1px solid rgb(224, 224, 224);
+    font-weight: normal;
+	font-size: 15px;
+	padding:1%;
+	min-height:200px;
+	
+}
+div#content div#main-content div#sub-content{
+ background-color: #eeeeee;
+ border: 1px solid rgb(224, 224, 224);
+ min-height:200px;
+}
+
+div#content div#main-content div#events-lists{
+ background-color: #eeeeee;
+ border: 1px solid rgb(224, 224, 224);
+ margin-top:10px;
+ min-height:100px;
+}
+
+div#content div#main-content div#sub-content div#common-content{
+margin-left:15px;
+
+}
+
+div#content div#main-content div#sub-content div#common-content textarea{
+ resize: none;
+}
+div#content div#main-content div#sub-content div#common-content a{
+ /*background-color: rgb(12,88,164);*/
+ color:#ffffff;
+ padding-left:6px;
+ padding-right:6px;
+ padding-top:3px;
+ padding-bottom:3px;
+ font-size:12px;
+ cursor: pointer; cursor: hand;
+}
+
+
+div#content div#main-content div#sub-content div#common-content div#no-file{
+float:right;
+font-size:11px;
+font-type:italic;
+margin-top: -5px;
+margin-right: -255px;
+}
+div#content div#main-content div#sub-content div#common-content div#no-file input{
+border:none;
+background-color:#eeeeee;
+}
+
+div#content div#main-content div#sub-content div#common-content div.fileUpload{
+float:right;
+position:relative;
+overflow: hidden;
+margin-top: -5px;
+margin-right: 210px;
+background-color: rgb(12,88,164);
+color:#ffffff;
+padding:3px 10px 6px 6px;
+font-size:14px;
+width:90px;
+}
+
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	
+}
+
+
+
+
+div#content div#main-content div#sub-content div#common-content img{
+width:746px;
+height:360px;
+
+}
+
+div#content div#main-content div#sub-content div#common-content div#event-name{
+margin-top:20px;
+
+}
+div#content div#main-content div#sub-content div#common-content label{
+display: block;
+
+}
+
+div#content div#main-content div#sub-content div#common-content div#event-name{
+margin-top:15px;
+
+}
+
+div#content div#main-content div#sub-content div#common-content div#short-description{
+float:right;
+margin-top:-50px;
+margin-right:240px;
+}
+div#content div#main-content div#sub-content div#common-content div#long-description{
+margin-top:10px;
+}
+div#content div#main-content div#sub-content div#common-content div#address{
+margin-top:10px;
+
+}
+div#content div#main-content div#sub-content div#common-content div#event-date{
+float:right;
+margin-right:830px;
+margin-top:10px;
+}
+
+div#content div#main-content div#sub-content div#common-content div#event-end-date{
+float:right;
+margin-right:600px;
+margin-top:-50px;
+}
+
+div#content div#main-content div#sub-content div#common-content div#city{	
+margin-top:10px;
+}
+div#content div#main-content div#sub-content div#common-content div#state{
+margin-left:470px;
+margin-top:-50px;
+}
+div#content div#main-content div#sub-content div#common-content div#state #state-select{	
+width:200px;
+
+}
+div#content div#main-content div#sub-content div#common-content div#zip{
+margin-left:690px;
+margin-top:-49px;
+}
+
+div#content div#main-content div#sub-content div#common-content div#start-date{	
+margin-top:10px;
+
+}
+div#content div#main-content div#sub-content div#common-content div#start-date #start{	
+width:410px;
+
+}
+div#content div#main-content div#sub-content div#common-content div#start-hour{
+margin-left:470px;
+margin-top:-50px;
+}
+div#content div#main-content div#sub-content div#common-content div#start-hour #start-event{
+width:150px;
+}
+div#content div#main-content div#sub-content div#common-content div#end-hour{
+margin-left:680px;
+margin-top:-32px;
+}
+div#content div#main-content div#sub-content div#common-content div#end-hour #end-event{
+width:140px;
+}
+div#content div#main-content div#sub-content div#common-content div#end-hour label{
+display: inline-block;
+}
+div#content div#main-content div#sub-content div#common-content div#start-pm-am{
+margin-left:620px;
+margin-top:-32px;
+}
+div#content div#main-content div#sub-content div#common-content div#end-pm-am{
+margin-left:840px;
+margin-top:-32px;
+}
+div#content div#main-content div#sub-content div#common-content div#featured{	
+margin-top:30px;
+}
+div#content div#main-content div#sub-content div#common-content div#featured label{	
+display: inline-block;
+}
+
+div#content div#main-content div#sub-content div#common-content #save-button{	
+background-color: rgb(12,88,164);
+color:#ffffff;
+padding:3px 9px 3px 9px;
+margin-top:20px;
+margin-bottom:20px;
+border-color:rgb(12,88,164);
+border-radius: 3px 3px 3px 3px;
+}
+div#content div#main-content div#sub-content div#common-content div#featured-dating{	
+margin-top:20px;
+}
+div#content div#main-content div#sub-content div#common-content div#featured-dating #feature-dating-box{	
+margin-top:20px;
+}
+div#content div#main-content div#sub-content div#common-content div#preview-big-event img{
+background-image: url("../../img/event.jpg");
+}
+div#content div#main-content div#sub-content div#common-content div#preview-big-dating img{
+background-image: url("../../img/dating .jpg");
+}
+
+
+div#content div#main-content div#events-lists div#headers  ul{
+display: block;
+list-style: none;
+float: left;
+width:100%;
+padding: 10px 0 10px 0px;
+margin-top: -5px;
+margin-left:10px;
+color: #aaacad;
+}
+div#content div#main-content div#events-lists div#headers ul li {
+height:30px;
+padding-top:6px;
+background-color: #e0e0e0;
+display: inline-block;
+font-weight:bold;
+float: left;
+color:black;
+text-decoration: none;
+}
+div#content div#main-content div#events-lists div#headers ul li:nth-of-type(1) {
+padding-left:1%;	
+}
+div#content div#main-content div#events-lists div#headers ul li:nth-of-type(2) {
+padding-left:1%;	
+}
+div#content div#main-content div#events-lists div#headers ul li:nth-of-type(3) {
+padding-left:3%;	
+}
+div#content div#main-content div#events-lists div#headers ul li:nth-of-type(4) {
+padding-left:12%;
+}
+div#content div#main-content div#events-lists div#headers ul li:nth-of-type(5) {
+padding-left:25%;
+padding-right:12%;
+}
+
+
+
+div#content div#main-content div#events-lists div#headers-event  ul{
+display: block;
+list-style: none;
+float: left;
+width:100%;
+padding: 10px 0 10px 0px;
+margin-top: -5px;
+margin-left:10px;
+color: #aaacad;
+}
+div#content div#main-content div#events-lists div#headers-event  ul li {
+height:30px;
+padding-top:6px;
+background-color: #e0e0e0;
+display: inline-block;
+font-weight:bold;
+float: left;
+color:black;
+text-decoration: none;
+}
+div#content div#main-content div#events-lists div#headers-event  ul li:nth-of-type(1) {
+padding-left:1%;	
+}
+div#content div#main-content div#events-lists div#headers-event  ul li:nth-of-type(2) {
+padding-left:1%;	
+}
+div#content div#main-content div#events-lists div#headers-event  ul li:nth-of-type(3) {
+padding-left:3%;	
+}
+div#content div#main-content div#events-lists div#headers-event  ul li:nth-of-type(4) {
+padding-left:15%;
+}
+div#content div#main-content div#events-lists div#headers-event  ul li:nth-of-type(5) {
+padding-left:25%;
+padding-right:12%;
+}
+
+div#content div#main-content div#events-lists div#event-container img{
+width:127px;
+height:97px;
+}
+
+div#content div#main-content div#events-lists div#event-container div#event-detail{
+border: 3px solid #ffffff;
+}
+div#content div#main-content div#events-lists div#event-container div#event-detail div#checks{
+display: inline-block;
+margin:0px 0px 0px 25px;
+position:relative;
+top:-45px;
+}
+div#content div#main-content div#events-lists div#event-container div#event-detail div#images{
+display: inline-block;
+margin:0px 0px 0px 100px;
+}
+div#content div#main-content div#events-lists div#event-container div#event-detail div#titles{
+display: inline-block;
+margin:-30px 0px 0px 110px;
+position:relative;
+top:-45px;
+left:0px;
+width:300px;
+}
+div#content div#main-content div#events-lists div#event-container div#event-detail div#dates{
+display: inline-block;
+margin:0px 0px 0px 0px;
+position:relative;
+top:-45px;
+left:100px;
+}
+
+div#content div#main-content div#events-lists div#event-container div#buttons input{	
+background-color: rgb(12,88,164);
+color:#ffffff;
+padding:3px 9px 3px 9px;
+margin-top:20px;
+margin-bottom:20px;
+margin-left:20px;
+border-color:rgb(12,88,164);
+border-radius: 3px 3px 3px 3px;
+}
+div#content div#main-content div#events-lists div#event-container div#buttons div#delete-button{	
+margin-top:-67px;
+margin-left:70px;
+}
+
+div#content div#main-content div#events-lists div#event-container p{	
+padding-left:20px;
+}
+
+
+
+

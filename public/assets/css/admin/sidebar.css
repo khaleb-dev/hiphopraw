@@ -1,0 +1,100 @@
+div#center div#sidebar-left,
+div#center div#content.with-sidebar-left{
+    float: left;
+}
+
+div#center div#sidebar-left{
+    width: 280px;
+    margin-right: 20px;
+	border:1px solid #2d2d2d;
+}
+
+div#center div#content.with-sidebar-left{
+    width: 696px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box{
+    /*margin: 0 25px 30px;*/
+	margin:0px;
+    padding: 0;
+}
+.profile-control-inner{
+	padding:10px 25px;
+    background-color: rgb(38,38,38);
+}
+.profile-control-bottom{
+	margin:0;
+}
+.profile-control-divider{
+	border-top:1px solid #2d2d2d;
+}
+div#center div#sidebar-left div.sidebar-content.content-box h3{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #ee0000;
+    font-family: arial;
+    font-size: 16px;
+    margin: 0 0 20px;
+    padding: 8px 0 0;
+    text-align: center;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content a#admin-profile-picture {
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content a#admin-profile-picture img{
+	border-radius:500px;
+	width:213px;
+	height:213px;
+	border:1px solid #fff;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links {
+    margin: 15px 0 50px;
+    padding: 15px;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links li {
+    padding-left: 0;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links li a {
+    border-color: #333333 #161616 #161616 #333333;
+    border-style: solid;
+    border-width: 1px;
+    color: #9f9f9f;
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px 15px;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links li p {
+    border-color: #333333 #161616 #161616 #333333;
+    border-style: solid;
+    border-width: 1px;
+    color: #9f9f9f;
+    margin-bottom: 10px;
+    padding: 5px 15px;
+    font-size: 14px;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links a i {
+    margin-right: 10px;
+}
+div#center div#sidebar-left div#profile-control ul#admin-profile-links li a span:hover {
+    color: #e11e1c;
+}
+
+div#center div#sidebar-left{
+background:url('../../img/profile-sidebar-bg.png') no-repeat 50% 95%;
+background-color: rgb(29,29,29);
+}
+div#profile-control ul{
+    padding: 20px 0 0;
+    margin-top: 15px;
+}
+div#center div#sidebar-left{
+    margin-bottom: 30px;
+}
+#admin-profile-links hr{
+    border: none;
+    border-top: 2px solid rgb(45,45,45);
+}
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+    padding:0;
+}

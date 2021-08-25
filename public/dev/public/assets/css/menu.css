@@ -1,0 +1,68 @@
+#blue-nav-container{
+    display: inline-block;
+    width: 1280px;
+    margin:0;
+    /*padding-left:65px;;*/
+    list-style-type:none;
+    height:30px;
+    font-size:14px;
+    font-weight:bold;
+    background: #005ab0;
+    font-family:'PT Sans';
+    border-bottom:1px solid #000000;
+    border-top:1px solid #000000;
+}
+
+#inner-menu
+{
+    display: inline;
+    width: 700px;
+    margin-left: 80px;
+    float: left;
+}
+#login-info{
+    display: inline;
+    float: right;
+    margin-right: 98px;
+    margin-top: 6px;
+    text-align: right;
+}
+#login-info li{
+    display:inline;
+    float:left;
+    margin:0;
+    padding:5px;
+}
+#login-info a, #login-info p{
+    color: #d3d3d3;
+}
+#inner-menu li
+{
+    display:block;
+    float:left;
+    margin:0;
+    padding:0;
+}
+#inner-menu p{
+    font-size: 10px;
+}
+#inner-menu li a
+{
+    display:block;
+    float:left;
+    color:#999999;
+    text-decoration:none;
+    font-weight:bold;
+    padding: 8px 12px 0;
+}
+
+#inner-menu li a:hover
+{	
+    color:#FFFFFF;
+}
+#inner-menu li a.active
+{	
+    color:#FFFFFF;
+    height:30px;
+    background:transparent url(../img/nav_bg.png) 50% 24px no-repeat;		
+}

@@ -1,0 +1,341 @@
+div#center div#sidebar-left div.sidebar-content.content-box div.content{
+    padding: 0;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content a.starred-link{
+    background: url('../../img/small_star.png') no-repeat left center;
+    padding-left: 20px;
+    color: #e11e1c;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content > img{
+    display: block;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p{
+    margin: 0px 0px 5px 0px;
+    font-size: 12px;
+    font-family: arial, sans-serif;
+    color: #afafaf;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p span{
+    color: #e11e1c;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: .8em;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.location{
+    font-size: 14px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.member-since,
+div#center div#sidebar-left div.sidebar-content.content-box div.content div.buttons{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dcdcdc;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content h4{
+    color: #cccccc;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin: 10px 0 5px 0px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.winner-name{
+    font-weight: bolder;
+    font-size: 14px;
+    color: #000;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content p.views{
+    border-bottom: solid 1px #dfdfdf;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+div#center div#sidebar-left div.sidebar-content.content-box div.content div p.votes{
+    float: left;
+    color: #e11e1c;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+div#center div#sidebar-left a.button.grey{
+    background-image: none;
+    background-color: #f4f4f4;
+    border: solid 1px #e2e2e2;
+    color: #000;
+    font-size: 9px;
+    text-transform: none;
+}
+
+div#center div#sidebar-left a.button.add{
+    background-image: url("../../img/icons/add_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+div#center div#sidebar-left a.button.send-message{
+    background-image: url("../../img/icons/message_icon.png");
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+div#center div#content.with-sidebar-left h3{
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #c4c4c4;
+}
+
+div#center div#content.with-sidebar-left div.items{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content.with-sidebar-left div.items div.item {
+    margin-bottom: 15px;
+    margin-right: 28px;	
+}
+
+div#center div#content.with-sidebar-left div.items div.item:last-child {
+    margin-right: 0;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3{
+    color: #000000;
+    font-size: 14px;
+    margin: 0 0 0 5px;
+    text-align: left;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a{
+    text-decoration: none;
+    color: #000;
+}
+
+div#center div#content.with-sidebar-left div.items div.item h3 a:hover{
+    color: #E11E1C;
+}
+
+div#center div#content.with-sidebar-left div.items div.item p.views{
+    font-size: 10px;
+    color: #afafaf;
+    margin: 2px 0 2px 0;
+    font-weight: lighter;
+}
+
+div#center div#content div#users{
+    font-family: arial, sans-serif;
+}
+
+div#center div#content div h2 {
+    margin-top: 0px;
+}
+
+div#content-index {
+    border-bottom: 2px solid #C4C4C4;
+    margin-bottom: 10px;
+}
+
+div#content-index > p {
+    float: left;
+    color: #C4C4C4;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+div#content-index ul {
+    color: #C4C4C4;
+    float: right;
+    font-size: 10px;
+    list-style: none outside none;
+    margin-bottom: 1px;
+    margin-right: 2px;
+    padding-top: 5px;
+}
+
+div#content-index ul li {
+    border-right: 1px solid #C4C4C4;
+    float: left;
+    line-height: 0.8em;
+    margin: 0 0 0 1px;
+    padding: 0 4px;
+}
+
+div#content-index ul li a {
+    text-decoration: none;
+    color: #C4C4C4;
+}
+
+div#content-index ul li a:hover {
+    color: #E92B2D;
+}
+
+div#content-index ul li#description { 
+    border: none;
+    color: #E11E1C;
+}
+
+div#users p.highlight-box {
+    color: #E11E1C;
+    font-family: ihatecomicsans,sans-serif;
+    letter-spacing: 1px;
+    margin: 10px 0 30px;
+}
+
+.side-menu-item {
+    color: #e11e1c;
+}
+
+div.actions{
+    font-size: .7em;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+
+div.actions a{
+    color: #999;
+    text-decoration: none;
+    display: block;
+    width: 49.5%;
+}
+
+div.actions a:hover{
+    color: #e11e1c;
+}
+
+div.actions a.green:hover{
+    color: #008000;
+}
+
+div.actions a i{
+    display: inline-block;
+    margin-right: 2px;
+    color: #e11e1c;
+    font-size: .7em;
+    line-height: 16px;
+}
+
+div.actions a.green i{
+    color: #008000;
+}
+
+div#banner-ads p#publish,
+div#notifications p#publish{
+    text-align: center;
+}
+
+div#banner-ads p#publish input[type="submit"], 
+div#notifications p#publish input[type="submit"] {
+    border: medium none;
+    font-size: 19px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+div#notifications {
+    margin-top: 20px;
+}
+
+div#notifications textarea {
+    width: 70%;
+    height: 100px;
+}
+
+div#banner-ads table,
+div#notifications table {
+    font-family: arial,sans-serif;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+div#banner-ads table thead,
+div#notifications table thead {
+    text-align: center;
+}
+
+div#banner-ads table .table-heading,
+div#notifications table .table-heading {
+    background-color: #EFEFEF;
+    height: 30px;
+}    
+
+
+div#banner-ads table .text-left,
+div#notifications table .text-left {
+    text-align: left;
+}
+
+div#banner-ads table .text-right,
+div#notifications table .text-right {
+    text-align: right;
+    padding-right: 20px;
+}
+#banner-ads, #notifications{
+        border: 2px solid #000;
+    background: rgb(29,29,29);
+}
+#banner-ads h2, #notifications h2{
+        margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 20px;
+    border-bottom: 2px solid #000;
+}
+#banner-ads .items label, #notifications label{
+    color: #fff;
+}
+.content-box form{
+    margin-top: 30px;
+}
+.content-box form input[type="text"], .content-box form select, #notifications textarea{
+    background-color: rgb(20,20,20) !important;
+    color: rgb(63,63,63);
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 5px;
+}
+#publish, #publish2{
+    display: inline;
+    margin-left: 20px;
+}
+#publish .button, #publish2 .button{
+    width: 200px;
+    border: none;
+    height: 30px;
+    margin-top:-5px;
+}
+#publish2 .button{
+    width: 150px;
+    margin-top: 0;
+}
+.banner-form th{
+    background-color: rgb(26,26,26);
+    color:rgb(88,88,88);
+    padding: 17px 10px;
+    border-top: 2px solid #000 !important;
+    border-bottom: 2px solid #000 !important;
+}
+.banner-form td{
+    padding: 20px 10px;
+    border-top: none !important;
+    border-bottom: 2px solid #000;
+    color: #fff;
+}
+.table tbody tr:hover td, .table tbody tr:hover th{
+    background-color: rgb(28,28,28);
+}
+.banner-form .button{
+    border:none;
+    padding: 8px 25px;
+}

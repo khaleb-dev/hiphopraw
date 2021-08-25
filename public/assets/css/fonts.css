@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'cardoregular';
+    src: url('../fonts/cardo104s-webfont.eot');
+    src: url('../fonts/cardo104s-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/cardo104s-webfont.woff') format('woff'),
+    url('../fonts/cardo104s-webfont.ttf') format('truetype'),
+    url('../fonts/cardo104s-webfont.svg#cardoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'accentregular';
+    src: url('../fonts/accent_sf.eot');
+    src: url('../fonts/accent_sf.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/accent_sf.woff') format('woff'),
+    url('../fonts/accent_sf.ttf') format('truetype'),
+    url('../fonts/accent_sf.svg#cardoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ihatecomicsans';
+    src: url('../fonts/IHATCS.eot');
+    src: url('../fonts/IHATCS.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/IHATCS.woff') format('woff'),
+    url('../fonts/IHATCS.ttf') format('truetype'),
+    url('../fonts/IHATCS.svg#cardoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

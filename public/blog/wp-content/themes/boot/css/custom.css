@@ -1,0 +1,133 @@
+body{
+	background:url('../img/body-bg.jpg');
+}
+
+header{
+	background:#fff;
+}
+.logo-wrap{
+	
+}
+.light-blue {
+    color: #54BDD2;
+}
+.pink {
+    color: #BE256E;
+}
+.light-grn {
+    color: #45C797;
+}
+.yellow {
+    color: #EDBB48;
+}
+.blog-title{
+	background:#fd7d7c;	
+	border-top:#2b7485 solid 1px;
+	padding: 0 !important;
+}
+.blog-title .container{
+	background:rgb(20,20,20);
+	color:#fff;
+	width: 100%;
+	margin:0;
+}
+.blog-body{
+	margin-top:30px;
+	min-height: 150px;
+}
+
+.no-pad-left{
+	padding-left:0px;
+}
+.ads div{
+	padding-left:0px;
+	margin-bottom:5px;
+}
+.ads div img{
+	width:125px;
+	max-width:100%;
+	height:124px;
+}
+.art-info{
+	padding:5px 0;
+	border-top:1px dotted #ccc;
+	border-bottom:1px dotted #ccc;
+	margin-bottom:15px;
+}
+.sidebar-item{
+	margin-bottom:25px;
+}
+.sidebar-item h4{
+	background:url('../img/border-small.jpg') right no-repeat;
+}
+.art-divder{
+	background:url('../img/border-big.jpg') 100% 100% repeat-x;
+	margin:15px;
+}
+.blog-footer{
+	background:rgb(20,20,20);	
+}
+.blog-footer .container{
+	background:rgb(20,20,20);
+	color:#fff;
+	padding:15px 0px 50px 0px;
+	width: 100%;
+}
+.social-icons img{
+	border:1px solid #26849e;
+	border-radius:2px;
+}
+a.white{
+	color:#fff;
+	text-decoration:none;
+}
+#commentform #submit{
+	background:none;
+	padding:10px;
+	border:1px solid #ccc;
+	border-radius:3px;
+	background:#35B0CF ;
+	color:#fff;
+}
+#commentform #submit:hover{
+	background:#0da6cd;
+}
+#comment{
+	width:100%;max-width:400px;
+	/*min-width:400px;*/
+}
+.blog-body{
+	margin-bottom:50px;
+}
+.blog-footer h3,.blog-title h2,.logo-wrap h3{
+	color: red;
+}
+.comment-content img{
+	max-width: 660px;
+}
+.avatar{
+	border-radius:500px;
+}
+.comments-area .comment-list{
+	margin-left:0px; padding-left:0px;
+}
+.comments-area .comment-list li{
+	background:#fff;padding:10px; list-style-type:none;margin-bottom:10px;
+}
+.container .page-header{
+	background:#fff;padding:10px;
+}
+article .entry-header{
+	background:none;
+}
+
+header{
+	border-top:5px solid #000;
+}
+a{color:#ff0100;}
+a:hover{color:#ff0100;}
+h3 a{ color:#464646;}
+h3 a:hover{ color:#464646;}
+a.white:hover{color:#fff}
+#commentform label{width:100px;}
+.single-art img , .col-md-9 img{max-width:100%;}

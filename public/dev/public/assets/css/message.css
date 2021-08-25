@@ -1,0 +1,299 @@
+
+.message-links-container {
+    background-color: #FFFFFF;
+    padding-bottom: 20px;
+    padding-left: 15px;
+}
+
+.message-links-container p {
+    color: black;
+    display: inline-block;
+    font-family: 'PT Sans Caption';
+    font-size: 22.83px;
+    margin-top: 10px;
+}
+
+.message-links-separator {
+    background-color: white;
+    background-image: url("../img/sign_up_bg.png");
+    background-position: center center;
+    background-repeat: repeat-x;
+    display: inline-block;
+    height: 10px;
+    width: 100%;
+}
+
+#dating-concierge-message {
+    background-image: url("../img/datingconceirgebg-2.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    height: 254px;
+    width: 264px;
+}
+
+#dating-concierge-message div#contact-dating-agent {
+    color: white;
+    font-family: pt sans caption;
+    font-size: 22px;
+    margin: 150px auto 10px;
+    text-align: center;
+    width: 75%;
+}
+
+#dating-concierge-message div#click-here {
+    background: linear-gradient(to bottom, #0084FF 0%, #002E59 100%) repeat scroll 0 0 transparent;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    padding-top: 3px;
+    text-align: center;
+    width: 100px;
+}
+
+.center-container-detail {
+    background-color: #FFFFFF;
+    display: inline-block;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.center-container-detail .title {
+    width: 97%;
+}
+.center-container-detail .title p {
+    font-weight: bold;
+    font-family: 'PT Sans Caption';
+    font-size: 15px;
+}
+/*//------------Send Message --*/
+
+#send_Message_Container{
+    background-color: #FFFFFF;
+    display: inline-block;
+    width: 500px;
+    clear: both;
+}
+#send_Message_Inner_Container{
+    background-color: #eaeaea;
+    display: inline-block;
+    padding-left: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 400px;
+    margin: 25px;
+    clear: both;
+}
+#send_Message_Inner_Container ul li p{
+    float: left;
+    /*position: fixed;*/
+    width: 80px;
+    text-align: right;
+}
+#send_Message_Inner_Container ul li small {
+    color:#a5a5a5;  
+    width: 220px;
+    font-size:12px;  
+    text-transform:none;  
+    font-family:Helvetica;  
+    position:relative;  
+    left:5px;  
+    top:0px;  
+    font-style: normal;
+    font-weight: normal;
+}
+#send_Message_Inner_Container form input[type="text"] {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #BFBFBF;
+    border-radius: 0 0 0 0;
+    width: 73%;
+}
+#send_Message_Inner_Container form textarea  {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #BFBFBF;
+    border-radius: 0 0 0 0;
+    width: 73%;
+}
+#send_Message_button {
+    margin-right: 20px;
+    float: right;
+    width: 70px;
+}
+#inbox_container{
+    display: inline-block;
+    font-family: helvetica;
+    font-size: 13px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    width: 95%;
+}
+#inbox_container .content {  
+    border-top: solid 0px #000;
+    background-color:#ffffff;  
+    /*padding:10px;*/  
+    clear: both;
+}
+#table-heading {
+    background-color: #CECECE;
+    border-bottom:2px;
+    font-weight: bold;
+    height: 30px;
+}
+#bottom-line{
+    /*margin-left: 10px;*/
+    width: 100%;
+    display: inline-block;
+    border-top: solid 2px #A5A5A5;
+}
+.table-footer{
+    padding-top: 10px;
+    display: inline;
+    width: 230px;
+    float: right;
+    margin-bottom: 20px;
+
+}
+
+.table-footer label{
+    color: #000;
+}
+
+.table-footer input[type="text"] {
+    background: white none;
+    border: 1px solid #BFBFBF;
+    border-radius: 0;
+    width: 40px;
+    height: 20px;
+}
+.table-footer a{
+    color: #A5A5A5;
+}
+.table-footer a:hover{
+    cursor: pointer;
+    color: #002E59;
+}
+.clstd{
+    float: right;
+}
+.tablerow{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-bottom: solid 1px #CECECE;
+    /*margin-left: 10px;*/
+    padding-bottom: 10px;
+}
+
+.first{ font-weight: bold; padding-top:5px; }
+.first a {color: #000;}
+.second{font-weight: normal; color: #A5A5A5;}
+
+#msgright{
+    padding-top: 5px;
+    display: inline;
+    width: 660px;;
+    float: right;
+    height: 20px;
+    font-family:'PT Sans';  
+    font-style: italic;
+    background-color:#eaeaea;
+}
+#msgright-small{
+    padding-top: 5px;
+    display: inline;
+    width: 415px;;
+    float: right;
+    height: 20px;
+    font-family:'PT Sans';  
+    font-style: italic;
+    background-color:#eaeaea;
+}
+#delete{
+    display: inline;
+    float: right;
+    width: 20px;
+    height: 20px;
+    /*background-color: red;*/
+}
+#delbtn{
+    width: 10px;
+    height: 20px;
+    border: none;
+    background-image: url("../img/x.png");
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+#msgright_subject{
+    display: inline-block;
+    width: 660px;;
+    float: right;
+    font-family:'PT Sans';  
+    margin-top: 10px;
+}
+#msgright_subject-small{
+    display: inline-block;
+    width: 415px;
+    float: right;
+    font-family:'PT Sans';  
+    margin-top: 10px;
+    font-style: italic;
+}
+#msgright-small span{ 
+    float: left;
+    width: auto;
+    color: #0084FF;
+    padding-left: 10px;
+}
+#msgright span{ 
+    float: left;
+    width: auto;
+    color: #0084FF;
+    padding-left: 10px;
+}
+#msg-p{
+    float: left;
+    width: auto;
+}
+#msg-p p{padding-left: 10px;}
+#msgright_subject span{ 
+    color: #A5A5A5;
+    padding-left: 10px;
+    line-height:20px;
+    font-style: italic;
+}
+#msgright_subject-small span{ 
+    color: #A5A5A5;
+    padding-left: 10px;
+}
+#msgright_subject p{
+    float: right;
+    width: 87%;
+    text-align: justify;
+    color: #000;
+    padding-right: 15px;
+    line-height:20px;
+}
+#msgright_subject-small p{
+    float: right;
+    width: 85%;
+    text-align: justify;
+    color: #000;
+}
+.msg-image{
+    display: inline-block;
+    float: left;
+    width: 80px;
+    background: #fff;
+}
+#view-all-conv{
+    display: inline;
+    float: right;
+}

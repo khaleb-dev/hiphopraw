@@ -1,0 +1,40 @@
+#join-today{
+    /*display: inline-block;*/
+    /*width: 264px;*/
+    height: 245px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+#text-info{
+    display: inline-block;
+    width: 244px;
+    height: 34px;
+    margin: 5px 15px;
+}
+#text-info h2{
+    padding:0 3px;
+    font-size: 12px;
+    color: #505050;
+    text-align: justify;
+    text-transform: none;
+}
+
+#signup-title div#complete-signup-text{
+    display: inline;
+    float: right;
+    margin: 0px 0px;
+    width: 46.83%;
+}
+#signup-title div#complete-signup-text p {
+    font-size: 15px;
+    color: #888888;
+    text-decoration: underline;
+    font-style: italic;
+    text-transform:none;
+    margin-top: 15px;
+}
+#link-buttons-container{
+    margin-top: 5px;
+    width: 83px;
+}
