@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Oil;
@@ -71,7 +69,7 @@ class Generate_Admin extends Generate_Scaffold
 		foreach ($default_files as $file)
 		{
 			// check if there's a template in app, and if so, use that
-			if (file_exists(APPPATH.'views/'.static::$view_subdir.$file['source']))
+			if (is_file(APPPATH.'views/'.static::$view_subdir.$file['source']))
 			{
 				Generate::create(APPPATH.$file['location'], file_get_contents(APPPATH.'views/'.static::$view_subdir.$file['source']), $file['type']);
 			}

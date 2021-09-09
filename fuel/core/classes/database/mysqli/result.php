@@ -1,19 +1,20 @@
 <?php
 /**
- * MySQL database result.
+ * Part of the Fuel framework.
  *
- * @package    Fuel/Database
- * @category   Query/Result
- * @author     Kohana Team
- * @copyright  (c) 2008-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package    Fuel
+ * @version    1.8
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2016 Fuel Development Team
+ * @copyright  2008 - 2009 Kohana Team
+ * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
 class Database_MySQLi_Result extends \Database_Result
 {
-
 	protected $_internal_row = 0;
 
 	public function __construct($result, $sql, $as_object)
@@ -50,7 +51,9 @@ class Database_MySQLi_Result extends \Database_Result
 	public function current()
 	{
 		if ($this->_current_row !== $this->_internal_row and ! $this->seek($this->_current_row))
+		{
 			return false;
+		}
 
 		// Increment internal row for optimization assuming rows are fetched in order
 		$this->_internal_row++;

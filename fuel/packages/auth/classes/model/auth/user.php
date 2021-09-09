@@ -1,16 +1,18 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Auth\Model;
+
+require_once __DIR__.'/../../../normalizedrivertypes.php';
 
 class Auth_User extends \Orm\Model
 {
@@ -18,6 +20,11 @@ class Auth_User extends \Orm\Model
 	 * @var  string  connection to use
 	 */
 	protected static $_connection = null;
+
+	/**
+	 * @var  string  write connection to use
+	 */
+    protected static $_write_connection = null;
 
 	/**
 	 * @var  string  table name to overwrite assumption
@@ -28,86 +35,68 @@ class Auth_User extends \Orm\Model
 	 * @var array	model properties
 	 */
 	protected static $_properties = array(
-		'id',
+		'id'              => array(),
 		'username'        => array(
-			'label'		  => 'auth_model_user.name',
-			'default' 	  => 0,
-			'null'		  => false,
-			'validation'  => array('required', 'max_length' => array(255))
+			'label'       => 'auth_model_user.name',
+			'default'     => 0,
+			'null'        => false,
+			'validation'  => array('required', 'max_length' => array(255)),
 		),
 		'email'           => array(
-			'label'		  => 'auth_model_user.email',
-			'default' 	  => 0,
-			'null'		  => false,
-			'validation'  => array('required', 'valid_email')
+			'label'       => 'auth_model_user.email',
+			'default'     => 0,
+			'null'        => false,
+			'validation'  => array('required', 'valid_email'),
 		),
-		'facebook_link'   => array(
-			 'label'      => 'auth_model_user.facebook_link',
-			 'default' 	  => "",
-			 'null'		  => false,
-			),
-
-
-		'instagram_link'   => array(
-			  'label'      => 'auth_model_user.instagram_link',
-			  'default' 	  => "",
-			  'null'		  => false,
-			),
-        'stage_name'   => array(
-            'label'      => 'auth_model_user.stage_name',
-            'default' 	  => "",
-            'null'		  => false,
-        ),
-
-		 'twitter_link'   => array(
-			  'label'      => 'auth_model_user.twitter_link',
-			  'default' 	  => "",
-			  'null'		  => false,
-			),
+		'group'	          => array(
+			'label'       => 'auth_model_user.group_id',
+			'default'     => 0,
+			'null'        => false,
+			'form'        => array('type' => 'select'),
+			'validation'  => array('required', 'match_pattern' => array('/^[1-9]\d*$/')),
+		),
 		'group_id'        => array(
-			'label'		  => 'auth_model_user.group_id',
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => 'select'),
-			'validation'  => array('required', 'is_numeric')
-		),
-		'is_logged_in'    => array(
-			'label'		  => 'auth_model_user.is_logged_in',
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => 'select'),
-			'validation'  => array('required', 'is_numeric')
+			'label'       => 'auth_model_user.group_id',
+			'default'     => null,
+			'null'        => true,
+			'form'        => array('type' => 'select'),
+			'validation'  => array('match_pattern' => array('/^[1-9]\d*$/')),
 		),
 		'password'        => array(
-			'label'		  => 'auth_model_user.password',
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => 'password'),
-			'validation'  => array('min_length' => array(8), 'match_field' => array('confirm'))
+			'label'       => 'auth_model_user.password',
+			'default'     => 0,
+			'null'        => false,
+			'form'        => array('type' => 'password'),
+			'validation'  => array('min_length' => array(8), 'match_field' => array('confirm')),
 		),
-		'last_login'	  => array(
-			'form'  	  => array('type' => false),
+		'profile_fields'  => array(
+			'default'     => array(),
+			'data_type'   => 'serialize',
+			'form'        => array('type' => false),
+		),
+		'last_login'      => array(
+			'form'        => array('type' => false),
 		),
 		'previous_login'  => array(
-			'form'  	  => array('type' => false),
+			'form'        => array('type' => false),
 		),
-		'login_hash'	  => array(
-			'form'  	  => array('type' => false),
+		'login_hash'      => array(
+			'form'        => array('type' => false),
 		),
 		'user_id'         => array(
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => false),
+			'default'     => 0,
+			'null'        => false,
+			'form'        => array('type' => false),
 		),
 		'created_at'      => array(
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => false),
+			'default'     => 0,
+			'null'        => false,
+			'form'        => array('type' => false),
 		),
 		'updated_at'      => array(
-			'default' 	  => 0,
-			'null'		  => false,
-			'form'  	  => array('type' => false),
+			'default'     => 0,
+			'null'        => false,
+			'form'        => array('type' => false),
 		),
 	);
 
@@ -118,19 +107,19 @@ class Auth_User extends \Orm\Model
 		'Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
 			'property' => 'created_at',
-			'mysql_timestamp' => false
+			'mysql_timestamp' => false,
 		),
 		'Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_update'),
 			'property' => 'updated_at',
-			'mysql_timestamp' => false
+			'mysql_timestamp' => false,
 		),
 		'Orm\\Observer_Typing' => array(
-			'events' => array('after_load', 'before_save', 'after_save')
+			'events' => array('after_load', 'before_save', 'after_save'),
 		),
 		'Orm\\Observer_Self' => array(
 			'events' => array('before_insert', 'before_update'),
-			'property' => 'user_id'
+			'property' => 'user_id',
 		),
 	);
 
@@ -170,6 +159,12 @@ class Auth_User extends \Orm\Model
 			'key_to'   => 'user_id',
 			'cascade_delete' => false,
 		),
+		'providers' => array(
+			'model_to' => 'Model\\Auth_Provider',
+			'key_from' => 'id',
+			'key_to'   => 'parent_id',
+			'cascade_delete' => true,
+		),
 	);
 
 	/**
@@ -200,17 +195,63 @@ class Auth_User extends \Orm\Model
    	public static function _init()
 	{
 		// auth config
-		\Config::load('ormauth', true);
+		\Config::load('auth', true);
 
-		// set the connection this model should use
-		static::$_connection = \Config::get('ormauth.db_connection');
+		// get the auth driver in use
+		$drivers = normalize_driver_types();
 
-		// set the models table name
-		static::$_table_name = \Config::get('ormauth.table_name', 'users');
+		// modify the model definition based on the driver used
+		if (in_array('Simpleauth', $drivers))
+		{
+			// remove properties not in use
+			unset(static::$_properties['group_id']);
+			unset(static::$_properties['previous_login']);
+			unset(static::$_properties['user_id']);
 
-		// set the relations through table names
-		static::$_many_many['roles']['table_through'] = \Config::get('ormauth.table_name', 'users').'_user_roles';
-		static::$_many_many['permissions']['table_through'] = \Config::get('ormauth.table_name', 'users').'_user_permissions';
+			// remove relations
+			static::$_eav        = array();
+			static::$_belongs_to = array();
+			static::$_has_many   = array();
+			static::$_many_many  = array();
+
+			// remove observers
+			unset(static::$_observers['Orm\\Observer_Self']);
+
+			// simpleauth config
+			\Config::load('simpleauth', true);
+
+			// set the connection this model should use
+			static::$_connection = \Config::get('simpleauth.db_connection');
+
+			// set the write connection this model should use
+			static::$_write_connection = \Config::get('simpleauth.db_write_connection') ?: static::$_connection;
+
+			// set the models table name
+			static::$_table_name = \Config::get('simpleauth.table_name', 'users');
+		}
+
+		elseif (in_array('Ormauth', $drivers))
+		{
+			// remove properties not in use
+			unset(static::$_properties['group']);
+			unset(static::$_properties['profile_fields']);
+
+			// ormauth config
+			\Config::load('ormauth', true);
+
+			// set the connection this model should use
+			static::$_connection = \Config::get('ormauth.db_connection');
+
+			// set the write connection this model should use
+			static::$_write_connection = \Config::get('ormauth.db_write_connection') ?: static::$_connection;
+
+			// set the models table name
+			static::$_table_name = \Config::get('ormauth.table_name', 'users');
+
+			// set the relations through table names
+			static::$_many_many['roles']['table_through'] = \Config::get('ormauth.table_name', 'users').'_user_roles';
+			static::$_many_many['permissions']['table_through'] = \Config::get('ormauth.table_name', 'users').'_user_permissions';
+		}
 
 		// model language file
 		\Lang::load('auth_model_user', true);
@@ -222,7 +263,15 @@ class Auth_User extends \Orm\Model
 	public function _event_before_insert()
 	{
 		// assign the user id that lasted updated this record
-		$this->user_id = ($this->user_id = \Auth::get_user_id()) ? $this->user_id[1] : 0;
+		$this->user_id = 0;
+		foreach (\Auth::verified() as $driver)
+		{
+			if (($id = $driver->get_user_id()) !== false)
+			{
+				$this->user_id = $id[1];
+				break;
+			}
+		}
 	}
 
 	/**

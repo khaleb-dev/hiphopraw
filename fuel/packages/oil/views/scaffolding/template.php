@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="span12">
+		<div class="col-md-12">
 			<h1><?php echo $title; ?></h1>
 			<hr>
 <?php if (Session::get_flash('success')): ?>
@@ -22,7 +22,7 @@
 			</div>
 <?php endif; ?>
 <?php if (Session::get_flash('error')): ?>
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<strong>Error</strong>
 				<p>
 				<?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
@@ -30,13 +30,13 @@
 			</div>
 <?php endif; ?>
 		</div>
-		<div class="span12">
+		<div class="col-md-12">
 <?php echo $content; ?>
 		</div>
 		<footer>
 			<p class="pull-right">Page rendered in {exec_time}s using {mem_usage}mb of memory.</p>
 			<p>
-				<a href="http://fuelphp.com">FuelPHP</a> is released under the MIT license.<br>
+				<a href="https://fuelphp.com">FuelPHP</a> is released under the MIT license.<br>
 				<small>Version: <?php echo e(Fuel::VERSION); ?></small>
 			</p>
 		</footer>

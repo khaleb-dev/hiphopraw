@@ -3,16 +3,14 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
-
-
 
 /**
  * Validation error
@@ -24,7 +22,6 @@ namespace Fuel\Core;
  */
 class Validation_Error extends \Exception
 {
-
 	/**
 	 * Load validation Language file when errors are thrown
 	 */
@@ -56,10 +53,10 @@ class Validation_Error extends \Exception
 	/**
 	 * Constructor
 	 *
-	 * @param  array  Fieldset_Field object
-	 * @param  mixed  value that failed to validate
-	 * @param  array  contains rule name as key and callback as value
-	 * @param  array  additional rule params
+	 * @param  Fieldset_Field  $field     object
+	 * @param  mixed           $value     value that failed to validate
+	 * @param  array           $callback  contains rule name as key and callback as value
+	 * @param  array           $params    additional rule params
 	 */
 	public function __construct(Fieldset_Field $field, $value, $callback, $params)
 	{
@@ -74,9 +71,9 @@ class Validation_Error extends \Exception
 	 *
 	 * Shows the error message which can be taken from loaded language file.
 	 *
-	 * @param   string  HTML to prefix error message
-	 * @param   string  HTML to postfix error message
-	 * @param   string  Message to use, or false to try and load it from Lang class
+	 * @param   string  $msg    HTML to prefix error message
+	 * @param   string  $open   HTML to postfix error message
+	 * @param   string  $close  Message to use, or false to try and load it from Lang class
 	 * @return  string
 	 */
 	public function get_message($msg = false, $open = '', $close = '')
@@ -107,7 +104,7 @@ class Validation_Error extends \Exception
 	/**
 	 * Replace templating tags with values
 	 *
-	 * @param   error message to parse
+	 * @param   mixed  $msg  error message to parse
 	 * @return  string
 	 */
 	protected function _replace_tags($msg)
@@ -178,5 +175,3 @@ class Validation_Error extends \Exception
 		return $this->get_message();
 	}
 }
-
-

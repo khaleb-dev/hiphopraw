@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -21,7 +21,6 @@ namespace Fuel\Core;
  */
 class Arr
 {
-
 	/**
 	 * Gets a dot-notated key from an array, with a default value if it does
 	 * not exist.
@@ -51,6 +50,13 @@ class Arr
 				$return[$k] = static::get($array, $k, $default);
 			}
 			return $return;
+		}
+
+		is_object($key) and $key = (string) $key;
+
+		if (array_key_exists($key, $array))
+		{
+			return $array[$key];
 		}
 
 		foreach (explode('.', $key) as $key_part)
@@ -155,11 +161,31 @@ class Arr
 	 */
 	public static function key_exists($array, $key)
 	{
+		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
+		{
+			throw new \InvalidArgumentException('First parameter must be an array or ArrayAccess object.');
+		}
+
+		is_object($key) and $key = (string) $key;
+
+		if ( ! is_string($key))
+		{
+			return false;
+		}
+
+		if (array_key_exists($key, $array))
+		{
+			return true;
+		}
+
 		foreach (explode('.', $key) as $key_part)
 		{
-			if ( ! is_array($array) or ! array_key_exists($key_part, $array))
+			if (($array instanceof \ArrayAccess and isset($array[$key_part])) === false)
 			{
-				return false;
+				if ( ! is_array($array) or ! array_key_exists($key_part, $array))
+				{
+					return false;
+				}
 			}
 
 			$array = $array[$key_part];
@@ -243,6 +269,34 @@ class Arr
 	}
 
 	/**
+	 * Converts an array of key => values into a multi-dimensional associative array with the provided field names
+	 *
+	 * @param   array   $array      the array to convert
+	 * @param   string  $key_field  the field name of the key field
+	 * @param   string  $val_field  the field name of the value field
+	 * @return  array
+	 * @throws  \InvalidArgumentException
+	 */
+	public static function keyval_to_assoc($array, $key_field, $val_field)
+	{
+		if ( ! is_array($array) and ! $array instanceof \Iterator)
+		{
+			throw new \InvalidArgumentException('The first parameter must be an array.');
+		}
+
+		$output = array();
+		foreach ($array as $key => $value)
+		{
+			$output[] = array(
+				$key_field => $key,
+				$val_field => $value,
+			);
+		}
+
+		return $output;
+	}
+
+	/**
 	 * Converts the given 1 dimensional non-associative array to an associative
 	 * array.
 	 *
@@ -298,10 +352,10 @@ class Arr
 	 * Flattens a multi-dimensional associative array down into a 1 dimensional
 	 * associative array.
 	 *
-	 * @param   array   the array to flatten
-	 * @param   string  what to glue the keys together with
-	 * @param   bool    whether to reset and start over on a new array
-	 * @param   bool    whether to flatten only associative array's, or also indexed ones
+	 * @param   array   $array   the array to flatten
+	 * @param   string  $glue    what to glue the keys together with
+	 * @param   bool    $reset   whether to reset and start over on a new array
+	 * @param   bool    $indexed whether to flatten only associative array's, or also indexed ones
 	 * @return  array
 	 */
 	public static function flatten($array, $glue = ':', $reset = true, $indexed = true)
@@ -320,7 +374,7 @@ class Arr
 			$curr_key[] = $key;
 			if (is_array($val) and ($indexed or array_values($val) !== $val))
 			{
-				static::flatten_assoc($val, $glue, false);
+				static::flatten($val, $glue, false, $indexed);
 			}
 			else
 			{
@@ -335,9 +389,9 @@ class Arr
 	 * Flattens a multi-dimensional associative array down into a 1 dimensional
 	 * associative array.
 	 *
-	 * @param   array   the array to flatten
-	 * @param   string  what to glue the keys together with
-	 * @param   bool    whether to reset and start over on a new array
+	 * @param   array   $array  the array to flatten
+	 * @param   string  $glue   what to glue the keys together with
+	 * @param   bool    $reset  whether to reset and start over on a new array
 	 * @return  array
 	 */
 	public static function flatten_assoc($array, $glue = ':', $reset = true)
@@ -390,9 +444,9 @@ class Arr
 	/**
 	 * Filters an array on prefixed associative keys.
 	 *
-	 * @param   array   the array to filter.
-	 * @param   string  prefix to filter on.
-	 * @param   bool    whether to remove the prefix.
+	 * @param   array   $array          the array to filter.
+	 * @param   string  $prefix         prefix to filter on.
+	 * @param   bool    $remove_prefix  whether to remove the prefix.
 	 * @return  array
 	 */
 	public static function filter_prefixed($array, $prefix, $remove_prefix = true)
@@ -404,7 +458,7 @@ class Arr
 			{
 				if ($remove_prefix === true)
 				{
-					$key = preg_replace('/^'.$prefix.'/','',$key);
+					$key = preg_replace('/^'.$prefix.'/', '', $key);
 				}
 				$return[$key] = $val;
 			}
@@ -415,8 +469,8 @@ class Arr
 	/**
 	 * Recursive version of PHP's array_filter()
 	 *
-	 * @param   array   the array to filter.
-	 * @param   callback   the callback that determines whether or not a value is filtered
+	 * @param   array     $array    the array to filter.
+	 * @param   callback  $callback the callback that determines whether or not a value is filtered
 	 * @return  array
 	 */
 	public static function filter_recursive($array, $callback = null)
@@ -435,8 +489,8 @@ class Arr
 	/**
 	 * Removes items from an array that match a key prefix.
 	 *
-	 * @param   array   the array to remove from
-	 * @param   string  prefix to filter on
+	 * @param   array   $array  the array to remove from
+	 * @param   string  $prefix  prefix to filter on
 	 * @return  array
 	 */
 	public static function remove_prefixed($array, $prefix)
@@ -454,9 +508,9 @@ class Arr
 	/**
 	 * Filters an array on suffixed associative keys.
 	 *
-	 * @param   array   the array to filter.
-	 * @param   string  suffix to filter on.
-	 * @param   bool    whether to remove the suffix.
+	 * @param   array   $array          the array to filter.
+	 * @param   string  $suffix         suffix to filter on.
+	 * @param   bool    $remove_suffix  whether to remove the suffix.
 	 * @return  array
 	 */
 	public static function filter_suffixed($array, $suffix, $remove_suffix = true)
@@ -468,7 +522,7 @@ class Arr
 			{
 				if ($remove_suffix === true)
 				{
-					$key = preg_replace('/'.$suffix.'$/','',$key);
+					$key = preg_replace('/'.$suffix.'$/', '', $key);
 				}
 				$return[$key] = $val;
 			}
@@ -479,8 +533,8 @@ class Arr
 	/**
 	 * Removes items from an array that match a key suffix.
 	 *
-	 * @param   array   the array to remove from
-	 * @param   string  suffix to filter on
+	 * @param   array   $array   the array to remove from
+	 * @param   string  $suffix  suffix to filter on
 	 * @return  array
 	 */
 	public static function remove_suffixed($array, $suffix)
@@ -498,9 +552,9 @@ class Arr
 	/**
 	 * Filters an array by an array of keys
 	 *
-	 * @param   array   the array to filter.
-	 * @param   array   the keys to filter
-	 * @param   bool    if true, removes the matched elements.
+	 * @param   array  $array   the array to filter.
+	 * @param   array  $keys    the keys to filter
+	 * @param   bool   $remove  if true, removes the matched elements.
 	 * @return  array
 	 */
 	public static function filter_keys($array, $keys, $remove = false)
@@ -524,16 +578,16 @@ class Arr
 	 * Insert value(s) into an array, mostly an array_splice alias
 	 * WARNING: original array is edited by reference, only boolean success is returned
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   int          the numeric position at which to insert, negative to count from the end backwards
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $value     the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   int          $pos       the numeric position at which to insert, negative to count from the end backwards
 	 * @return  bool         false when array shorter then $pos, otherwise true
 	 */
 	public static function insert(array &$original, $value, $pos)
 	{
 		if (count($original) < abs($pos))
 		{
-			\Error::notice('Position larger than number of elements in array in which to insert.');
+			\Errorhandler::notice('Position larger than number of elements in array in which to insert.');
 			return false;
 		}
 
@@ -546,9 +600,9 @@ class Arr
 	 * Insert value(s) into an array, mostly an array_splice alias
 	 * WARNING: original array is edited by reference, only boolean success is returned
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   int          the numeric position at which to insert, negative to count from the end backwards
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $values    the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   int          $pos       the numeric position at which to insert, negative to count from the end backwards
 	 * @return  bool         false when array shorter then $pos, otherwise true
 	 */
 	public static function insert_assoc(array &$original, array $values, $pos)
@@ -567,10 +621,10 @@ class Arr
 	 * Insert value(s) into an array before a specific key
 	 * WARNING: original array is edited by reference, only boolean success is returned
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   string|int   the key before which to insert
-	 * @param   bool         wether the input is an associative array
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $value     the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   string|int   $key       the key before which to insert
+	 * @param   bool         $is_assoc  whether the input is an associative array
 	 * @return  bool         false when key isn't found in the array, otherwise true
 	 */
 	public static function insert_before_key(array &$original, $value, $key, $is_assoc = false)
@@ -579,7 +633,7 @@ class Arr
 
 		if ($pos === false)
 		{
-			\Error::notice('Unknown key before which to insert the new value into the array.');
+			\Errorhandler::notice('Unknown key before which to insert the new value into the array.');
 			return false;
 		}
 
@@ -590,10 +644,10 @@ class Arr
 	 * Insert value(s) into an array after a specific key
 	 * WARNING: original array is edited by reference, only boolean success is returned
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   string|int   the key after which to insert
-	 * @param   bool         wether the input is an associative array
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $value     the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   string|int   $key       the key after which to insert
+	 * @param   bool         $is_assoc  whether the input is an associative array
 	 * @return  bool         false when key isn't found in the array, otherwise true
 	 */
 	public static function insert_after_key(array &$original, $value, $key, $is_assoc = false)
@@ -602,7 +656,7 @@ class Arr
 
 		if ($pos === false)
 		{
-			\Error::notice('Unknown key after which to insert the new value into the array.');
+			\Errorhandler::notice('Unknown key after which to insert the new value into the array.');
 			return false;
 		}
 
@@ -612,10 +666,10 @@ class Arr
 	/**
 	 * Insert value(s) into an array after a specific value (first found in array)
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   string|int   the value after which to insert
-	 * @param   bool         wether the input is an associative array
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $value     the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   string|int   $search    the value after which to insert
+	 * @param   bool         $is_assoc  whether the input is an associative array
 	 * @return  bool         false when value isn't found in the array, otherwise true
 	 */
 	public static function insert_after_value(array &$original, $value, $search, $is_assoc = false)
@@ -624,7 +678,7 @@ class Arr
 
 		if ($key === false)
 		{
-			\Error::notice('Unknown value after which to insert the new value into the array.');
+			\Errorhandler::notice('Unknown value after which to insert the new value into the array.');
 			return false;
 		}
 
@@ -634,10 +688,10 @@ class Arr
 	/**
 	 * Insert value(s) into an array before a specific value (first found in array)
 	 *
-	 * @param   array        the original array (by reference)
-	 * @param   array|mixed  the value(s) to insert, if you want to insert an array it needs to be in an array itself
-	 * @param   string|int   the value after which to insert
-	 * @param   bool         wether the input is an associative array
+	 * @param   array        $original  the original array (by reference)
+	 * @param   array|mixed  $value     the value(s) to insert, if you want to insert an array it needs to be in an array itself
+	 * @param   string|int   $search    the value after which to insert
+	 * @param   bool         $is_assoc  whether the input is an associative array
 	 * @return  bool         false when value isn't found in the array, otherwise true
 	 */
 	public static function insert_before_value(array &$original, $value, $search, $is_assoc = false)
@@ -646,7 +700,7 @@ class Arr
 
 		if ($key === false)
 		{
-			\Error::notice('Unknown value before which to insert the new value into the array.');
+			\Errorhandler::notice('Unknown value before which to insert the new value into the array.');
 			return false;
 		}
 
@@ -657,10 +711,10 @@ class Arr
 	 * Sorts a multi-dimensional array by it's values.
 	 *
 	 * @access	public
-	 * @param	array	The array to fetch from
-	 * @param	string	The key to sort by
-	 * @param	string	The order (asc or desc)
-	 * @param	int		The php sort type flag
+	 * @param	array   $array       The array to fetch from
+	 * @param	string  $key         The key to sort by
+	 * @param	string  $order       The order (asc or desc)
+	 * @param	int	    $sort_flags  The php sort type flag
 	 * @return	array
 	 */
 	public static function sort($array, $key, $order = 'asc', $sort_flags = SORT_REGULAR)
@@ -704,11 +758,12 @@ class Arr
 	}
 
 	/**
-	 * Sorts an array on multitiple values, with deep sorting support.
+	 * Sorts an array on multiple values, with deep sorting support.
 	 *
 	 * @param   array  $array        collection of arrays/objects to sort
 	 * @param   array  $conditions   sorting conditions
-	 * @param   bool   @ignore_case  wether to sort case insensitive
+	 * @param   bool   $ignore_case  whether to sort case insensitive
+	 * @return  array
 	 */
 	public static function multisort($array, $conditions, $ignore_case = false)
 	{
@@ -733,15 +788,15 @@ class Arr
 
 		$args[] = &$array;
 
-		call_user_func_array('array_multisort', $args);
+		call_fuel_func_array('array_multisort', $args);
 		return $array;
 	}
 
 	/**
 	 * Find the average of an array
 	 *
-	 * @param   array    the array containing the values
-	 * @return  numeric  the average value
+	 * @param   array   $array  the array containing the values
+	 * @return  number          the average value
 	 */
 	public static function average($array)
 	{
@@ -757,10 +812,10 @@ class Arr
 	/**
 	 * Replaces key names in an array by names in $replace
 	 *
-	 * @param   array			the array containing the key/value combinations
-	 * @param   array|string	key to replace or array containing the replacement keys
-	 * @param   string			the replacement key
-	 * @return  array			the array with the new keys
+	 * @param   array           $source   the array containing the key/value combinations
+	 * @param   array|string    $replace  key to replace or array containing the replacement keys
+	 * @param   string          $new_key  the replacement key
+	 * @return  array                     the array with the new keys
 	 */
 	public static function replace_key($source, $replace, $new_key = null)
 	{
@@ -798,7 +853,6 @@ class Arr
 	 * - Numeric keys that don't conflict aren't changed, only when a numeric key already exists is the
 	 *   value added using array_push()
 	 *
-	 * @param   array  multiple variables all of which must be arrays
 	 * @return  array
 	 * @throws  \InvalidArgumentException
 	 */
@@ -824,7 +878,7 @@ class Arr
 				// numeric keys are appended
 				if (is_int($k))
 				{
-					array_key_exists($k, $array) ? array_push($array, $v) : $array[$k] = $v;
+					array_key_exists($k, $array) ? $array[] = $v : $array[$k] = $v;
 				}
 				elseif (is_array($v) and array_key_exists($k, $array) and is_array($array[$k]))
 				{
@@ -841,12 +895,54 @@ class Arr
 	}
 
 	/**
-	 * Prepends a value with an asociative key to an array.
+	 * Merge 2 arrays recursively, differs in 2 important ways from array_merge_recursive()
+	 * - When there's 2 different values and not both arrays, the latter value overwrites the earlier
+	 *   instead of merging both into an array
+	 * - Numeric keys are never changed
+	 *
+	 * @return  array
+	 * @throws  \InvalidArgumentException
+	 */
+	public static function merge_assoc()
+	{
+		$array  = func_get_arg(0);
+		$arrays = array_slice(func_get_args(), 1);
+
+		if ( ! is_array($array))
+		{
+			throw new \InvalidArgumentException('Arr::merge_assoc() - all arguments must be arrays.');
+		}
+
+		foreach ($arrays as $arr)
+		{
+			if ( ! is_array($arr))
+			{
+				throw new \InvalidArgumentException('Arr::merge_assoc() - all arguments must be arrays.');
+			}
+
+			foreach ($arr as $k => $v)
+			{
+				if (is_array($v) and array_key_exists($k, $array) and is_array($array[$k]))
+				{
+					$array[$k] = static::merge_assoc($array[$k], $v);
+				}
+				else
+				{
+					$array[$k] = $v;
+				}
+			}
+		}
+
+		return $array;
+	}
+
+	/**
+	 * Prepends a value with an associative key to an array.
 	 * Will overwrite if the value exists.
 	 *
 	 * @param   array           $arr     the array to prepend to
 	 * @param   string|array    $key     the key or array of keys and values
-	 * @param   mixed           $valye   the value to prepend
+	 * @param   mixed           $value   the value to prepend
 	 */
 	public static function prepend(&$arr, $key, $value = null)
 	{
@@ -858,7 +954,8 @@ class Arr
 	 *
 	 * @param   mixed  $needle    what to search for
 	 * @param   array  $haystack  array to search in
-	 * @return  bool   wether the needle is found in the haystack.
+	 * @param   bool   $strict
+	 * @return  bool   whether the needle is found in the haystack.
 	 */
 	public static function in_array_recursive($needle, $haystack, $strict = false)
 	{
@@ -885,7 +982,7 @@ class Arr
 	 * Checks if the given array is a multidimensional array.
 	 *
 	 * @param   array  $arr       the array to check
-	 * @param   array  $all_keys  if true, check that all elements are arrays
+	 * @param   bool   $all_keys  if true, check that all elements are arrays
 	 * @return  bool   true if its a multidimensional array, false if not
 	 */
 	public static function is_multi($arr, $all_keys = false)
@@ -905,9 +1002,10 @@ class Arr
 	 * @param   string  $default   The default value
 	 * @param   bool    $recursive Whether to get keys recursive
 	 * @param   string  $delimiter The delimiter, when $recursive is true
+	 * @param   bool    $strict    If true, do a strict key comparison
 	 * @return  mixed
 	 */
-	public static function search($array, $value, $default = null, $recursive = true, $delimiter = '.')
+	public static function search($array, $value, $default = null, $recursive = true, $delimiter = '.', $strict = false)
 	{
 		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
 		{
@@ -924,7 +1022,7 @@ class Arr
 			throw new \InvalidArgumentException('Expects parameter 5 must be an string.');
 		}
 
-		$key = array_search($value, $array);
+		$key = array_search($value, $array, $strict);
 
 		if ($recursive and $key === false)
 		{
@@ -933,7 +1031,7 @@ class Arr
 			{
 				if (is_array($v))
 				{
-					$rk = static::search($v, $value, $default, true, $delimiter);
+					$rk = static::search($v, $value, $default, true, $delimiter, $strict);
 					if ($rk !== $default)
 					{
 						$keys = array($k, $rk);
@@ -980,9 +1078,9 @@ class Arr
 	/**
 	 * Calculate the sum of an array
 	 *
-	 * @param   array    $array  the array containing the values
-	 * @param   string   $key    key of the value to pluck
-	 * @return  numeric  the sum value
+	 * @param   array   $array  the array containing the values
+	 * @param   string  $key    key of the value to pluck
+	 * @return  number          the sum value
 	 */
 	public static function sum($array, $key)
 	{
@@ -992,5 +1090,199 @@ class Arr
 		}
 
 		return array_sum(static::pluck($array, $key));
+	}
+
+	/**
+	 * Returns the array with all numeric keys re-indexed, and string keys untouched
+	 *
+	 * @param   array  $arr       the array to reindex
+	 * @return  array  re-indexed array
+	 */
+	public static function reindex($arr)
+	{
+		// reindex this level
+		$arr = array_merge($arr);
+
+		foreach ($arr as $k => &$v)
+		{
+			is_array($v) and $v = static::reindex($v);
+		}
+
+		return $arr;
+	}
+
+	/**
+	 * Get the previous value or key from an array using the current array key
+	 *
+	 * @param   array    $array      the array containing the values
+	 * @param   string   $key        key of the current entry to use as reference
+	 * @param   bool     $get_value  if true, return the previous value instead of the previous key
+	 * @param   bool     $strict     if true, do a strict key comparison
+	 *
+	 * @return  mixed  the value in the array, null if there is no previous value, or false if the key doesn't exist
+	 */
+	public static function previous_by_key($array, $key, $get_value = false, $strict = false)
+	{
+		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
+		{
+			throw new \InvalidArgumentException('First parameter must be an array or ArrayAccess object.');
+		}
+
+		// get the keys of the array
+		$keys = array_keys($array);
+
+		// and do a lookup of the key passed
+		if (($index = array_search($key, $keys, $strict)) === false)
+		{
+			// key does not exist
+			return false;
+		}
+
+		// check if we have a previous key
+		elseif ( ! isset($keys[$index-1]))
+		{
+			// there is none
+			return null;
+		}
+
+		// return the value or the key of the array entry the previous key points to
+		return $get_value ? $array[$keys[$index-1]] : $keys[$index-1];
+	}
+
+	/**
+	 * Get the next value or key from an array using the current array key
+	 *
+	 * @param   array    $array      the array containing the values
+	 * @param   string   $key        key of the current entry to use as reference
+	 * @param   bool     $get_value  if true, return the next value instead of the next key
+	 * @param   bool     $strict     if true, do a strict key comparison
+	 *
+	 * @return  mixed  the value in the array, null if there is no next value, or false if the key doesn't exist
+	 */
+	public static function next_by_key($array, $key, $get_value = false, $strict = false)
+	{
+		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
+		{
+			throw new \InvalidArgumentException('First parameter must be an array or ArrayAccess object.');
+		}
+
+		// get the keys of the array
+		$keys = array_keys($array);
+
+		// and do a lookup of the key passed
+		if (($index = array_search($key, $keys, $strict)) === false)
+		{
+			// key does not exist
+			return false;
+		}
+
+		// check if we have a previous key
+		elseif ( ! isset($keys[$index+1]))
+		{
+			// there is none
+			return null;
+		}
+
+		// return the value or the key of the array entry the previous key points to
+		return $get_value ? $array[$keys[$index+1]] : $keys[$index+1];
+	}
+
+	/**
+	 * Get the previous value or key from an array using the current array value
+	 *
+	 * @param   array    $array      the array containing the values
+	 * @param   string   $value      value of the current entry to use as reference
+	 * @param   bool     $get_value  if true, return the previous value instead of the previous key
+	 * @param   bool     $strict     if true, do a strict key comparison
+	 *
+	 * @return  mixed  the value in the array, null if there is no previous value, or false if the key doesn't exist
+	 */
+	public static function previous_by_value($array, $value, $get_value = true, $strict = false)
+	{
+		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
+		{
+			throw new \InvalidArgumentException('First parameter must be an array or ArrayAccess object.');
+		}
+
+		// find the current value in the array
+		if (($key = array_search($value, $array, $strict)) === false)
+		{
+			// bail out if not found
+			return false;
+		}
+
+		// get the list of keys, and find our found key
+		$keys = array_keys($array);
+		$index = array_search($key, $keys);
+
+		// if there is no previous one, bail out
+		if ( ! isset($keys[$index-1]))
+		{
+			return null;
+		}
+
+		// return the value or the key of the array entry the previous key points to
+		return $get_value ? $array[$keys[$index-1]] : $keys[$index-1];
+	}
+
+	/**
+	 * Get the next value or key from an array using the current array value
+	 *
+	 * @param   array    $array      the array containing the values
+	 * @param   string   $value      value of the current entry to use as reference
+	 * @param   bool     $get_value  if true, return the next value instead of the next key
+	 * @param   bool     $strict     if true, do a strict key comparison
+	 *
+	 * @return  mixed  the value in the array, null if there is no next value, or false if the key doesn't exist
+	 */
+	public static function next_by_value($array, $value, $get_value = true, $strict = false)
+	{
+		if ( ! is_array($array) and ! $array instanceof \ArrayAccess)
+		{
+			throw new \InvalidArgumentException('First parameter must be an array or ArrayAccess object.');
+		}
+
+		// find the current value in the array
+		if (($key = array_search($value, $array, $strict)) === false)
+		{
+			// bail out if not found
+			return false;
+		}
+
+		// get the list of keys, and find our found key
+		$keys = array_keys($array);
+		$index = array_search($key, $keys);
+
+		// if there is no next one, bail out
+		if ( ! isset($keys[$index+1]))
+		{
+			return null;
+		}
+
+		// return the value or the key of the array entry the next key points to
+		return $get_value ? $array[$keys[$index+1]] : $keys[$index+1];
+	}
+
+	/**
+	 * Return the subset of the array defined by the supplied keys.
+	 *
+	 * Returns $default for missing keys, as with Arr::get()
+	 *
+	 * @param   array    $array    the array containing the values
+	 * @param   array    $keys     list of keys (or indices) to return
+	 * @param   mixed    $default  value of missing keys; default null
+	 *
+	 * @return  array  An array containing the same set of keys provided.
+	 */
+	public static function subset(array $array, array $keys, $default = null)
+	{
+		$result = array();
+
+		foreach ($keys as $key)
+		{
+			static::set($result, $key, static::get($array, $key, $default));
+		}
+
+		return $result;
 	}
 }

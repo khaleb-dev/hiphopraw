@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -27,7 +27,6 @@ namespace Fuel\Core;
  */
 class Request
 {
-
 	/**
 	 * Holds the main request instance
 	 *
@@ -51,9 +50,9 @@ class Request
 	 *
 	 *     Request::forge('hello/world');
 	 *
-	 * @param   string   The URI of the request
-	 * @param   mixed    Internal: whether to use the routes; external: driver type or array with settings (driver key must be set)
-	 * @param   string   request method
+	 * @param   string  $uri      The URI of the request
+	 * @param   mixed   $options  Internal: whether to use the routes; external: driver type or array with settings (driver key must be set)
+	 * @param   string  $method   request method
 	 * @return  Request  The new request object
 	 */
 	public static function forge($uri = null, $options = true, $method = null)
@@ -102,7 +101,7 @@ class Request
 	 *
 	 *     Request::active();
 	 *
-	 * @param   Request|null|false  overwrite current request before returning, false prevents overwrite
+	 * @param   Request|null|false  $request  overwrite current request before returning, false prevents overwrite
 	 * @return  Request
 	 */
 	public static function active($request = false)
@@ -143,12 +142,16 @@ class Request
 	 *
 	 * @return  void
 	 */
-	public static function reset_request()
+	public static function reset_request($full = false)
 	{
 		// Let's make the previous Request active since we are done executing this one.
-		static::$active = static::$active->parent();
-	}
+		static::$active and static::$active = static::$active->parent();
 
+		if ($full)
+		{
+			static::$main = null;
+		}
+	}
 
 	/**
 	 * Holds the response object of the request.
@@ -254,17 +257,17 @@ class Request
 	 *
 	 *     $request = new Request('foo/bar');
 	 *
-	 * @param   string  the uri string
-	 * @param   bool    whether or not to route the URI
-	 * @param   string  request method
-	 * @return  void
+	 * @param   string  $uri     the uri string
+	 * @param   bool    $route   whether or not to route the URI
+	 * @param   string  $method  request method
+	 * @throws  \FuelException
 	 */
 	public function __construct($uri, $route = true, $method = null)
 	{
 		$this->uri = new \Uri($uri);
 		$this->method = $method ?: \Input::method();
 
-		logger(\Fuel::L_INFO, 'Creating a new Request with URI = "'.$this->uri->get().'"', __METHOD__);
+		logger(\Fuel::L_INFO, 'Creating a new '.(static::$main==null ? 'main' : 'HMVC').' Request with URI = "'.$this->uri->get().'"', __METHOD__);
 
 		// check if a module was requested
 		if (count($this->uri->get_segments()) and $module_path = \Module::exists($this->uri->get_segment(1)))
@@ -277,14 +280,22 @@ class Request
 				// load and add the module routes
 				$module_routes = \Fuel::load($module_path);
 
+				$reserve_routes = array(
+					'_root_' => $module,
+					'_403_'  => '_403_',
+					'_404_'  => '_404_',
+					'_500_'  => '_500_',
+					$module  => $module,
+				);
+
 				$prepped_routes = array();
 				foreach($module_routes as $name => $_route)
 				{
-					if ($name === '_root_')
+					if (isset($reserve_routes[$name]))
 					{
-						$name = $module;
+						$name = $reserve_routes[$name];
 					}
-					elseif (strpos($name, $module.'/') !== 0 and $name != $module and $name !== '_404_')
+					elseif (strpos($name, $module.'/') !== 0)
 					{
 						$name = $module.'/'.$name;
 					}
@@ -323,8 +334,11 @@ class Request
 	 *
 	 *     $request = Request::forge('hello/world')->execute();
 	 *
-	 * @param  array|null  $method_params  An array of parameters to pass to the method being executed
+	 * @param   array|null  $method_params  An array of parameters to pass to the method being executed
 	 * @return  Request  This request object
+	 * @throws  \Exception
+	 * @throws  \FuelException
+	 * @throws  \HttpNotFoundException
 	 */
 	public function execute($method_params = null)
 	{
@@ -333,7 +347,7 @@ class Request
 
 		if (\Fuel::$profiling)
 		{
-			\Profiler::mark(__METHOD__.' Start');
+			\Profiler::mark(__METHOD__.': Start of '.$this->uri->get());
 		}
 
 		logger(\Fuel::L_INFO, 'Called', __METHOD__);
@@ -361,7 +375,7 @@ class Request
 		{
 			if ($this->route->callable !== null)
 			{
-				$response = call_user_func_array($this->route->callable, array($this));
+				$response = call_fuel_func_array($this->route->callable, array($this));
 
 				if ( ! $response instanceof Response)
 				{
@@ -408,7 +422,14 @@ class Request
 
 				if ( ! $class->hasMethod($method))
 				{
-					$method = 'action_'.$this->action;
+					// If they call user, go to $this->post_user();
+					$method = strtolower(\Input::method()) . '_' . $this->action;
+
+					// Fall back to action_ if no HTTP request method based method exists
+					if ( ! $class->hasMethod($method))
+					{
+						$method = 'action_'.$this->action;
+					}
 				}
 
 				if ($class->hasMethod($method))
@@ -416,6 +437,11 @@ class Request
 					$action = $class->getMethod($method);
 
 					if ( ! $action->isPublic())
+					{
+						throw new \HttpNotFoundException();
+					}
+
+					if (count($this->method_params) < $action->getNumberOfRequiredParameters())
 					{
 						throw new \HttpNotFoundException();
 					}
@@ -466,7 +492,7 @@ class Request
 
 		if (\Fuel::$profiling)
 		{
-			\Profiler::mark(__METHOD__.' End');
+			\Profiler::mark(__METHOD__.': End of '.$this->uri->get());
 		}
 
 		static::reset_request();

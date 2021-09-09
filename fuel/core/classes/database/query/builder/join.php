@@ -1,34 +1,41 @@
 <?php
 /**
- * Database query builder for JOIN statements.
+ * Part of the Fuel framework.
  *
- * @package    Fuel/Database
- * @category   Query
- * @author     Kohana Team
- * @copyright  (c) 2008-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package    Fuel
+ * @version    1.8
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2016 Fuel Development Team
+ * @copyright  2008 - 2009 Kohana Team
+ * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
 class Database_Query_Builder_Join extends \Database_Query_Builder
 {
-	// Type of JOIN
+	/**
+	 * @var string  $_type  join type
+	 */
 	protected $_type;
 
-	// JOIN ...
+	/**
+	 * @var string  $_table  join table
+	 */
 	protected $_table;
 
-	// ON ...
+	/**
+	 * @var array  $_on  ON clauses
+	 */
 	protected $_on = array();
 
 	/**
 	 * Creates a new JOIN statement for a table. Optionally, the type of JOIN
 	 * can be specified as the second parameter.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  type of JOIN: INNER, RIGHT, LEFT, etc
-	 * @return  void
+	 * @param   mixed  $table column name or array($column, $alias) or object
+	 * @param   string $type  type of JOIN: INNER, RIGHT, LEFT, etc
 	 */
 	public function __construct($table, $type = null)
 	{
@@ -45,9 +52,10 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 	/**
 	 * Adds a new OR condition for joining.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   mixed   $c1  column name or array($column, $alias) or object
+	 * @param   string  $op  logic operator
+	 * @param   mixed   $c2  column name or array($column, $alias) or object
+	 *
 	 * @return  $this
 	 */
 	public function or_on($c1, $op, $c2)
@@ -60,9 +68,10 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 	/**
 	 * Adds a new AND condition for joining.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   mixed   $c1  column name or array($column, $alias) or object
+	 * @param   string  $op  logic operator
+	 * @param   mixed   $c2  column name or array($column, $alias) or object
+	 *
 	 * @return  $this
 	 */
 	public function on($c1, $op, $c2)
@@ -75,9 +84,10 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 	/**
 	 * Adds a new AND condition for joining.
 	 *
-	 * @param   mixed   column name or array($column, $alias) or object
-	 * @param   string  logic operator
-	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   mixed   $c1  column name or array($column, $alias) or object
+	 * @param   string  $op  logic operator
+	 * @param   mixed   $c2  column name or array($column, $alias) or object
+	 *
 	 * @return  $this
 	 */
 	public function and_on($c1, $op, $c2)
@@ -88,7 +98,8 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 	/**
 	 * Compile the SQL partial for a JOIN statement and return it.
 	 *
-	 * @param   mixed  Database instance or instance name
+	 * @param   mixed  $db  Database_Connection instance or instance name
+	 *
 	 * @return  string
 	 */
 	public function compile($db = null)
@@ -128,7 +139,7 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 			}
 
 			// Quote each of the identifiers used for the condition
-			$conditions[] = $db->quote_identifier($c1).$op.' '.$db->quote_identifier($c2);
+			$conditions[] = $db->quote_identifier($c1).$op.' '.(is_null($c2) ? 'NULL' : $db->quote_identifier($c2));
 		}
 
 		// remove the first chain type
@@ -143,7 +154,7 @@ class Database_Query_Builder_Join extends \Database_Query_Builder
 	/**
 	 * Resets the join values.
 	 *
-	 * @return  object  $this
+	 * @return  $this
 	 */
 	public function reset()
 	{

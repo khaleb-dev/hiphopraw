@@ -1,23 +1,34 @@
 <?php
+/**
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
+ *
+ * @package    Fuel
+ * @version    1.8.2
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
+ */
 
 namespace Fuel\Migrations;
 
+include __DIR__."/../normalizedrivertypes.php";
+
 class Auth_Create_Usertables
 {
-
 	function up()
 	{
-		// get the driver used
-		\Config::load('auth', true);
-
-		$drivers = \Config::get('auth.driver', array());
-		is_array($drivers) or $drivers = array($drivers);
+		// get the drivers defined
+		$drivers = normalize_driver_types();
 
 		if (in_array('Simpleauth', $drivers))
 		{
 			// get the tablename
 			\Config::load('simpleauth', true);
 			$table = \Config::get('simpleauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('simpleauth');
 
 			// only do this if it doesn't exist yet
 			if ( ! \DBUtil::table_exists($table))
@@ -34,10 +45,6 @@ class Auth_Create_Usertables
 					'profile_fields' => array('type' => 'text'),
 					'created_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 					'updated_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
-					'facebook_link' => array('type' => 'varchar', 'constraint' => 255),
-					'instagram_link' => array('type' => 'varchar', 'constraint' => 255),
-                    'stage_name' => array('type' => 'varchar', 'constraint' => 255),
-					'twitter_link' => array('type' => 'varchar', 'constraint' => 255),
 				), array('id'));
 
 				// add a unique index on username and email
@@ -50,6 +57,9 @@ class Auth_Create_Usertables
 			// get the tablename
 			\Config::load('ormauth', true);
 			$table = \Config::get('ormauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('ormauth');
 
 			if ( ! \DBUtil::table_exists($table))
 			{
@@ -72,10 +82,6 @@ class Auth_Create_Usertables
 						'user_id' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 						'created_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 						'updated_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
-                        'facebook_link' => array('type' => 'varchar', 'constraint' => 255),
-                        'instagram_link' => array('type' => 'varchar', 'constraint' => 255),
-                        'stage_name' => array('type' => 'varchar', 'constraint' => 255),
-                        'twitter_link' => array('type' => 'varchar', 'constraint' => 255),
 					), array('id'));
 
 					// add a unique index on username and email
@@ -142,7 +148,7 @@ class Auth_Create_Usertables
 				'id' => array('type' => 'int', 'constraint' => 11, 'auto_increment' => true),
 				'parent_id' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 				'key' => array('type' => 'varchar', 'constraint' => 20),
-				'value' => array('type' => 'varchar', 'constraint' => 10000),
+				'value' => array('type' => 'varchar', 'constraint' => 100),
 				'user_id' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 				'created_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
 				'updated_at' => array('type' => 'int', 'constraint' => 11, 'default' => 0),
@@ -151,7 +157,7 @@ class Auth_Create_Usertables
 			// convert profile fields to metadata, and drop the column
 			if (\DBUtil::field_exists($table, 'profile_fields'))
 			{
-				$result = \DB::select('id', 'profile_fields')->from($table)->execute();
+				$result = \DB::select('id', 'profile_fields')->from($table)->execute(\Config::get('ormauth.db_connection', null));
 				foreach ($result as $row)
 				{
 					$profile_fields = empty($row['profile_fields']) ? array() : unserialize($row['profile_fields']);
@@ -165,7 +171,7 @@ class Auth_Create_Usertables
 									'key' => $field,
 									'value' => $value,
 								)
-							)->execute();
+							)->execute(\Config::get('ormauth.db_connection', null));
 						}
 					}
 				}
@@ -186,21 +192,24 @@ class Auth_Create_Usertables
 				'perms_id' => array('type' => 'int', 'constraint' => 11),
 			), array('user_id', 'perms_id'));
 		}
+
+		// reset any DBUtil connection set
+		$this->dbconnection(false);
 	}
 
 	function down()
 	{
-		// get the driver used
-		\Config::load('auth', true);
-
-		$drivers = \Config::get('auth.driver', array());
-		is_array($drivers) or $drivers = array($drivers);
+		// get the drivers defined
+		$drivers = normalize_driver_types();
 
 		if (in_array('Simpleauth', $drivers))
 		{
 			// get the tablename
 			\Config::load('simpleauth', true);
 			$table = \Config::get('simpleauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('simpleauth');
 
 			// drop the admin_users table
 			\DBUtil::drop_table($table);
@@ -211,6 +220,9 @@ class Auth_Create_Usertables
 			// get the tablename
 			\Config::load('ormauth', true);
 			$table = \Config::get('ormauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('ormauth');
 
 			// drop the admin_users table
 			\DBUtil::drop_table($table);
@@ -223,6 +235,40 @@ class Auth_Create_Usertables
 
 			// drop the admin_users_user_perms table
 			\DBUtil::drop_table($table.'_user_permissions');
+		}
+
+		// reset any DBUtil connection set
+		$this->dbconnection(false);
+	}
+
+	/**
+	 * check if we need to override the db connection for auth tables
+	 */
+	protected function dbconnection($type = null)
+	{
+		static $connection;
+
+		switch ($type)
+		{
+			// switch to the override connection
+			case 'simpleauth':
+			case 'ormauth':
+				if ($connection = \Config::get($type.'.db_connection', null))
+				{
+					\DBUtil::set_connection($connection);
+				}
+				break;
+
+			// switch back to the configured migration connection, or the default one
+			case false:
+				if ($connection)
+				{
+					\DBUtil::set_connection(\Config::get('migrations.connection', null));
+				}
+				break;
+
+			default:
+				// noop
 		}
 	}
 }

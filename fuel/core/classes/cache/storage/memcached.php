@@ -3,20 +3,17 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
-
-
 class Cache_Storage_Memcached extends \Cache_Storage_Driver
 {
-
 	/**
 	 * @const  string  Tag used for opening & closing cache properties
 	 */
@@ -30,7 +27,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	/*
 	 * @var  Memcached  storage for the memcached object
 	 */
-	protected $memcached = false;
+	protected static $memcached = false;
 
 	// ---------------------------------------------------------------------
 
@@ -48,7 +45,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 		$this->expiration = $this->_validate_config('expiration', isset($this->config['expiration'])
 			? $this->config['expiration'] : $this->expiration);
 
-		if ($this->memcached === false)
+		if (static::$memcached === false)
 		{
 			// make sure we have memcached servers configured
 			$this->config['servers'] = $this->_validate_config('servers', $this->config['servers']);
@@ -60,15 +57,20 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 			}
 
 			// instantiate the memcached object
-			$this->memcached = new \Memcached();
+			static::$memcached = new \Memcached();
 
 			// add the configured servers
-			$this->memcached->addServers($this->config['servers']);
+			static::$memcached->addServers($this->config['servers']);
 
-			// check if we can connect to the server(s)
-			if ($this->memcached->getVersion() === false)
+			// check if we can connect to all the server(s)
+			$added = static::$memcached->getStats();
+			foreach ($this->config['servers'] as $server)
 			{
-				throw new \FuelException('Memcached cache are configured, but there is no connection possible. Check your configuration.');
+				$server = $server['host'].':'.$server['port'];
+				if ( ! isset($added[$server]) or $added[$server]['pid'] == -1)
+				{
+					throw new \FuelException('Memcached cache is configured, but there is no connection possible. Check your configuration.');
+				}
 			}
 		}
 	}
@@ -100,7 +102,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 			}
 
 			// get the cache index
-			$index = $this->memcached->get($this->config['cache_id'].$sections);
+			$index = static::$memcached->get($this->config['cache_id'].$sections);
 
 			// get the key from the index
 			$key = isset($index[$identifier][0]) ? $index[$identifier] : false;
@@ -124,11 +126,11 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 		$key = $this->_get_key(true);
 
 		// delete the key from the memcached server
-		if ($key and $this->memcached->delete($key) === false)
+		if ($key and static::$memcached->delete($key) === false)
 		{
-			if ($this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND)
+			if (static::$memcached->getResultCode() !== \Memcached::RES_NOTFOUND)
 			{
-				throw new \FuelException('Memcached returned error code "'.$this->memcached->getResultCode().'" on delete. Check your configuration.');
+				throw new \FuelException('Memcached returned error code "'.static::$memcached->getResultCode().'" on delete. Check your configuration.');
 			}
 		}
 
@@ -138,16 +140,16 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	/**
 	 * Purge all caches
 	 *
-	 * @param   limit purge to subsection
+	 * @param   string  $section  limit purge to subsection
 	 * @return  bool
 	 */
 	public function delete_all($section)
 	{
 		// determine the section index name
-		$section = $this->config['cache_id'].(empty($section)?'':'.'.$section);
+		$section = $this->config['cache_id'].(empty($section) ? '' : '.'.$section);
 
 		// get the directory index
-		$index = $this->memcached->get($this->config['cache_id'].'__DIR__');
+		$index = static::$memcached->get($this->config['cache_id'].'__DIR__');
 
 		if (is_array($index))
 		{
@@ -164,17 +166,17 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 			// loop through the indexes, delete all stored keys, then delete the indexes
 			foreach ($dirs as $dir)
 			{
-				$list = $this->memcached->get($dir);
+				$list = static::$memcached->get($dir);
 				foreach ($list as $item)
 				{
-					$this->memcached->delete($item[0]);
+					static::$memcached->delete($item[0]);
 				}
-				$this->memcached->delete($dir);
+				static::$memcached->delete($dir);
 			}
 
 			// update the directory index
 			$index = array_diff($index, $dirs);
-			$this->memcached->set($this->config['cache_id'].'__DIR__', $index);
+			static::$memcached->set($this->config['cache_id'].'__DIR__', $index);
 		}
 	}
 
@@ -191,7 +193,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 			'created'          => $this->created,
 			'expiration'       => $this->expiration,
 			'dependencies'     => $this->dependencies,
-			'content_handler'  => $this->content_handler
+			'content_handler'  => $this->content_handler,
 		);
 		$properties = '{{'.static::PROPS_TAG.'}}'.json_encode($properties).'{{/'.static::PROPS_TAG.'}}';
 
@@ -202,7 +204,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	 * Remove the prepended cache properties and save them in class properties
 	 *
 	 * @param   string
-	 * @throws  UnexpectedValueException
+	 * @throws \UnexpectedValueException
 	 */
 	protected function unprep_contents($payload)
 	{
@@ -230,6 +232,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	 * Save a cache, this does the generic pre-processing
 	 *
 	 * @return  bool  success
+	 * @throws \FuelException
 	 */
 	protected function _set()
 	{
@@ -238,10 +241,16 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 
 		$payload = $this->prep_contents();
 
+		// calculate relative expiration time (eg. 60s)
+		$expiration = !is_null($this->expiration) ? $this->expiration - time() : 0;
+
+		// if expiration value is less than 30 days, use relative value, otherwise use unix timestamp:
+		$expiration = $expiration <= 2592000 ? (int) $expiration : (int) $this->expiration;
+
 		// write it to the memcached server
-		if ($this->memcached->set($key, $payload, ! is_null($this->expiration) ? (int) $this->expiration : 0) === false)
+		if (static::$memcached->set($key, $payload, $expiration) === false)
 		{
-			throw new \FuelException('Memcached returned error code "'.$this->memcached->getResultCode().'" on write. Check your configuration.');
+			throw new \FuelException('Memcached returned error code "'.static::$memcached->getResultCode().'" on write. Check your configuration.');
 		}
 
 		// update the index
@@ -261,7 +270,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 		$key = $this->_get_key();
 
 		// fetch the cached data from the Memcached server
-		$payload = $this->memcached->get($key);
+		$payload = static::$memcached->get($key);
 
 		try
 		{
@@ -278,9 +287,10 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	/**
 	 * validate a driver config value
 	 *
-	 * @param   string  name of the config variable to validate
-	 * @param   mixed   value
+	 * @param   string  $name  name of the config variable to validate
+	 * @param   mixed   $value
 	 * @return  mixed
+	 * @throws \FuelException
 	 */
 	protected function _validate_config($name, $value)
 	{
@@ -339,7 +349,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 	/**
 	 * Get's the memcached key belonging to the cache identifier
 	 *
-	 * @param   bool  if true, remove the key retrieved from the index
+	 * @param   bool  $remove  if true, remove the key retrieved from the index
 	 * @return  string
 	 */
 	protected function _get_key($remove = false)
@@ -355,7 +365,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 			if ( $key !== false )
 			{
 				unset($index[$identifier]);
-				$this->memcached->set($this->config['cache_id'].$sections, $index);
+				static::$memcached->set($this->config['cache_id'].$sections, $index);
 			}
 		}
 		else
@@ -403,7 +413,7 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 		}
 
 		// get the cache index and return it
-		return array($identifier, $sections, $this->memcached->get($this->config['cache_id'].$sections));
+		return array($identifier, $sections, static::$memcached->get($this->config['cache_id'].$sections));
 	}
 
 	/**
@@ -421,10 +431,10 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 
 		// store the key in the index and write the index back
 		$index[$identifier] = array($key, $this->created);
-		$this->memcached->set($this->config['cache_id'].$sections, $index, 0);
+		static::$memcached->set($this->config['cache_id'].$sections, $index, 0);
 
 		// get the directory index
-		$index = $this->memcached->get($this->config['cache_id'].'__DIR__');
+		$index = static::$memcached->get($this->config['cache_id'].'__DIR__');
 
 		if (is_array($index))
 		{
@@ -439,6 +449,6 @@ class Cache_Storage_Memcached extends \Cache_Storage_Driver
 		}
 
 		// update the directory index
-		$this->memcached->set($this->config['cache_id'].'__DIR__', $index, 0);
+		static::$memcached->set($this->config['cache_id'].'__DIR__', $index, 0);
 	}
 }

@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -14,7 +14,6 @@ namespace Fuel\Core;
 
 class Route
 {
-
 	/**
 	 * @var  array  segments array
 	 */
@@ -41,9 +40,14 @@ class Route
 	public $case_sensitive = false;
 
 	/**
-	 * @var  boolean  wether to strip the extension from the URI
+	 * @var  boolean  whether to strip the extension from the URI
 	 */
 	public $strip_extension = true;
+
+	/**
+	 * @var  string  route name
+	 */
+	public $name = null;
 
 	/**
 	 * @var  string  route module
@@ -60,6 +64,10 @@ class Route
 	 */
 	public $controller = null;
 
+	/**
+	 * @var  string  controller path
+	 */
+	public $controller_path = null;
 	/**
 	 * @var  string  default controller action
 	 */
@@ -80,13 +88,14 @@ class Route
 	 */
 	protected $search = null;
 
-	public function __construct($path, $translation = null, $case_sensitive = null, $strip_extension = null)
+	public function __construct($path, $translation = null, $case_sensitive = null, $strip_extension = null, $name = null)
 	{
 		$this->path = $path;
 		$this->translation = ($translation === null) ? $path : $translation;
 		$this->search = ($translation == stripslashes($path)) ? $path : $this->compile();
 		$this->case_sensitive = ($case_sensitive === null) ? \Config::get('routing.case_sensitive', true) : $case_sensitive;
 		$this->strip_extension = ($strip_extension === null) ? \Config::get('routing.strip_extension', true) : $strip_extension;
+		$this->name = $name;
 	}
 
 	/**
@@ -103,12 +112,14 @@ class Route
 
 		$search = str_replace(array(
 			':any',
+			':everything',
 			':alnum',
 			':num',
 			':alpha',
 			':segment',
 		), array(
 			'.+',
+			'.*',
 			'[[:alnum:]]+',
 			'[[:digit:]]+',
 			'[[:alpha:]]+',
@@ -121,8 +132,7 @@ class Route
 	/**
 	 * Attempts to find the correct route for the given URI
 	 *
-	 * @access	public
-	 * @param	object	The URI object
+	 * @param	\Request	$request  The URI object
 	 * @return	array
 	 */
 	public function parse(\Request $request)
@@ -148,9 +158,9 @@ class Route
 	/**
 	 * Parses a route match and returns the controller, action and params.
 	 *
-	 * @access	public
-	 * @param	string	The matched route
-	 * @return	object  $this
+	 * @param   string  $uri           The matched route
+	 * @param   array   $named_params  Named parameters
+	 * @return  object  $this
 	 */
 	public function matched($uri = '', $named_params = array())
 	{
@@ -178,7 +188,10 @@ class Route
 				// strip the extension if needed and there is something to strip
 				if ($this->strip_extension and strrchr($uri, '.') == $ext = '.'.\Input::extension())
 				{
-					$uri = substr($uri, 0, -(strlen($ext)));
+					if ($this->strip_extension === true or (is_array($this->strip_extension) and in_array($ext, $this->strip_extension)))
+					{
+						$uri = substr($uri, 0, -(strlen($ext)));
+					}
 				}
 
 				if ($this->case_sensitive)
@@ -200,9 +213,9 @@ class Route
 	/**
 	 * Parses an actual route - extracted out of parse() to make it recursive.
 	 *
-	 * @param   string  The URI object
-	 * @param   object  route object
-	 * @param   string  request method
+	 * @param   string  $uri     The URI object
+	 * @param   object  $route   route object
+	 * @param   string  $method  request method
 	 * @return  array|boolean
 	 */
 	protected function _parse_search($uri, $route = null, $method = null)

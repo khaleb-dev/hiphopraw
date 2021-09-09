@@ -8,7 +8,7 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=hiphopraw-local',
+			'dsn'        => 'mysql:host=localhost;dbname=hiphopraw',
 			'username'   => 'root',
 			'password'   => '',
 		),

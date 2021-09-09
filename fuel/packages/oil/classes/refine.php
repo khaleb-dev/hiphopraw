@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Oil;
@@ -23,7 +21,7 @@ namespace Oil;
  */
 class Refine
 {
-	public static function run($task, $args)
+	public static function run($task, $args = array())
 	{
 		$task = strtolower($task);
 
@@ -49,7 +47,7 @@ class Refine
 			{
 				\Module::load($module);
 				$path = \Module::exists($module);
-				\Finder::instance()->add_path($path);
+				\Finder::instance()->add_path($path, -1);
 			}
 			catch (\FuelException $e)
 			{
@@ -92,15 +90,44 @@ class Refine
 
 		$new_task = new $task;
 
-		// The help option hs been called, so call help instead
-		if (\Cli::option('help') && is_callable(array($new_task, 'help')))
+		// The help option has been called, so call help instead
+		if ((\Cli::option('help') or $method == 'help') and is_callable(array($new_task, 'help')))
 		{
 			$method = 'help';
 		}
-
-		if ($return = call_user_func_array(array($new_task, $method), $args))
+		else
 		{
-			\Cli::write($return);
+			// if the task has an init method, call it now
+			is_callable($task.'::_init') and $task::_init();
+		}
+
+		if (is_callable(array($new_task, $method)))
+		{
+			if ($return = call_fuel_func_array(array($new_task, $method), $args))
+			{
+				\Cli::write($return);
+			}
+		}
+		else
+		{
+			\Cli::write(sprintf('Task "%s" does not have a command called "%s".', $task, $method));
+
+			\Cli::write("\nDid you mean:\n");
+			$reflect = new \ReflectionClass($new_task);
+
+			// Ensure we only pull out the public methods
+			$methods = $reflect->getMethods(\ReflectionMethod::IS_PUBLIC);
+			if (count($methods) > 0)
+			{
+				foreach ($methods as $method)
+				{
+					if (strpos($method->name, '_') !== 0)
+					{
+						\Cli::write(sprintf("php oil [r|refine] %s:%s", $reflect->getShortName(), $method->name));
+
+					}
+				}
+			}
 		}
 	}
 
@@ -133,12 +160,12 @@ Usage:
     php oil [r|refine] <taskname>
 
 Description:
-    Tasks are classes that can be run through the the command line or set up as a cron job.
+    Tasks are classes that can be run through the command line or set up as a cron job.
 
 Available tasks:
 $output_available_tasks
 Documentation:
-    http://docs.fuelphp.com/packages/oil/refine.html
+    https://docs.fuelphp.com/packages/oil/refine.html
 HELP;
 		\Cli::write($output);
 

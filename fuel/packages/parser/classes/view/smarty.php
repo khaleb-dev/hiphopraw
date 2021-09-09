@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Parser;
@@ -28,8 +26,8 @@ class View_Smarty extends \View
 		{
 			// Smarty doesn't support method chaining
 			$parser = static::parser();
-			$parser->assign($this->get_data());
-			return $parser->fetch($file);
+			$parser->assign($data = $this->get_data());
+			$result = $parser->fetch($file);
 		}
 		catch (\Exception $e)
 		{
@@ -37,6 +35,9 @@ class View_Smarty extends \View
 			ob_end_clean();
 			throw $e;
 		}
+
+		$this->unsanitize($data);
+		return $result;
 	}
 
 	public $extension = 'smarty';
@@ -73,7 +74,9 @@ class View_Smarty extends \View
 
 		static::$_parser->autoload_filters  = \Config::get('parser.View_Smarty.environment.autoload_filters', array());
 		static::$_parser->default_modifiers = \Config::get('parser.View_Smarty.environment.default_modifiers', array());
-
+                foreach (\Config::get('parser.View_Smarty.extensions', array()) as $extension){
+                    new $extension(static::$_parser);
+                }
 		return static::$_parser;
 	}
 }

@@ -3,16 +3,14 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
-
-
 
 // ------------------------------------------------------------------------
 
@@ -39,15 +37,15 @@ class Fieldset
 	/**
 	 * Create Fieldset object
 	 *
-	 * @param   string    Identifier for this fieldset
-	 * @param   array     Configuration array
+	 * @param   string    $name    Identifier for this fieldset
+	 * @param   array     $config  Configuration array
 	 * @return  Fieldset
 	 */
 	public static function forge($name = 'default', array $config = array())
 	{
 		if ($exists = static::instance($name))
 		{
-			\Error::notice('Fieldset with this name exists already, cannot be overwritten.');
+			\Errorhandler::notice('Fieldset with this name exists already, cannot be overwritten.');
 			return $exists;
 		}
 
@@ -64,7 +62,7 @@ class Fieldset
 	/**
 	 * Return a specific instance, or the default instance (is created if necessary)
 	 *
-	 * @param   string  driver id
+	 * @param   Fieldset  $instance
 	 * @return  Fieldset
 	 */
 	public static function instance($instance = null)
@@ -148,8 +146,15 @@ class Fieldset
 	 * @param  string
 	 * @param  array
 	 */
-	protected function __construct($name, array $config = array())
+	public function __construct($name = '', array $config = array())
 	{
+		// support new Fieldset($config) syntax
+		if (is_array($name))
+		{
+			$config = $name;
+			$name = '';
+		}
+
 		if (isset($config['validation_instance']))
 		{
 			$this->validation($config['validation_instance']);
@@ -168,7 +173,7 @@ class Fieldset
 	/**
 	 * Get related Validation instance or create it
 	 *
-	 * @param   bool|Validation
+	 * @param   bool|Validation  $instance
 	 * @return  Validation
 	 */
 	public function validation($instance = true)
@@ -190,7 +195,7 @@ class Fieldset
 	/**
 	 * Get related Form instance or create it
 	 *
-	 * @param   bool|Form
+	 * @param   bool|Form  $instance
 	 * @return  Form
 	 */
 	public function form($instance = true)
@@ -225,7 +230,7 @@ class Fieldset
 	/**
 	 * Set the parent Fieldset instance
 	 *
-	 * @param   Fieldset  parent fieldset to which this belongs
+	 * @param   Fieldset  $fieldset  parent fieldset to which this belongs
 	 * @return  Fieldset
 	 */
 	public function set_parent(Fieldset $fieldset)
@@ -318,7 +323,7 @@ class Fieldset
 		// Check if it exists already, if so: return and give notice
 		if ($field = $this->field($name))
 		{
-			\Error::notice('Field with this name exists already in this fieldset: "'.$name.'".');
+			\Errorhandler::notice('Field with this name exists already in this fieldset: "'.$name.'".');
 			return $field;
 		}
 
@@ -377,41 +382,59 @@ class Fieldset
 	}
 
 	/**
+	 * Delete a field instance
+	 *
+	 * @param   string  field name or null to fetch an array of all
+	 * @return  Fieldset  this fieldset, for chaining
+	 */
+	public function delete($name)
+	{
+		if (isset($this->fields[$name]))
+		{
+			unset($this->fields[$name]);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Get Field instance
 	 *
-	 * @param   string|null           field name or null to fetch an array of all
-	 * @param   bool                  whether to get the fields array or flattened array
-	 * @param   bool                  whether to include tabular form fields in the flattened array
+	 * @param   string|null           $name          field name or null to fetch an array of all
+	 * @param   bool                  $flatten       whether to get the fields array or flattened array
+	 * @param   bool                  $tabular_form  whether to include tabular form fields in the flattened array
 	 * @return  Fieldset_Field|false  returns false when field wasn't found
 	 */
 	public function field($name = null, $flatten = false, $tabular_form = true)
 	{
 		if ($name === null)
 		{
-			if ( ! $flatten)
-			{
-				return $this->fields;
-			}
-
 			$fields = $this->fields;
-			foreach ($this->fieldset_children as $fs_name => $fieldset)
+
+			if ($flatten)
 			{
-				if ($tabular_form or ! $fieldset->get_tabular_form())
+				foreach ($this->fieldset_children as $fs_name => $fieldset)
 				{
-					\Arr::insert_after_key($fields, $fieldset->field(null, true), $fs_name);
+					if ($tabular_form or ! $fieldset->get_tabular_form())
+					{
+						\Arr::insert_after_key($fields, $fieldset->field(null, true), $fs_name);
+					}
+					unset($fields[$fs_name]);
 				}
-				unset($fields[$fs_name]);
 			}
 			return $fields;
 		}
 
 		if ( ! array_key_exists($name, $this->fields))
 		{
-			foreach ($this->fieldset_children as $fieldset)
+			if ($flatten)
 			{
-				if (($field = $fieldset->field($name)) !== false)
+				foreach ($this->fieldset_children as $fieldset)
 				{
-					return $field;
+					if (($field = $fieldset->field($name)) !== false)
+					{
+						return $field;
+					}
 				}
 			}
 			return false;
@@ -425,9 +448,9 @@ class Fieldset
 	 * The model must have a method "set_form_fields" that takes this Fieldset instance
 	 * and adds fields to it.
 	 *
-	 * @param   string|Object  either a full classname (including full namespace) or object instance
-	 * @param   array|Object   array or object that has the exactly same named properties to populate the fields
-	 * @param   string         method name to call on model for field fetching
+	 * @param   string|Object  $class     either a full classname (including full namespace) or object instance
+	 * @param   array|Object   $instance  array or object that has the exactly same named properties to populate the fields
+	 * @param   string         $method    method name to call on model for field fetching
 	 * @return  Fieldset       this, to allow chaining
 	 */
 	public function add_model($class, $instance = null, $method = 'set_form_fields')
@@ -447,8 +470,8 @@ class Fieldset
 	/**
 	 * Sets a config value on the fieldset
 	 *
-	 * @param   string
-	 * @param   mixed
+	 * @param   string  $config
+	 * @param   mixed   $value
 	 * @return  Fieldset  this, to allow chaining
 	 */
 	public function set_config($config, $value = null)
@@ -472,8 +495,8 @@ class Fieldset
 	/**
 	 * Get a single or multiple config values by key
 	 *
-	 * @param   string|array  a single key or multiple in an array, empty to fetch all
-	 * @param   mixed         default output when config wasn't set
+	 * @param   string|array  $key      a single key or multiple in an array, empty to fetch all
+	 * @param   mixed         $default  default output when config wasn't set
 	 * @return  mixed|array   a single config value or multiple in an array when $key input was an array
 	 */
 	public function get_config($key = null, $default = null)
@@ -506,8 +529,8 @@ class Fieldset
 	/**
 	 * Populate the form's values using an input array or object
 	 *
-	 * @param   array|object
-	 * @param   bool
+	 * @param   array|object  $input
+	 * @param   bool          $repopulate
 	 * @return  Fieldset  this, to allow chaining
 	 */
 	public function populate($input, $repopulate = false)
@@ -518,7 +541,7 @@ class Fieldset
 			if (is_array($input) or $input instanceof \ArrayAccess)
 			{
 				// convert form field array's to Fuel dotted notation
-				$name = str_replace(array('[',']'), array('.', ''), $f->name);
+				$name = str_replace(array('[', ']'), array('.', ''), $f->name);
 
 				// fetch the value for this field, and set it if found
 				$value = \Arr::get($input, $name, null);
@@ -568,6 +591,7 @@ class Fieldset
 	/**
 	 * Build the fieldset HTML
 	 *
+     * @param   mixed  $action
 	 * @return  string
 	 */
 	public function build($action = null)
@@ -600,7 +624,7 @@ class Fieldset
 				{
 					continue;
 				}
-				$fields_output .= "\t".'<th class="'.$this->tabular_form_relation.'_col_'.$field.'">'.(isset($settings['label'])?\Lang::get($settings['label'], array(), $settings['label']):'').'</th>'.PHP_EOL;
+				$fields_output .= "\t".'<th class="'.$this->tabular_form_relation.'_col_'.$field.'">'.(isset($settings['label']) ? \Lang::get($settings['label'], array(), $settings['label']) : '').'</th>'.PHP_EOL;
 			}
 			$fields_output .= "\t".'<th>'.\Config::get('form.tabular_delete_label', 'Delete?').'</th>'.PHP_EOL;
 
@@ -629,6 +653,7 @@ class Fieldset
 	/**
 	 * Enable a disabled field from being build
 	 *
+	 * @param   mixed  $name
 	 * @return  Fieldset      this, to allow chaining
 	 */
 	public function enable($name = null)
@@ -650,6 +675,7 @@ class Fieldset
 	/**
 	 * Disable a field from being build
 	 *
+	 * @param   mixed  $name
 	 * @return  Fieldset      this, to allow chaining
 	 */
 	public function disable($name = null)
@@ -698,6 +724,7 @@ class Fieldset
 	/**
 	 * Alias for $this->validation()->input()
 	 *
+	 * @param   string  $field
 	 * @return  mixed
 	 */
 	public function input($field = null)
@@ -708,6 +735,7 @@ class Fieldset
 	/**
 	 * Alias for $this->validation()->validated()
 	 *
+	 * @param   string  $field
 	 * @return  mixed
 	 */
 	public function validated($field = null)
@@ -718,6 +746,7 @@ class Fieldset
 	/**
 	 * Alias for $this->validation()->error()
 	 *
+	 * @param   string  $field
 	 * @return  Validation_Error|array
 	 */
 	public function error($field = null)
@@ -728,6 +757,7 @@ class Fieldset
 	/**
 	 * Alias for $this->validation()->show_errors()
 	 *
+	 * @param   array  $config
 	 * @return  string
 	 */
 	public function show_errors(array $config = array())
@@ -748,10 +778,10 @@ class Fieldset
 	/**
 	 * Enable or disable the tabular form feature of this fieldset
 	 *
-	 * @param  string  Model on which to define the tabular form
-	 * @param  string  Relation of the Model on the tabular form is modeled
-	 * @param  array  Collection of Model objects from a many relation
-	 * @param  int  Number of empty rows to generate
+	 * @param  string  $model     Model on which to define the tabular form
+	 * @param  string  $relation  Relation of the Model on the tabular form is modeled
+	 * @param  array   $parent    Collection of Model objects from a many relation
+	 * @param  int     $blanks    Number of empty rows to generate
 	 *
 	 * @return  Fieldset  this, to allow chaining
 	 */
@@ -803,7 +833,7 @@ class Fieldset
 		// load the config for embedded forms
 		$this->set_config(array(
 			'form_template' => \Config::get('form.tabular_form_template', "<table>{fields}</table>\n"),
-			'field_template' => \Config::get('form.tabular_field_template', "{field}")
+			'field_template' => \Config::get('form.tabular_field_template', "{field}"),
 		));
 
 		// add the rows to the tabular form fieldset
@@ -816,7 +846,7 @@ class Fieldset
 			$fieldset->add_model($model, $row)->set_fieldset_tag(false);
 			$fieldset->set_config(array(
 				'form_template' => \Config::get('form.tabular_row_template', "<table>{fields}</table>\n"),
-				'field_template' => \Config::get('form.tabular_row_field_template', "{field}")
+				'field_template' => \Config::get('form.tabular_row_field_template', "{field}"),
 			));
 			$fieldset->add($this->tabular_form_relation.'['.$row->{$primary_key}.'][_delete]', '', array('type' => 'checkbox', 'value' => 1));
 		}
@@ -832,7 +862,7 @@ class Fieldset
 			$fieldset->add_model($model)->set_fieldset_tag(false);
 			$fieldset->set_config(array(
 				'form_template' => \Config::get('form.tabular_row_template', "<tr>{fields}</tr>"),
-				'field_template' => \Config::get('form.tabular_row_field_template', "{field}")
+				'field_template' => \Config::get('form.tabular_row_field_template', "{field}"),
 			));
 			$fieldset->add($this->tabular_form_relation.'_new['.$i.'][_delete]', '', array('type' => 'checkbox', 'value' => 0, 'disabled' => 'disabled'));
 

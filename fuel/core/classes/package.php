@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -28,7 +28,6 @@ class PackageNotFoundException extends \FuelException { }
  */
 class Package
 {
-
 	/**
 	 * @var  array  $packages  Holds all the loaded package information.
 	 */
@@ -42,12 +41,13 @@ class Package
 	 * @param   string|array  $package  The package name or array of packages.
 	 * @param   string|null   $path     The path to the package
 	 * @return  bool  True on success
-	 * @throws  PackageNotFoundException
+	 * @throws  \PackageNotFoundException
 	 */
 	public static function load($package, $path = null)
 	{
 		if (is_array($package))
 		{
+			$result = true;
 			foreach ($package as $pkg => $path)
 			{
 				if (is_numeric($pkg))
@@ -55,14 +55,14 @@ class Package
 					$pkg = $path;
 					$path = null;
 				}
-				static::load($pkg, $path);
+				$result = $result and static::load($pkg, $path);
 			}
-			return false;
+			return $result;
 		}
 
 		if (static::loaded($package))
 		{
-			return;
+			return false;
 		}
 
 		// if no path is given, try to locate the package
@@ -99,7 +99,7 @@ class Package
 	/**
 	 * Unloads a package from the stack.
 	 *
-	 * @param   string  $pacakge  The package name
+	 * @param   string  $package  The package name
 	 * @return  void
 	 */
 	public static function unload($package)
@@ -141,6 +141,7 @@ class Package
 		{
 			$paths = \Config::get('package_paths', array());
 			empty($paths) and $paths = array(PKGPATH);
+			$package = strtolower($package);
 
 			foreach ($paths as $path)
 			{

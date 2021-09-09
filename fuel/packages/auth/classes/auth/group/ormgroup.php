@@ -1,13 +1,13 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Auth;
@@ -46,7 +46,7 @@ class Auth_Group_Ormgroup extends \Auth_Group_Driver
 	 * additional drivers to load
 	 */
 	protected $config = array(
-		'drivers' => array('acl' => array('Ormacl'))
+		'drivers' => array('acl' => array('Ormacl')),
 	);
 
 	/*
@@ -60,34 +60,46 @@ class Auth_Group_Ormgroup extends \Auth_Group_Driver
 	/*
 	 * check for group membership
 	 */
-	public function member($group, $user = null)
+	public function member($group_id, $user = null)
 	{
-		// if no user is given
-		if ($user === null)
+		// if it's not a group id, fetch it from the object
+		if ( ! is_numeric($group_id))
 		{
-			// get the groups of the logged-in user
-			$groups = \Auth::instance()->get_groups();
-		}
-		else
-		{
-			// get the groups if the given user instance
-			$groups = \Auth::instance($user[0])->get_groups();
+			$group_id = $group_id->id;
 		}
 
-		// if no group info could be retrieved, the user can't be a member
-		if ( ! $groups)
+		// do we know this group?
+		if (isset(static::$_valid_groups[$group_id]))
 		{
-			return false;
+			// if no user is given
+			if ($user === null)
+			{
+				// get the groups of the logged-in user
+				$groups = \Auth::instance()->get_groups();
+			}
+			else
+			{
+				// get the groups if the given user instance
+				$groups = \Auth::instance($user[0])->get_groups();
+			}
+
+			// if no group info could be retrieved, the user can't be a member
+			if ( ! $groups)
+			{
+				return false;
+			}
+
+			// check for membership
+			foreach($groups as $group)
+			{
+				if ($group[0] === $this->id and (int) $group_id === (int) $group[1]->id)
+				{
+					return true;
+				}
+			}
 		}
 
-		// if it's a group id, find the corresponding object
-		if (is_numeric($group) and isset(static::$_valid_groups[$group]))
-		{
-			$group = static::$_valid_groups[$group];
-		}
-
-		// return the result
-		return in_array(array($this->id, $group), $groups);
+		return false;
 	}
 
 	/*

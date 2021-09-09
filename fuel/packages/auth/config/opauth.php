@@ -1,13 +1,13 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 /**
@@ -27,6 +27,15 @@ return array(
 	 * Can multiple providers be attached to one user account
 	 */
 	'link_multiple_providers' => true,
+
+	/**
+	 * auto_registration
+	 *
+	 * If true, a login via a provider will automatically create a dummy
+	 * local user account with a random password, if a nickname and an
+	 * email address is present
+	 */
+	'auto_registration' => false,
 
 	/**
 	 * default_group

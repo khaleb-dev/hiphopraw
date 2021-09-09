@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Orm;
@@ -24,7 +22,7 @@ class RecordNotFound extends \OutOfBoundsException {}
  */
 class FrozenObject extends \RuntimeException {}
 
-class Model implements \ArrayAccess, \Iterator
+class Model implements \ArrayAccess, \Iterator, \Sanitization
 {
 	/* ---------------------------------------------------------------------------
 	 * Static usage
@@ -75,6 +73,11 @@ class Model implements \ArrayAccess, \Iterator
 	protected static $_primary_key = array('id');
 
 	/**
+	 * @var  bool  whether to allow setting PK's via forge() or from_array()
+	 */
+	protected static $block_set_pks = true;
+
+	/**
 	 * @var  array  name or columns that need to be excluded from any to_array() result
 	 */
 	protected static $_to_array_exclude = array();
@@ -110,6 +113,16 @@ class Model implements \ArrayAccess, \Iterator
 	protected static $_cached_objects = array();
 
 	/**
+	 * @var string Name of DB connection to use
+	 */
+	protected static $_connection = null;
+
+	/**
+	 * @var string Name of the DB connection to use when writing
+	 */
+	protected static $_write_connection = null;
+
+	/**
 	 * @var  array  array of valid relation types
 	 */
 	protected static $_valid_relations = array(
@@ -119,6 +132,14 @@ class Model implements \ArrayAccess, \Iterator
 		'many_many'     => 'Orm\\ManyMany',
 	);
 
+	/**
+	 * @var  array  global array to track circular references in to_array()
+	 */
+	protected static $to_array_references = array();
+
+	/**
+	 * Create a new model instance
+	 */
 	public static function forge($data = array(), $new = true, $view = null, $cache = true)
 	{
 		return new static($data, $new, $view, $cache);
@@ -134,12 +155,30 @@ class Model implements \ArrayAccess, \Iterator
 	{
 		$class = get_called_class();
 
-		if ($writeable and property_exists($class, '_write_connection'))
+		if ($writeable and property_exists($class, '_write_connection') && static::$_write_connection !== null)
 		{
 			return static::$_write_connection;
 		}
 
 		return property_exists($class, '_connection') ? static::$_connection : null;
+	}
+
+	/**
+	 * Sets the connection to use for this model.
+	 * @param string $connection
+	 */
+	public static function set_connection($connection)
+	{
+		static::$_connection = $connection;
+	}
+
+	/**
+	 * Sets the write connection to use for this model.
+	 * @param string $connection
+	 */
+	public static function set_write_connection($connection)
+	{
+		static::$_write_connection = $connection;
 	}
 
 	/**
@@ -206,11 +245,46 @@ class Model implements \ArrayAccess, \Iterator
 	public static function cached_object($obj, $class = null)
 	{
 		$class = $class ?: get_called_class();
+
 		$id    = (is_int($obj) or is_string($obj)) ? (string) $obj : $class::implode_pk($obj);
 
 		$result = ( ! empty(static::$_cached_objects[$class][$id])) ? static::$_cached_objects[$class][$id] : false;
 
 		return $result;
+	}
+
+	/**
+	 * Flush the object cache
+	 *
+	 * @param   null|string|object  $class
+	 */
+	public static function flush_cache($class = null)
+	{
+		// determine what to flush
+		if (func_num_args() == 0)
+		{
+			$class = get_called_class();
+		}
+		elseif (is_object($class))
+		{
+			$class = get_class($class);
+		}
+		elseif (is_string($class))
+		{
+			$class = ltrim($class, "\\");
+		}
+
+		// flush ...
+		if (is_null($class))
+		{
+			// the entire cache
+			static::$_cached_objects = array();
+		}
+		elseif (array_key_exists($class, static::$_cached_objects))
+		{
+			// the requested object cache
+			unset(static::$_cached_objects[$class]);
+		}
 	}
 
 	/**
@@ -224,7 +298,13 @@ class Model implements \ArrayAccess, \Iterator
 	}
 
 	/**
-	 * Implode the primary keys within the data into a string
+	 * Implode the primary keys within the data into a unique string for the runtime
+	 *
+	 * Note: as explained below, it is not possible to use the output to match an item after runtime
+	 *  - The format contains no reference to which value is destined for which key
+	 *  - The format does not encode the values
+	 *
+	 * @internal Designed for internal use only
 	 *
 	 * @param   array
 	 * @return  string
@@ -254,11 +334,13 @@ class Model implements \ArrayAccess, \Iterator
 		return $pk;
 	}
 
-	/**
-	 * Get the class's properties
-	 *
-	 * @return  array
-	 */
+    /**
+     * Get the class's properties
+     *
+     * @throws \FuelException Listing columns failed
+     *
+     * @return  array
+     */
 	public static function properties()
 	{
 		$class = get_called_class();
@@ -323,11 +405,13 @@ class Model implements \ArrayAccess, \Iterator
 		return \Arr::get(static::$_properties_cached[$class], $key, $default);
 	}
 
-	/**
-	 * Fetch the model's views
-	 *
-	 * @return  array
-	 */
+    /**
+     * Fetch the model's views
+     *
+     * @throws \InvalidArgumentException Database view is defined without columns
+     *
+     * @return  array
+     */
 	public static function views()
 	{
 		$class = get_called_class();
@@ -360,8 +444,8 @@ class Model implements \ArrayAccess, \Iterator
 	/**
 	 * Get the class's relations
 	 *
-	 * @param   string
-	 * @return  array
+	 * @param bool $specific
+	 * @return  HasOne|HasMany|ManyMany|Belongsto|HasOne[]|HasMany[]|ManyMany[]|Belongsto[]
 	 */
 	public static function relations($specific = false)
 	{
@@ -415,9 +499,22 @@ class Model implements \ArrayAccess, \Iterator
 		{
 			if (property_exists($class, '_'.$rel_name))
 			{
-				if (isset(static::${'_'.$rel_name}[$relation]))
+				foreach (static::${'_'.$rel_name} as $key => $value)
 				{
-					return static::${'_'.$rel_name}[$relation]['model_to'];
+					if (is_string($value))
+					{
+						if ($value === $relation)
+						{
+							return \Inflector::classify('model_'.$value);
+						}
+					}
+					else
+					{
+						if ($key === $relation)
+						{
+							return static::${'_'.$rel_name}[$relation]['model_to'];
+						}
+					}
 				}
 			}
 		}
@@ -482,12 +579,10 @@ class Model implements \ArrayAccess, \Iterator
 	 *
 	 * @return	void
 	 */
-	public static function register_observer($name, $options = null)
+	public static function register_observer($name, $options = array())
 	{
 		$class = get_called_class();
-		$new_observer = is_null($options) ? array($name) : array($name => $options);
-
-		static::$_observers_cached[$class] = static::observers() + $new_observer;
+		static::$_observers_cached[$class] = static::observers() + array($name => $options);
 	}
 
 	/**
@@ -508,30 +603,35 @@ class Model implements \ArrayAccess, \Iterator
 		}
 	}
 
-	/**
-	 * Find one or more entries
-	 *
-	 * @param   mixed
-	 * @param   array
-	 * @return  Model|Model[]
-	 */
-	public static function find($id = null, array $options = array())
+    /**
+     * Find one or more entries
+     *
+     * @param int|null $id
+     * @param array $options
+     *
+     * @throws \FuelException
+     *
+     * @return  Model|Model[]
+     */
+	public static function find($id = null, array $options = null)
 	{
-		// Return Query object
+		// deal with null valued PK's
 		if (is_null($id))
 		{
-			if (func_num_args() === 1)
-			{
-				throw new \FuelException('Invalid method call.  You need to specify a key value.', 0);
-			}
-			return static::query($options);
+			// if no options are passed, simply return null. a PK with a null value can exist
+			return is_array($options) ? static::query($options) : null;
 		}
-		// Return all that match $options array
-		elseif ($id === 'all')
+
+		// make sure options is an array, before we continue
+		is_null($options) and $options = array();
+
+		// return all that match $options array
+		if ($id === 'all')
 		{
 			return static::query($options)->get();
 		}
-		// Return first or last row that matches $options array
+
+		// return first or last row that matches $options array
 		elseif ($id === 'first' or $id === 'last')
 		{
 			$query = static::query($options);
@@ -543,6 +643,7 @@ class Model implements \ArrayAccess, \Iterator
 
 			return $query->get_one();
 		}
+
 		// Return specific request row by ID
 		else
 		{
@@ -587,7 +688,7 @@ class Model implements \ArrayAccess, \Iterator
 	 */
 	public static function count(array $options = array())
 	{
-		return Query::forge(get_called_class(), array(static::connection(), static::connection(true)), $options)->count();
+		return static::query($options)->count();
 	}
 
 	/**
@@ -599,7 +700,7 @@ class Model implements \ArrayAccess, \Iterator
 	 */
 	public static function max($key = null)
 	{
-		return Query::forge(get_called_class(), array(static::connection(), static::connection(true)))->max($key ?: static::primary_key());
+		return static::query()->max($key ?: static::primary_key());
 	}
 
 	/**
@@ -611,11 +712,14 @@ class Model implements \ArrayAccess, \Iterator
 	 */
 	public static function min($key = null)
 	{
-		return Query::forge(get_called_class(), array(static::connection(), static::connection(true)))->min($key ?: static::primary_key());
+		return static::query()->min($key ?: static::primary_key());
 	}
 
 	public static function __callStatic($method, $args)
 	{
+		// storage for the type of find query
+		$find_type = false;
+
 		// Start with count_by? Get counting!
 		if (strpos($method, 'count_by') === 0)
 		{
@@ -626,12 +730,20 @@ class Model implements \ArrayAccess, \Iterator
 		// Otherwise, lets find stuff
 		elseif (strpos($method, 'find_') === 0)
 		{
-			$find_type = strncmp($method, 'find_all_by_', 12) === 0 ? 'all' : (strncmp($method, 'find_by_', 8) === 0 ? 'first' : false);
-			$fields = $find_type === 'first' ? substr($method, 8) : substr($method, 12);
+			if ($method == 'find_by')
+			{
+				$find_type = 'all';
+				$fields = array_shift($args);
+			}
+			else
+			{
+				$find_type = strncmp($method, 'find_all_by_', 12) === 0 ? 'all' : (strncmp($method, 'find_by_', 8) === 0 ? 'first' : false);
+				$fields = $find_type === 'first' ? substr($method, 8) : substr($method, 12);
+			}
 		}
 
-		// God knows, complain
-		else
+		// bail out if an invalid find type is detected
+		if ( ! $find_type)
 		{
 			throw new \FuelException('Invalid method call.  Method '.$method.' does not exist.', 0);
 		}
@@ -646,13 +758,13 @@ class Model implements \ArrayAccess, \Iterator
 
 				if (count($or_parts) == 1)
 				{
-					$where[] = array($or_parts[0] => array_shift($args));
+					$where[] = array($or_parts[0], array_shift($args));
 				}
 				else
 				{
 					foreach($or_parts as $or_part)
 					{
-						$or_where[] = array($or_part => array_shift($args));
+						$or_where[] = array($or_part, array_shift($args));
 					}
 				}
 			}
@@ -660,22 +772,28 @@ class Model implements \ArrayAccess, \Iterator
 
 		$options = count($args) > 0 ? array_pop($args) : array();
 
-		if ( ! array_key_exists('where', $options))
+		if ( ! empty($where))
 		{
-			$options['where'] = $where;
-		}
-		else
-		{
-			$options['where'] = array_merge($where, $options['where']);
+			if ( ! array_key_exists('where', $options))
+			{
+				$options['where'] = $where;
+			}
+			else
+			{
+				$options['where'] = array_merge($where, $options['where']);
+			}
 		}
 
-		if ( ! array_key_exists('or_where', $options))
+		if ( ! empty($or_where))
 		{
-			$options['or_where'] = $or_where;
-		}
-		else
-		{
-			$options['or_where'] = array_merge($or_where, $options['or_where']);
+			if ( ! array_key_exists('or_where', $options))
+			{
+				$options['or_where'] = $or_where;
+			}
+			else
+			{
+				$options['or_where'] = array_merge($or_where, $options['or_where']);
+			}
 		}
 
 		if ($find_type == 'count')
@@ -705,6 +823,11 @@ class Model implements \ArrayAccess, \Iterator
 	 * @var  bool  keeps to object frozen
 	 */
 	protected $_frozen = false;
+
+	/**
+	 * @var  bool  $_sanitization_enabled  If this is a records data will be sanitized on get
+	 */
+	protected $_sanitization_enabled = false;
 
 	/**
 	 * @var  array  keeps the current state of the object
@@ -737,6 +860,11 @@ class Model implements \ArrayAccess, \Iterator
 	protected $_reset_relations = array();
 
 	/**
+	 * @var  array  disabled observer events
+	 */
+	protected $_disabled_events = array();
+
+	/**
 	 * @var  string  view name when used
 	 */
 	protected $_view;
@@ -747,52 +875,93 @@ class Model implements \ArrayAccess, \Iterator
 	 * @param  array
 	 * @param  bool
 	 */
-	public function __construct(array $data = array(), $new = true, $view = null, $cache = true)
+	public function __construct($data = array(), $new = true, $view = null, $cache = true)
 	{
+		// Make sure we get the correct dataformat passed
+		if ( ! is_array($data) and ! $data instanceOf \ArrayAccess)
+		{
+			throw new \ErrorException(
+				'Argument 1 passed to '.__METHOD__.'() must be of the type array or implement ArrayAccess, '.gettype($data).' given',
+				0, E_ERROR, __FILE__, __LINE__-7 // adjust the line to point to the function prototype, not this line!
+			);
+		}
+
 		// This is to deal with PHP's native hydration that happens before constructor is called
 		// for some weird reason, for example using the DB's as_object() function
-		if( ! empty($this->_data))
+		if( ! empty($this->_data) or  ! empty($this->_custom_data))
 		{
-			$this->_original = $this->_data;
+			// merge the injected data with the passed data
+			$data = array_merge($this->_custom_data, $this->_data, $data);
+
+			// and reset them
+			$this->_data = array();
+			$this->_custom_data = array();
+
+			// and mark it as existing data
 			$new = false;
 		}
 
-		if ($new)
+		// move the passed data to the correct container
+		$properties = $this->properties();
+		foreach ($properties as $prop => $settings)
 		{
-			$properties = $this->properties();
-			foreach ($properties as $prop => $settings)
+			// do we have data for this this model property?
+			if (array_key_exists($prop, $data))
 			{
-				if (array_key_exists($prop, $data))
-				{
-					$this->_data[$prop] = $data[$prop];
-					unset($data[$prop]);
-				}
-				elseif (array_key_exists('default', $settings))
-				{
-					$this->_data[$prop] = $settings['default'];
-				}
+				// store it in the data container
+				$this->_data[$prop] = $data[$prop];
+				unset($data[$prop]);
 			}
-			$this->_custom_data = $data;
-		}
-		else
-		{
-			$this->_update_original($data);
-			$this->_data = array_merge($this->_data, $data);
 
-			if ($view and array_key_exists($view, $this->views()))
+			// property not present, do we have a default value?
+			elseif ($new and array_key_exists('default', $settings))
 			{
-				$this->_view = $view;
+				$this->_data[$prop] = $settings['default'];
 			}
+
+			// no default either, initialize with null
+			else
+			{
+				$this->_data[$prop] = null;
+			}
+		}
+
+		// store the remainder in the custom data store
+		$this->_custom_data = $data;
+
+		// store the view, if one was passed
+		if ($view and array_key_exists($view, $this->views()))
+		{
+			$this->_view = $view;
 		}
 
 		if ($new === false)
 		{
-			$cache and static::$_cached_objects[get_class($this)][static::implode_pk($data)] = $this;
+			// update the original datastore and the related datastore
+			$this->_update_original($this->_data);
+
+			// update the object cache if needed
+			$cache and static::$_cached_objects[get_class($this)][static::implode_pk($this->_data)] = $this;
+
+			// mark the object as existing
 			$this->_is_new = false;
+
+			// and fire the after-load observers
 			$this->observe('after_load');
 		}
 		else
 		{
+			// wipe any PK values present in the input if not allowed
+			if (static::$block_set_pks)
+			{
+				// make sure the primary keys are reset
+				foreach (static::$_primary_key as $pk)
+				{
+					$this->_data[$pk] = null;
+				}
+			}
+
+			// new object, fire the after-create observers
 			$this->observe('after_create');
 		}
 	}
@@ -840,36 +1009,46 @@ class Model implements \ArrayAccess, \Iterator
 				$this->_original_relations[$rel] = array();
 				foreach ($data as $obj)
 				{
-					$this->_original_relations[$rel][] = $obj ? $obj->implode_pk($obj) : null;
+					if ($obj and ! $obj->is_new())
+					{
+						$this->_original_relations[$rel][] = $obj->implode_pk($obj);
+					}
 				}
 			}
 			else
 			{
-				$this->_original_relations[$rel] = $data ? $data->implode_pk($data) : null;
+				$this->_original_relations[$rel] = null;
+				if ($data and ! $data->is_new())
+				{
+					$this->_original_relations[$rel] = $data->implode_pk($data);
+				}
 			}
 		}
 	}
 
-	/**
-	 * Fetch or set relations on this object
-	 * To be used only after having fetched them from the database!
-	 *
-	 * @param   array|null  $rels
-	 * @return  void|array
-	 */
+    /**
+     * Fetch or set relations on this object
+     * To be used only after having fetched them from the database!
+     *
+     * @param array|bool|null $rels
+     *
+     * @throws \FuelException  Invalid input for _relate(), should be an array
+     * @throws FrozenObject    No changes allowed
+     *
+     * @return  void|array
+     */
 	public function _relate($rels = false)
 	{
-		if ($this->_frozen)
-		{
-			throw new FrozenObject('No changes allowed.');
-		}
-
 		if ($rels === false)
 		{
 			return $this->_data_relations;
 		}
 		elseif (is_array($rels))
 		{
+			if ($this->_frozen)
+			{
+				throw new FrozenObject('No changes allowed.');
+			}
 			$this->_data_relations = $rels;
 		}
 		else
@@ -894,6 +1073,8 @@ class Model implements \ArrayAccess, \Iterator
 	 *
 	 * @param  string
 	 * @param  mixed
+	 *
+	 * @return Model
 	 */
 	public function __set($property, $value)
 	{
@@ -908,7 +1089,7 @@ class Model implements \ArrayAccess, \Iterator
 	 */
 	public function __isset($property)
 	{
-		if (array_key_exists($property, static::properties()))
+		if (array_key_exists($property, $this->_data))
 		{
 			return true;
 		}
@@ -1019,66 +1200,93 @@ class Model implements \ArrayAccess, \Iterator
 	 *
 	 * @access  public
 	 * @param   string  $property
+	 * @param   array   $conditions
 	 * @return  mixed
 	 */
-	public function & get($property)
+	public function & get($property, array $conditions = array())
 	{
+		// database columns
 		if (array_key_exists($property, static::properties()))
 		{
 			if ( ! array_key_exists($property, $this->_data))
 			{
-				// avoid a notice, we're returning by reference
-				$var = null;
-				return $var;
+				$result = null;
 			}
-
-			return $this->_data[$property];
+			elseif ($this->_sanitization_enabled)
+			{
+				// use a copy
+				$result = $this->_data[$property];
+			}
+			else
+			{
+				// use a reference
+				$result =& $this->_data[$property];
+			}
 		}
+
+		// related models
 		elseif ($rel = static::relations($property))
 		{
 			if ( ! array_key_exists($property, $this->_data_relations))
 			{
-				if ($this->_frozen)
-				{
-					// avoid a notice, we're returning by reference
-					$var = null;
-					return $var;
-				}
-				$this->_data_relations[$property] = $rel->get($this);
+				$this->_data_relations[$property] = $rel->get($this, $conditions);
 				$this->_update_original_relations(array($property));
 			}
-			return $this->_data_relations[$property];
+
+			$result =& $this->_data_relations[$property];
 		}
-		elseif (($value = $this->_get_eav($property)) !== false)
+
+		// EAV properties
+		elseif (($result = $this->_get_eav($property)) !== false)
 		{
-			return $value;
+			// nothing else to do here
 		}
-		elseif ($this->_view and in_array($property, static::$_views_cached[get_class($this)][$this->_view]['columns']))
-		{
-			return $this->_data[$property];
-		}
+
+		// stored custom data
 		elseif (array_key_exists($property, $this->_custom_data))
 		{
-				return $this->_custom_data[$property];
+			if ($this->_sanitization_enabled)
+			{
+				// use a copy
+				$result = $this->_custom_data[$property];
+			}
+			else
+			{
+				// use a reference
+				$result =& $this->_custom_data[$property];
+			}
 		}
 		else
 		{
 			throw new \OutOfBoundsException('Property "'.$property.'" not found for '.get_class($this).'.');
 		}
+
+		// do we need to clean before returning the result?
+		if ($this->_sanitization_enabled)
+		{
+			$result = $this->_sanitize($property, $result);
+		}
+
+		return $result;
 	}
 
-	/**
-	 * Set
-	 *
-	 * Sets a property or
-	 * relation of the
-	 * object
-	 *
-	 * @access  public
-	 * @param   string|array  $property
-	 * @param   string  $value in case $property is a string
-	 * @return  Orm\Model
-	 */
+    /**
+     * Set
+     *
+     * Sets a property or
+     * relation of the
+     * object
+     *
+     * @access  public
+     * @param   string|array $property
+     * @param   string $value in case $property is a string
+     *
+     * @throws \FuelException Primary key on model cannot be changed
+     * @throws \InvalidArgumentException You need to pass both a property name and a value to set()
+     * @throws FrozenObject No changes allowed
+     *
+     * @return  Model
+     */
 	public function set($property, $value = null)
 	{
 		if ($this->_frozen)
@@ -1100,19 +1308,38 @@ class Model implements \ArrayAccess, \Iterator
 				throw new \InvalidArgumentException('You need to pass both a property name and a value to set().');
 			}
 
-			if (in_array($property, static::primary_key()) and $this->{$property} !== null)
+			// is it a primary key we're updating?
+			if (in_array($property, static::primary_key()) and $this->{$property} !== null and $this->{$property} != $value)
 			{
 				throw new \FuelException('Primary key on model '.get_class($this).' cannot be changed.');
 			}
+
+			// is it a model property we're updating?
 			if (array_key_exists($property, static::properties()))
 			{
 				$this->_data[$property] = $value;
 			}
-			elseif (static::relations($property))
+
+			// or perhaps a related model?
+			elseif ($rel = static::relations($property))
 			{
 				$this->is_fetched($property) or $this->_reset_relations[$property] = true;
-				$this->_data_relations[$property] = $value;
+				if (isset($this->_data_relations[$property]) and ($this->_data_relations[$property] instanceof self) and is_array($value))
+				{
+					$this->_data_relations[$property]->set($value);
+				}
+				elseif ($value === null or $value === array())
+				{
+					$this->_reset_relations[$property] = true;
+					$this->_data_relations[$property] = $rel->singular ? null : array();
+				}
+				else
+				{
+					$this->_data_relations[$property] = $value;
+				}
 			}
+
+			// none of the above, assume its custom data
 			elseif ( ! $this->_set_eav($property, $value))
 			{
 				$this->_custom_data[$property] = $value;
@@ -1129,7 +1356,9 @@ class Model implements \ArrayAccess, \Iterator
 	 *     null = use default config,
 	 *     bool = force/prevent cascade,
 	 *     array cascades only the relations that are in the array
-	 */
+     *
+     * @return bool
+     */
 	public function save($cascade = null, $use_transaction = false)
 	{
 		if ($this->frozen())
@@ -1155,6 +1384,7 @@ class Model implements \ArrayAccess, \Iterator
 					if (method_exists($rel, 'delete_related'))
 					{
 						$rel->delete_related($this);
+						$this->_original_relations[$rel_name] = $rel->singular ? null : array();
 					}
 					else
 					{
@@ -1203,6 +1433,7 @@ class Model implements \ArrayAccess, \Iterator
 			}
 			$this->unfreeze();
 
+			// update the original datastore and the related datastore
 			$this->_update_original();
 
 			$this->observe('after_save');
@@ -1256,6 +1487,7 @@ class Model implements \ArrayAccess, \Iterator
 
 		// update the original properties on creation and cache object for future retrieval in this request
 		$this->_is_new = false;
+
 		$this->_original = $this->_data;
 		static::$_cached_objects[get_class($this)][static::implode_pk($this)] = $this;
 
@@ -1275,6 +1507,12 @@ class Model implements \ArrayAccess, \Iterator
 			return false;
 		}
 
+		// Objects created from a view can't be updated either
+		if ($this->_view)
+		{
+			return false;
+		}
+
 		// Non changed objects don't have to be saved, but return true anyway (no reason to fail)
 		if ( ! $this->is_changed(array_keys(static::properties())))
 		{
@@ -1286,18 +1524,30 @@ class Model implements \ArrayAccess, \Iterator
 		// Create the query and limit to primary key(s)
 		$query       = Query::forge(get_called_class(), static::connection(true));
 		$primary_key = static::primary_key();
-		$properties  = array_keys(static::properties());
+		$properties  = static::properties();
+		$properties_keys  = array_keys($properties);
 		//Add the primary keys to the where
 		$this->add_primary_keys_to_where($query);
 
 		// Set all current values
-		foreach ($properties as $p)
+		foreach ($properties_keys as $p)
 		{
 			if ( ! in_array($p, $primary_key) )
 			{
 				if (array_key_exists($p, $this->_original))
 				{
-					$this->{$p} !== $this->_original[$p] and $query->set($p, isset($this->_data[$p]) ? $this->_data[$p] : null);
+					if ((array_key_exists('type', $properties[$p]) and $properties[$p]['type'] == 'int') or
+						(array_key_exists('data_type', $properties[$p]) and $properties[$p]['data_type'] == 'int'))
+					{
+						if ($this->{$p} != $this->_original[$p])
+						{
+							$query->set($p, isset($this->_data[$p]) ? $this->_data[$p] : null);
+						}
+					}
+					elseif ($this->{$p} !== $this->_original[$p])
+					{
+						$query->set($p, isset($this->_data[$p]) ? $this->_data[$p] : null);
+					}
 				}
 				else
 				{
@@ -1311,6 +1561,9 @@ class Model implements \ArrayAccess, \Iterator
 		{
 			return false;
 		}
+
+		$this->_original = $this->_data;
+		static::$_cached_objects[get_class($this)][static::implode_pk($this)] = $this;
 
 		// update the original property on success
 		$this->observe('after_update');
@@ -1332,15 +1585,19 @@ class Model implements \ArrayAccess, \Iterator
 		}
 	}
 
-	/**
-	 * Delete current object
-	 *
-	 * @param   mixed  $cascade
-	 *     null = use default config,
-	 *     bool = force/prevent cascade,
-	 *     array cascades only the relations that are in the array
-	 * @return  Model  this instance as a new object without primary key(s)
-	 */
+    /**
+     * Delete current object
+     *
+     * @param   mixed $cascade
+     *     null = use default config,
+     *     bool = force/prevent cascade,
+     *     array cascades only the relations that are in the array
+     * @param bool $use_transaction
+     *
+     * @throws \Exception
+     *
+     * @return  Model  this instance as a new object without primary key(s)
+     */
 	public function delete($cascade = null, $use_transaction = false)
 	{
 		// New objects can't be deleted, neither can frozen
@@ -1362,20 +1619,21 @@ class Model implements \ArrayAccess, \Iterator
 			$this->freeze();
 			foreach($this->relations() as $rel_name => $rel)
 			{
-				$rel->delete($this, $this->{$rel_name}, false, is_array($cascade) ? in_array($rel_name, $cascade) : $cascade);
+				$should_cascade = is_array($cascade) ? in_array($rel_name, $cascade) : $rel->cascade_delete;
+
+				// Give model subclasses a chance to chip in.
+				if ($should_cascade && ! $this->should_cascade_delete($rel))
+				{
+					// The function returned false so something does not want this relation to be cascade deleted
+					$should_cascade = false;
+				}
+
+				$rel->delete($this, $this->{$rel_name}, false, $should_cascade);
 			}
 			$this->unfreeze();
 
-			// Create the query and limit to primary key(s)
-			$query = Query::forge(get_called_class(), static::connection(true))->limit(1);
-			$primary_key = static::primary_key();
-			foreach ($primary_key as $pk)
-			{
-				$query->where($pk, '=', $this->{$pk});
-			}
-
-			// Return success of update operation
-			if ( ! $query->delete())
+			// Delete the model in question
+			if ( ! $this->delete_self())
 			{
 				return false;
 			}
@@ -1383,12 +1641,12 @@ class Model implements \ArrayAccess, \Iterator
 			$this->freeze();
 			foreach($this->relations() as $rel_name => $rel)
 			{
-				$should_cascade = is_array($cascade) ? in_array($rel_name, $cascade) : $cascade;
+				$should_cascade = is_array($cascade) ? in_array($rel_name, $cascade) : $rel->cascade_delete;
 
-				//Give model subclasses a chance to chip in.
+				// Give model subclasses a chance to chip in.
 				if ($should_cascade && ! $this->should_cascade_delete($rel))
 				{
-					//The function returned false so something does not want this relation to be cascade deleted
+					// The function returned false so something does not want this relation to be cascade deleted
 					$should_cascade = false;
 				}
 
@@ -1416,7 +1674,6 @@ class Model implements \ArrayAccess, \Iterator
 			$this->_is_new = true;
 			$this->_original = array();
 
-
 			$this->observe('after_delete');
 
 			$use_transaction and $db->commit_transaction();
@@ -1428,6 +1685,25 @@ class Model implements \ArrayAccess, \Iterator
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Deletes this model instance from the database.
+	 *
+	 * @return bool
+	 */
+	protected function delete_self()
+	{
+		// Create the query and limit to primary key(s)
+		$query = Query::forge(get_called_class(), static::connection(true))->limit(1);
+		$primary_key = static::primary_key();
+		foreach ($primary_key as $pk)
+		{
+			$query->where($pk, '=', $this->{$pk});
+		}
+
+		// Return success of update operation
+		return $query->delete();
 	}
 
 	/**
@@ -1454,6 +1730,29 @@ class Model implements \ArrayAccess, \Iterator
 	}
 
 	/**
+	 * Disable an observer event
+	 *
+	 * @param string event to disable
+	 * @return void
+	 */
+	public function disable_event($event)
+	{
+		$this->_disabled_events[$event] = true;
+	}
+
+	/**
+	 * Enable a defined observer
+	 *
+	 * @param string class name of the observer (including namespace)
+	 * @param string event to enable, or null for all events
+	 * @return void
+	 */
+	public function enable_event($event)
+	{
+		unset($this->_disabled_events[$event]);
+	}
+
+	/**
 	 * Calls all observers for the current event
 	 *
 	 * @param  string
@@ -1463,7 +1762,8 @@ class Model implements \ArrayAccess, \Iterator
 		foreach ($this->observers() as $observer => $settings)
 		{
 			$events = isset($settings['events']) ? $settings['events'] : array();
-			if (empty($events) or in_array($event, $events))
+			if ((empty($events) or in_array($event, $events))
+				and empty($this->_disabled_events[$event]))
 			{
 				if ( ! class_exists($observer))
 				{
@@ -1498,13 +1798,22 @@ class Model implements \ArrayAccess, \Iterator
 	 * Compare current state with the retrieved state
 	 *
 	 * @param   string|array $property
+	 * @param   bool $observe
+	 *
+	 * @throws \OutOfBoundsException
+	 *
 	 * @return  bool
 	 */
-	public function is_changed($property = null)
+	public function is_changed($property = null, $observe = false)
 	{
 		$properties = static::properties();
 		$relations = static::relations();
 		$property = (array) $property ?: array_merge(array_keys($properties), array_keys($relations));
+		$simple_data_types = array('int','bool');
+
+		$changed = false;
+
+		$observe and $this->observe('before_save');
 
 		foreach ($property as $p)
 		{
@@ -1512,23 +1821,27 @@ class Model implements \ArrayAccess, \Iterator
 			{
 				if (array_key_exists($p, $this->_original))
 				{
-					if (array_key_exists('data_type', $properties[$p]) and $properties[$p]['data_type'] == 'int')
+					if ((array_key_exists('type', $properties[$p]) and in_array($properties[$p]['type'], $simple_data_types)) or
+						(array_key_exists('data_type', $properties[$p]) and in_array($properties[$p]['data_type'], $simple_data_types)))
 					{
 						if ($this->{$p} != $this->_original[$p])
 						{
-							return true;
+							$changed = true;
+							break;
 						}
 					}
 					elseif ($this->{$p} !== $this->_original[$p])
 					{
-						return true;
+						$changed = true;
+						break;
 					}
 				}
 				else
 				{
 					if (array_key_exists($p, $this->_data))
 					{
-						return true;
+						$changed = true;
+						break;
 					}
 				}
 			}
@@ -1540,7 +1853,8 @@ class Model implements \ArrayAccess, \Iterator
 						or ( ! empty($this->_original_relations[$p])
 							and $this->_original_relations[$p] !== $this->_data_relations[$p]->implode_pk($this->{$p})))
 					{
-						return true;
+						$changed = true;
+						break;
 					}
 				}
 				else
@@ -1549,7 +1863,8 @@ class Model implements \ArrayAccess, \Iterator
 					{
 						if ( ! empty($this->_data_relations[$p]))
 						{
-							return true;
+							$changed = true;
+							break;
 						}
 						continue;
 					}
@@ -1559,13 +1874,15 @@ class Model implements \ArrayAccess, \Iterator
 					{
 						if ( ! in_array($r->implode_pk($r), $orig_rels))
 						{
-							return true;
+							$changed = true;
+							break;
 						}
 						unset($orig_rels[array_search($rk, $orig_rels)]);
 					}
 					if ( ! empty($orig_rels))
 					{
-						return true;
+						$changed = true;
+						break;
 					}
 				}
 			}
@@ -1575,7 +1892,9 @@ class Model implements \ArrayAccess, \Iterator
 			}
 		}
 
-		return false;
+		$observe and $this->observe('after_load');
+
+		return $changed;
 	}
 
 	/**
@@ -1601,11 +1920,13 @@ class Model implements \ArrayAccess, \Iterator
 			$rel = static::relations($key);
 			if ($rel->singular)
 			{
+				$new_pk = empty($val) ? null : $val->implode_pk($val);
 				if (empty($this->_original_relations[$key]) !== empty($val)
 					or ( ! empty($this->_original_relations[$key]) and ! empty($val)
-						and $this->_original_relations[$key] !== $new_pk = $val->implode_pk($val)
+						and $this->_original_relations[$key] !== $new_pk
 					))
 				{
+
 					$diff[0][$key] = isset($this->_original_relations[$key]) ? $this->_original_relations[$key] : null;
 					$diff[1][$key] = isset($val) ? $new_pk : null;
 				}
@@ -1640,6 +1961,8 @@ class Model implements \ArrayAccess, \Iterator
 
 	/***
 	 * Returns whether the given relation is fetched. If no relation is
+	 *
+	 * @param string $relation Name of relation
 	 *
 	 * @return  bool
 	 */
@@ -1690,6 +2013,53 @@ class Model implements \ArrayAccess, \Iterator
 	}
 
 	/**
+	 * Enable sanitization mode in the object
+	 *
+	 * @return  $this
+	 */
+	public function sanitize()
+	{
+		$this->_sanitization_enabled = true;
+
+		return $this;
+	}
+
+	/**
+	 * Disable sanitization mode in the object
+	 *
+	 * @return  $this
+	 */
+	public function unsanitize()
+	{
+		$this->_sanitization_enabled = false;
+
+		return $this;
+	}
+
+	/**
+	 * Returns the current sanitization state of the object
+	 *
+	 * @return  bool
+	 */
+	public function sanitized()
+	{
+		return $this->_sanitization_enabled;
+	}
+
+	/**
+	 * Sanitizatize a data value
+	 *
+	 * @param  string  $field  Name of the property that is being sanitized
+	 * @param  mixed   $value  Value to sanitize
+	 *
+	 * @return  mixed
+	 */
+	protected function _sanitize($field, $value)
+	{
+		return \Security::clean($value, null, 'security.output_filter');
+	}
+
+	/**
 	 * Method for use with Fieldset::add_model()
 	 *
 	 * @param   Fieldset     Fieldset instance to add fields to
@@ -1700,7 +2070,6 @@ class Model implements \ArrayAccess, \Iterator
 		Observer_Validation::set_fields($instance instanceof static ? $instance : get_called_class(), $form);
 		$instance and $form->populate($instance, true);
 	}
-
 
 	/**
 	 * Allow populating this object from an array, and any related objects
@@ -1713,9 +2082,12 @@ class Model implements \ArrayAccess, \Iterator
 	{
 		foreach($values as $property => $value)
 		{
-			if (array_key_exists($property, static::properties()) and ! in_array($property, static::primary_key()))
+			if (array_key_exists($property, static::properties()))
 			{
-				$this->_data[$property] = $value;
+				if ( ! in_array($property, static::primary_key()) or ! static::$block_set_pks)
+				{
+					$this->_data[$property] = $value;
+				}
 			}
 			elseif (array_key_exists($property, static::relations()) and is_array($value))
 			{
@@ -1756,6 +2128,10 @@ class Model implements \ArrayAccess, \Iterator
 					}
 				}
 			}
+			elseif (property_exists($this, '_eav') and ! empty(static::$_eav))
+			{
+				$this->_set_eav($property, $value);
+			}
 			else
 			{
 				$this->_custom_data[$property] = $value;
@@ -1768,17 +2144,21 @@ class Model implements \ArrayAccess, \Iterator
 	/**
 	 * Allow converting this object to an array
 	 *
-	 * @param	bool	whether or not to include the custom data array
+	 * @param bool $custom
+	 * @param bool $recurse
+	 * @param bool $eav
+	 *
+	 * @internal param \Orm\whether $bool or not to include the custom data array
+	 *
 	 * @return  array
 	 */
-	public function to_array($custom = false, $recurse = false)
+	public function to_array($custom = false, $recurse = false, $eav = false)
 	{
-		static $references = array();
-
+		// storage for the result
 		$array = array();
 
 		// reset the references array on first call
-		$recurse or $references = array();
+		$recurse or static::$to_array_references = array(get_class($this));
 
 		// make sure all data is scalar or array
 		if ($custom)
@@ -1820,37 +2200,68 @@ class Model implements \ArrayAccess, \Iterator
 		// convert relations
 		foreach ($this->_data_relations as $name => $rel)
 		{
-			if (is_array($rel))
+			if (is_null($rel))
+			{
+				$array[$name] = null;
+			}
+			elseif (is_array($rel))
 			{
 				$array[$name] = array();
 				if ( ! empty($rel))
 				{
-					foreach ($rel as $id => $r)
+					if ( ! in_array(get_class(reset($rel)), static::$to_array_references))
 					{
-						$array[$name][$id] = $r->to_array($custom, true);
+						static::$to_array_references[] = get_class(reset($rel));
+						foreach ($rel as $id => $r)
+						{
+							$array[$name][$id] = $r->to_array($custom, true, $eav);
+						}
+						array_pop(static::$to_array_references);
 					}
-					$references[] = get_class($r);
 				}
 			}
-			else
+			elseif ( ! in_array(get_class($rel), static::$to_array_references))
 			{
-				if ( ! in_array(get_class($rel), $references))
+				static::$to_array_references[] = get_class($rel);
+				$array[$name] = $rel->to_array($custom, true, $eav);
+				array_pop(static::$to_array_references);
+			}
+		}
+
+		// get eav relations
+		if ($eav and property_exists(get_called_class(), '_eav'))
+		{
+			// loop through the defined EAV containers
+			foreach (static::$_eav as $rel => $settings)
+			{
+				// normalize the container definition, could be string or array
+				if (is_string($settings))
 				{
-					if (is_null($rel))
-					{
-						$array[$name] = null;
-					}
-					else
-					{
-						$array[$name] = $rel->to_array($custom, true);
-						$references[] = get_class($rel);
-					}
+					$rel = $settings;
+					$settings = array();
+				}
+
+				// determine attribute and value column names
+				$attr = \Arr::get($settings, 'attribute', 'attribute');
+				$val  = \Arr::get($settings, 'value', 'value');
+
+				// check if relation is present
+				if (array_key_exists($rel, $array))
+				{
+					// get eav properties
+					$container = \Arr::assoc_to_keyval($array[$rel], $attr, $val);
+
+					// merge eav properties to array without overwritting anything
+					$array = array_merge($container, $array);
+
+					// we don't need this relation anymore
+					unset($array[$rel]);
 				}
 			}
 		}
 
 		// strip any excluded values from the array
-		foreach (static::$_to_array_exclude as $key)
+		foreach (static::get_to_array_exclude() as $key)
 		{
 			if (array_key_exists($key, $array))
 			{
@@ -1861,26 +2272,43 @@ class Model implements \ArrayAccess, \Iterator
 		return $array;
 	}
 
+	/**
+	 * Provide the identifying details in the form of an array
+	 *
+	 * @return array
+	 */
+	public function get_pk_assoc()
+	{
+		$array = array_flip(static::primary_key());
+
+		foreach ($array as $key => &$value)
+		{
+			$value = $this->get($key);
+		}
+
+		return $array;
+	}
 
 	/**
 	 * Allow converting this object to a real object
 	 *
 	 * @return  object
 	 */
-	public function to_object()
+	public function to_object($custom = false, $recurse = false)
 	{
-		return (object) $this->to_array();
+		return (object) $this->to_array($custom, $recurse);
 	}
 
 	/**
 	 * EAV attribute getter. Also deals with isset() and unset()
 	 *
-	 * @param   string  $attribute, the attribute value to get
-	 * @param	bool	$isset, if true, do an exists check instead of returning the value
-	 * @param	bool	$unset, if true, delete the EAV attribute if it exists
+	 * @param   string $attribute, the attribute value to get
+	 * @param    bool $isset, if true, do an exists check instead of returning the value
+	 * @param    bool $unset, if true, delete the EAV attribute if it exists
+	 *
+	 * @throws \OutOfBoundsException if the defined EAV relation does not exist or of the wrong type
 	 *
 	 * @return  mixed
-	 * @throws	OutOfBoundsException if the defined EAV relation does not exist or of the wrong type
 	 */
 	protected function _get_eav($attribute, $isset = false, $unset = false)
 	{
@@ -1949,8 +2377,10 @@ class Model implements \ArrayAccess, \Iterator
 	/**
 	 * EAV attribute setter
 	 *
-	 * @param   string  $attribute
-	 * @param   string  $value
+	 * @param   string $attribute
+	 * @param   string $value
+	 *
+	 * @throws \OutOfBoundsException
 	 *
 	 * @return  mixed
 	 */
@@ -2083,4 +2513,34 @@ class Model implements \ArrayAccess, \Iterator
 		return key($this->_iterable) !== null;
 	}
 
+	/**
+	 * Returns a list of properties that will be excluded when to_array() is used.
+	 * @return array
+	 */
+	public static function get_to_array_exclude()
+	{
+		return static::$_to_array_exclude;
+	}
+
+	/**
+	 * Returns a list of properties and their information with _to_array_exclude
+	 * properties removed.
+	 *
+	 * @return array
+	 */
+	public static function get_filtered_properties()
+	{
+		$array = static::properties();
+
+		// strip any excluded values from the array
+		foreach (static::get_to_array_exclude() as $key)
+		{
+			if (array_key_exists($key, $array))
+			{
+				unset($array[$key]);
+			}
+		}
+
+		return $array;
+	}
 }

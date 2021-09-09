@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Fuel\Tasks;
@@ -114,7 +112,7 @@ HELP;
 		$errors = array();
 
 		// validate the auth configuration file
-		if ( ! file_exists($file = APPPATH.'config'.DS.'auth.php'))
+		if ( ! is_file($file = APPPATH.'config'.DS.'auth.php'))
 		{
 			$errors[] = \Fuel::clean_path($file).' does not exist.';
 		}
@@ -132,7 +130,7 @@ HELP;
 		}
 
 		// validate the simpleauth configuration file
-		if ( ! file_exists($file = APPPATH.'config'.DS.'simpleauth.php'))
+		if ( ! is_file($file = APPPATH.'config'.DS.'simpleauth.php'))
 		{
 			$errors[] = \Fuel::clean_path($file).' does not exist.';
 		}
@@ -155,7 +153,7 @@ HELP;
 		}
 
 		// validate the ormauth configuration file
-		if ( ! file_exists($file = APPPATH.'config'.DS.'ormauth.php'))
+		if ( ! is_file($file = APPPATH.'config'.DS.'ormauth.php'))
 		{
 			$errors[] = \Fuel::clean_path($file).' does not exist.';
 		}
@@ -356,7 +354,6 @@ HELP;
 
 		return true;
 	}
-
 
 	/*
 	 * Deal with potential changes in users table layout between simpleauth and ormauth

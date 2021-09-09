@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Orm;
@@ -81,7 +79,7 @@ class ManyMany extends Relation
 		$this->model_to = get_real_class($this->model_to);
 	}
 
-	public function get(Model $from)
+	public function get(Model $from, array $conditions = array())
 	{
 		// Create the query on the model_through
 		$query = call_user_func(array($this->model_to, 'query'));
@@ -91,7 +89,7 @@ class ManyMany extends Relation
 				'table'      => array($this->table_through, 't0_through'),
 				'join_type'  => null,
 				'join_on'    => array(),
-				'columns'    => $this->select_through('t0_through')
+				'columns'    => $this->select_through('t0_through'),
 		);
 
 		reset($this->key_from);
@@ -112,14 +110,21 @@ class ManyMany extends Relation
 			next($this->key_to);
 		}
 
-		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
-		{
-			is_array($condition) or $condition = array($key, '=', $condition);
-			$query->where($condition);
-		}
+		$conditions = \Arr::merge($this->conditions, $conditions);
+		$query->_parse_where_array(\Arr::get($conditions, 'where', array()));
 
-		foreach (\Arr::get($this->conditions, 'order_by', array()) as $field => $direction)
+		foreach (\Arr::get($conditions, 'order_by', array()) as $field => $direction)
 		{
+			if (strpos($field, '.') !== false)
+			{
+				$parts = explode('.', $field);
+				if ($parts[0] == $join['table'][0])
+				{
+					$parts[0] = $join['table'][1];
+					$field = implode('.', $parts);
+				}
+			}
+
 			if (is_numeric($field))
 			{
 				$query->order_by($direction);
@@ -166,7 +171,7 @@ class ManyMany extends Relation
 				'join_on'      => array(),
 				'columns'      => $this->select_through($alias_to.'_through'),
 				'rel_name'     => $this->model_through,
-				'relation'     => $this
+				'relation'     => $this,
 			),
 			$rel_name => array(
 				'model'        => $this->model_to,
@@ -179,7 +184,7 @@ class ManyMany extends Relation
 				'rel_name'     => strpos($rel_name, '.') ? substr($rel_name, strrpos($rel_name, '.') + 1) : $rel_name,
 				'relation'     => $this,
 				'where'        => \Arr::get($conditions, 'where', array()),
-			)
+			),
 		);
 
 		reset($this->key_from);
@@ -205,6 +210,10 @@ class ManyMany extends Relation
 				{
 					$condition[0] = $alias_to.'.'.$condition[0];
 				}
+				if (count($condition) == 2) // From Query::_where()
+				{
+					$condition = array($condition[0], '=', $condition[1]);
+				}
 				is_string($condition[2]) and $condition[2] = \Db::quote($condition[2], $models[$rel_name]['connection']);
 
 				$models[$rel_name]['join_on'][] = $condition;
@@ -220,7 +229,7 @@ class ManyMany extends Relation
 			}
 			else
 			{
-				$key = str_replace(array($alias_through[0],$alias_to_table[0]), array($alias_through[1],$alias_to_table[1]), $key);
+				$key = str_replace(array($alias_through[0], $alias_to_table[0]), array($alias_through[1], $alias_to_table[1]), $key);
 			}
 			$models[$rel_name]['order_by'][$key] = $direction;
 		}
@@ -276,7 +285,7 @@ class ManyMany extends Relation
 					next($this->key_to);
 				}
 
-				\DB::insert($this->table_through)->set($ids)->execute(call_user_func(array($model_from, 'connection')));
+				\DB::insert($this->table_through)->set($ids)->execute(call_user_func(array($model_from, 'connection'), true));
 				$original_model_ids[] = $current_model_id; // prevents inserting it a second time
 			}
 			else
@@ -320,7 +329,7 @@ class ManyMany extends Relation
 				next($to_keys);
 			}
 
-			$query->execute(call_user_func(array($model_from, 'connection')));
+			$query->execute(call_user_func(array($model_from, 'connection'), true));
 		}
 
 		$cascade = is_null($cascade) ? $this->cascade_save : (bool) $cascade;
@@ -370,6 +379,6 @@ class ManyMany extends Relation
 			$query->where($key, '=', $model_from->{current($this->key_from)});
 			next($this->key_from);
 		}
-		$query->execute(call_user_func(array($model_from, 'connection')));
+		$query->execute(call_user_func(array($model_from, 'connection'), true));
 	}
 }

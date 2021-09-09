@@ -5,12 +5,8 @@ namespace Fuel\Core;
 import('phpquickprofiler/console', 'vendor');
 import('phpquickprofiler/phpquickprofiler', 'vendor');
 
-use \Console;
-use \PhpQuickProfiler;
-
 class Profiler
 {
-
 	protected static $profiler = null;
 
 	protected static $query = null;
@@ -19,7 +15,7 @@ class Profiler
 	{
 		if ( ! \Fuel::$is_cli and ! \Input::is_ajax() and ! static::$profiler)
 		{
-			static::$profiler = new PhpQuickProfiler(FUEL_START_TIME);
+			static::$profiler = new \PhpQuickProfiler(FUEL_START_TIME);
 			static::$profiler->queries = array();
 			static::$profiler->queryCount = 0;
 			static::mark(__METHOD__.' Start');
@@ -29,17 +25,17 @@ class Profiler
 
 	public static function mark($label)
 	{
-		static::$profiler and Console::logSpeed($label);
+		static::$profiler and \Console::logSpeed($label);
 	}
 
 	public static function mark_memory($var = false, $name = 'PHP')
 	{
-		static::$profiler and Console::logMemory($var, $name);
+		static::$profiler and \Console::logMemory($var, $name);
 	}
 
 	public static function console($text)
 	{
-		static::$profiler and Console::log($text);
+		static::$profiler and \Console::log($text);
 	}
 
 	public static function output()
@@ -55,6 +51,7 @@ class Profiler
 				'sql' => \Security::htmlentities($sql),
 				'time' => static::$profiler->getMicroTime(),
 				'stacktrace' => $stacktrace,
+				'dbname' => $dbname,
 			);
 			return true;
 		}
@@ -65,7 +62,7 @@ class Profiler
 		if (static::$profiler)
 		{
 			static::$query['time'] = (static::$profiler->getMicroTime() - static::$query['time']) *1000;
-			array_push(static::$profiler->queries, static::$query);
+			static::$profiler->queries[] = static::$query;
 			static::$profiler->queryCount++;
 		}
 	}
@@ -79,7 +76,7 @@ class Profiler
 	{
 		return array(
 			microtime(true) - FUEL_START_TIME,
-			memory_get_peak_usage() - FUEL_START_MEM
+			memory_get_peak_usage() - FUEL_START_MEM,
 		);
 	}
 }

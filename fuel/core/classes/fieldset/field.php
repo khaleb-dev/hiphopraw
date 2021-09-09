@@ -3,16 +3,14 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
-
-
 
 /**
  * Fieldset Class
@@ -87,15 +85,21 @@ class Fieldset_Field
 	/**
 	 * Constructor
 	 *
-	 * @param  string
-	 * @param  string
-	 * @param  array
-	 * @param  array
-	 * @param  Fieldset
+	 * @param  string    $name
+	 * @param  string    $label
+	 * @param  array     $attributes
+	 * @param  array     $rules
+	 * @param  Fieldset  $fieldset
+	 * @throws \RuntimeException
 	 */
 	public function __construct($name, $label = '', array $attributes = array(), array $rules = array(), $fieldset = null)
 	{
 		$this->name = (string) $name;
+
+		if ($this->name === "")
+		{
+			throw new \RuntimeException('Fieldset field name may not be empty.');
+		}
 
 		// determine the field's base name (for fields with array indices)
 		$this->basename = ($pos = strpos($this->name, '[')) ? rtrim(substr(strrchr($this->name, '['), 1), ']') : $this->name;
@@ -128,22 +132,31 @@ class Fieldset_Field
 
 		foreach ($rules as $rule)
 		{
-			call_user_func_array(array($this, 'add_rule'), (array) $rule);
+			call_fuel_func_array(array($this, 'add_rule'), (array) $rule);
 		}
 	}
 
 	/**
-	 * @param   Fieldset  Fieldset to assign the field to
+	 * @param   Fieldset        $fieldset  Fieldset to assign the field to
 	 * @return  Fieldset_Field
 	 * @throws  \RuntimeException
 	 */
 	public function set_fieldset(Fieldset $fieldset)
 	{
+		// if we currently have a fieldset
 		if ($this->fieldset)
 		{
-			throw new \RuntimeException('Field already belongs to a fieldset, cannot be reassigned.');
+			// remove the field from the fieldset
+			$this->fieldset->delete($this->name);
+
+			// reset the fieldset
+			$this->fieldset = null;
+
+			// add this field to the new fieldset
+			$fieldset->add($this);
 		}
 
+		// assign the new fieldset
 		$this->fieldset = $fieldset;
 
 		return $this;
@@ -152,7 +165,7 @@ class Fieldset_Field
 	/**
 	 * Change the field label
 	 *
-	 * @param   string
+	 * @param   string  $label
 	 * @return  Fieldset_Field  this, to allow chaining
 	 */
 	public function set_label($label)
@@ -166,7 +179,7 @@ class Fieldset_Field
 	/**
 	 * Change the field type for form generation
 	 *
-	 * @param   string
+	 * @param   string  $type
 	 * @return  Fieldset_Field  this, to allow chaining
 	 */
 	public function set_type($type)
@@ -180,8 +193,8 @@ class Fieldset_Field
 	/**
 	 * Change the field's current or default value
 	 *
-	 * @param   string
-	 * @param   bool
+	 * @param   string  $value
+	 * @param   bool    $repopulate
 	 * @return  Fieldset_Field  this, to allow chaining
 	 */
 	public function set_value($value, $repopulate = false)
@@ -209,7 +222,7 @@ class Fieldset_Field
 	/**
 	 * Change the field description
 	 *
-	 * @param   string
+	 * @param   string          $description
 	 * @return  Fieldset_Field  this, to allow chaining
 	 */
 	public function set_description($description)
@@ -222,7 +235,7 @@ class Fieldset_Field
 	/**
 	 * Template the output
 	 *
-	 * @param   string
+	 * @param   string          $template
 	 * @return  Fieldset_Field  this, to allow chaining
 	 */
 	public function set_template($template = null)

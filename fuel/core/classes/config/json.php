@@ -7,6 +7,9 @@ namespace Fuel\Core;
  */
 class Config_Json extends \Config_File
 {
+	/**
+	 * @var  string  the extension used by this JSON file parser
+	 */
 	protected $ext = '.json';
 
 	/**
@@ -24,7 +27,7 @@ class Config_Json extends \Config_File
 	/**
 	 * Returns the formatted config file contents.
 	 *
-	 * @param   array   $content  config array
+	 * @param   array   $contents config array
 	 * @return  string  formatted config file contents
 	 */
 	protected function export_format($contents)

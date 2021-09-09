@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -25,11 +25,10 @@ namespace Fuel\Core;
  */
 class Cookie
 {
-
 	/**
 	 * @var  array  Cookie class configuration defaults
 	 */
-	private static $config = array(
+	protected static $config = array(
 		'expiration'            => 0,
 		'path'                  => '/',
 		'domain'                => null,
@@ -53,8 +52,8 @@ class Cookie
 	 *     // Get the "theme" cookie, or use "blue" if the cookie does not exist
 	 *     $theme = Cookie::get('theme', 'blue');
 	 *
-	 * @param   string  cookie name
-	 * @param   mixed   default value to return
+	 * @param   string  $name cookie name
+	 * @param   mixed   $default default value to return
 	 * @return  string
 	 */
 	public static function get($name = null, $default = null)
@@ -69,17 +68,23 @@ class Cookie
 	 *     // Set the "theme" cookie
 	 *     Cookie::set('theme', 'red');
 	 *
-	 * @param   string    name of cookie
-	 * @param   string    value of cookie
-	 * @param   integer   lifetime in seconds
-	 * @param   string    path of the cookie
-	 * @param   string    domain of the cookie
-	 * @param   boolean   if true, the cookie should only be transmitted over a secure HTTPS connection
-	 * @param   boolean   if true, the cookie will be made accessible only through the HTTP protocol
+	 * @param   string    $name        name of cookie
+	 * @param   string    $value       value of cookie
+	 * @param   integer   $expiration  lifetime in seconds
+	 * @param   string    $path        path of the cookie
+	 * @param   string    $domain      domain of the cookie
+	 * @param   boolean   $secure      if true, the cookie should only be transmitted over a secure HTTPS connection
+	 * @param   boolean   $http_only   if true, the cookie will be made accessible only through the HTTP protocol
 	 * @return  boolean
 	 */
 	public static function set($name, $value, $expiration = null, $path = null, $domain = null, $secure = null, $http_only = null)
 	{
+		// you can't set cookies in CLi mode
+		if (\Fuel::$is_cli)
+		{
+			return false;
+		}
+
 		$value = \Fuel::value($value);
 
 		// use the class defaults for the other parameters if not provided
@@ -100,11 +105,11 @@ class Cookie
 	 *
 	 *     Cookie::delete('theme');
 	 *
-	 * @param   string   cookie name
- 	 * @param   string    path of the cookie
-	 * @param   string    domain of the cookie
-	 * @param   boolean   if true, the cookie should only be transmitted over a secure HTTPS connection
-	 * @param   boolean   if true, the cookie will be made accessible only through the HTTP protocol
+	 * @param   string   $name       cookie name
+ 	 * @param   string   $path       path of the cookie
+	 * @param   string   $domain     domain of the cookie
+	 * @param   boolean  $secure     if true, the cookie should only be transmitted over a secure HTTPS connection
+	 * @param   boolean  $http_only  if true, the cookie will be made accessible only through the HTTP protocol
 	 * @return  boolean
 	 * @uses    static::set
 	 */
@@ -117,5 +122,3 @@ class Cookie
 		return static::set($name, null, -86400, $path, $domain, $secure, $http_only);
 	}
 }
-
-

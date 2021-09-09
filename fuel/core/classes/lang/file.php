@@ -19,7 +19,6 @@ abstract class Lang_File implements Lang_Interface
 	 * @param   string  $file       Lang file name
 	 * @param   array   $languages  Languages to scan for the lang file
 	 * @param   array   $vars       Variables to parse in the file
-	 * @return  void
 	 */
 	public function __construct($file = null, $languages = array(), $vars = array())
 	{
@@ -44,6 +43,7 @@ abstract class Lang_File implements Lang_Interface
 	public function load($overwrite = false)
 	{
 		$paths = $this->find_file();
+
 		$lang = array();
 
 		foreach ($paths as $path)
@@ -117,8 +117,8 @@ abstract class Lang_File implements Lang_Interface
 	/**
 	 * Finds the given language files
 	 *
-	 * @param   bool  $multiple  Whether to load multiple files or not
 	 * @return  array
+	 * @throws  \LangException
 	 */
 	protected function find_file()
 	{
@@ -128,12 +128,12 @@ abstract class Lang_File implements Lang_Interface
 			$paths = array_merge($paths, \Finder::search('lang'.DS.$lang, $this->file, $this->ext, true));
 		}
 
-		if (count($paths) > 0)
+		if (empty($paths))
 		{
-			return array_reverse($paths);
+			throw new \LangException(sprintf('File "%s" does not exist.', $this->file));
 		}
 
-		throw new \LangException(sprintf('File "%s" does not exist.', $this->file));
+		return array_reverse($paths);
 	}
 
 	/**
@@ -164,7 +164,7 @@ abstract class Lang_File implements Lang_Interface
 					$identifier = substr($identifier, $pos+2);
 
 					// strip the classes directory as we need the module root
-					$path = substr($path,0, -8).'lang'.DS.$identifier;
+					$path = substr($path, 0, -8).'lang'.DS.$identifier;
 				}
 				else
 				{
@@ -194,6 +194,9 @@ abstract class Lang_File implements Lang_Interface
 
 	/**
 	 * Must be implemented by child class. Gets called for each file to load.
+	 *
+	 * @param   string  $file  File to load
+	 * @return  array
 	 */
 	abstract protected function load_file($file);
 

@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Oil;
@@ -25,7 +23,6 @@ namespace Oil;
 
 class Console
 {
-
 	public function __construct()
 	{
 		error_reporting(E_ALL | E_STRICT);
@@ -35,7 +32,7 @@ class Console
 		ini_set("html_errors", 0);
 		ini_set("display_errors", 0);
 
-		while (ob_get_level ())
+		while (ob_get_level())
 		{
 			 ob_end_clean();
 		}
@@ -44,6 +41,27 @@ class Console
 
 		// And, go!
 		self::main();
+	}
+
+	public static function help()
+	{
+		$output = <<<HELP
+
+Usage:
+  php oil [c|console]
+
+Description:
+  Opens a commandline console to your FuelPHP installation. This allows
+  you to run any FuelPHP command interactively.
+
+Examples:
+  php oil console
+
+Documentation:
+  https://fuelphp.com/docs/packages/oil/console.html
+HELP;
+		\Cli::write($output);
+
 	}
 
 	private function main()
@@ -116,11 +134,11 @@ class Console
 				}
 				elseif (is_string($ret))
 				{
-					echo addcslashes($ret, "\0..\37\177..\377");
+					echo addcslashes($ret, "\0..\11\13\14\16..\37\177..\377");
 				}
 				elseif ( ! is_null($ret))
 				{
-					var_export($ret);
+					print_r($ret);
 				}
 			}
 
@@ -144,7 +162,7 @@ class Console
 			'class', 'declare', 'die', 'echo', 'exit', 'for',
 			'foreach', 'function', 'global', 'if', 'include',
 			'include_once', 'print', 'require', 'require_once',
-			'return', 'static', 'switch', 'unset', 'while'
+			'return', 'static', 'switch', 'unset', 'while',
 		);
 
 		$okeq = array('===', '!==', '==', '!=', '<=', '>=');
@@ -181,7 +199,7 @@ class Console
 			return false;
 		}
 
-		$kw = preg_split("[^a-z0-9_]i", $code);
+		$kw = preg_split("/[^a-z0-9_]/i", $code);
 		foreach ($kw as $i)
 		{
 			if (in_array($i, $skip))

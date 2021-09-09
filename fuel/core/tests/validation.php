@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -40,8 +40,9 @@ class Test_Validation extends TestCase
 					'dns' => '127.0.0.1',
 					'snd' => '127.0.0',
 					'url' => 'http://www.google.com',
-				)
-			)
+					'gender' => 'M',
+				),
+			),
 		);
 	}
 
@@ -149,6 +150,76 @@ class Test_Validation extends TestCase
 
 		$this->assertEquals($expected, $output);
 	}
+
+    /**
+     * Validation:  match_collection
+     * Expecting:   success
+     *
+     * @dataProvider    form_provider
+     */
+    public function test_validation_match_collection_success($input)
+    {
+        $val = Validation::forge(__FUNCTION__);
+        $val->add_field('gender', 'Gender', 'match_collection[M,F]');
+
+        $output = $val->run($input);
+        $expected = true;
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * Validation:  match_collection
+     * Expecting:   failure
+     *
+     * @dataProvider    form_provider
+     */
+    public function test_validation_match_collection_failure($input)
+    {
+        $val = Validation::forge(__FUNCTION__);
+        $val->add_field('gender', 'Gender', 'match_collection["M,F"]');
+        $val->run($input);
+
+        $output = $val->error('gender', false) ? true : false;
+        $expected = true;
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * Validation:  match_collection (strict)
+     * Expecting:   success
+     *
+     * @dataProvider    form_provider
+     */
+    public function test_validation_match_collection_strict_success($input)
+    {
+        $val = Validation::forge(__FUNCTION__);
+        $val->add_field('gender', 'Gender', '')->add_rule('match_collection', array('M', 'F'), true);
+
+        $output = $val->run($input);
+        $expected = true;
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * Validation:  match_collection (strict)
+     * Expecting:   failure
+     *
+     * @dataProvider    form_provider
+     */
+    public function test_validation_match_collection_strict_failure($input)
+    {
+        $val = Validation::forge(__FUNCTION__);
+        $val->add_field('gender', 'Gender', '')->add_rule('match_collection', array('m', 'f'), true);
+        $val->run($input);
+
+        $output = $val->error('gender', false) ? true : false;
+        $expected = true;
+
+        $this->assertEquals($expected, $output);
+    }
 
 	/**
 	 * Validation:  match_pattern
@@ -485,6 +556,48 @@ class Test_Validation extends TestCase
 	}
 
 	/**
+	 * Validation:  valid_ip
+	 * Expecting:   success
+	 */
+	public function test_validation_valid_ip_v6_only_success()
+	{
+		$val = Validation::forge(__FUNCTION__);
+		$val->add_field('ipv6', 'IPv6 address', 'valid_ip[ipv6]');
+
+		$output = $val->run(array('ipv6' => '2001:0db8:85a3:08d3:1319:8a2e:0370:7334'));
+
+		$this->assertTrue($output);
+	}
+
+	/**
+	 * Validation:  valid_ip
+	 * Expecting:   failure
+	 */
+	public function test_validation_valid_ip_v6_only_failure()
+	{
+		$val = Validation::forge(__FUNCTION__);
+		$val->add_field('ipv6', 'IPv6 address', 'valid_ip[ipv6]');
+
+		$output = $val->run(array('ipv6' => '192.168.0.1'));
+
+		$this->assertFalse($output);
+	}
+
+	/**
+	 * Validation:  valid_ip
+	 * Expecting:   failure
+	 */
+	public function test_validation_valid_ip_v4_only_failure()
+	{
+		$val = Validation::forge(__FUNCTION__);
+		$val->add_field('ipv4', 'IPv4 address', 'valid_ip[ipv4]');
+
+		$output = $val->run(array('ipv4' => '2001:0db8:85a3:08d3:1319:8a2e:0370:7334'));
+
+		$this->assertFalse($output);
+	}
+
+	/**
 	 * Validation:  numeric_min
 	 * Expecting:   success
 	 *
@@ -806,5 +919,35 @@ class Test_Validation extends TestCase
 		$expected = true;
 
 		$this->assertEquals($expected, $test);
+	}
+
+	/**
+	 * Test for $validation->error_message()
+	 *
+	 * @test
+	 */
+	public function test_error_message() {
+		$post = array(
+			'title' => '',
+			'number' => 'ABC',
+		);
+
+		$val = Validation::forge(__FUNCTION__);
+		$val->add_field('title', 'Title', 'required');
+		$val->add_field('number', 'Number', 'required|valid_string[numeric]');
+
+		$val->run($post);
+
+		$expected = 'The field Title is required and must contain a value.';
+		$this->assertEquals($expected, $val->error_message('title'));
+
+		$expected = 'The valid string rule valid_string(numeric) failed for field Number';
+		$this->assertEquals($expected, $val->error_message('number'));
+
+		$expected = 'The field Title is required and must contain a value.';
+		$this->assertEquals($expected, current($val->error_message()));
+
+		$expected = 'No error';
+		$this->assertEquals($expected, $val->error_message('content', 'No error'));
 	}
 }

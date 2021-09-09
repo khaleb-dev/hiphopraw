@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Parser;
@@ -21,7 +19,6 @@ use Twig_Lexer;
 use MtHaml;
 
 class View_HamlTwig extends View_Twig {
-
 	protected static $_environment;
 
 	/**
@@ -34,7 +31,7 @@ class View_HamlTwig extends View_Twig {
 		// Include View_HamlTwig file(s) defined in config.
 		$includes = \Config::get('parser.View_Twig.include');
 
-		foreach ((array)$includes as $include)
+		foreach ((array) $includes as $include)
 		{
 			require $include;
 			static::$loaded_files[$include] = true;
@@ -88,7 +85,7 @@ class View_HamlTwig extends View_Twig {
 		//\Debug::dump(static::parser()); exit();
 		try
 		{
-			return static::parser()->render($view_name, $local_data);
+			$result = static::parser()->render($view_name, $local_data);
 		}
 		catch (\Exception $e)
 		{
@@ -96,6 +93,11 @@ class View_HamlTwig extends View_Twig {
 			ob_end_clean();
 			throw $e;
 		}
+
+		$this->unsanitize($local_data);
+		$this->unsanitize($global_data);
+
+		return $result;
 	}
 
 	/**

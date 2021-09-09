@@ -1,23 +1,34 @@
 <?php
+/**
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
+ *
+ * @package    Fuel
+ * @version    1.8.2
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
+ */
 
 namespace Fuel\Migrations;
 
+include __DIR__."/../normalizedrivertypes.php";
+
 class Auth_Add_Authactions
 {
-
 	function up()
 	{
-		// get the driver used
-		\Config::load('auth', true);
-
-		$drivers = \Config::get('auth.driver', array());
-		is_array($drivers) or $drivers = array($drivers);
+		// get the drivers defined
+		$drivers = normalize_driver_types();
 
 		if (in_array('Ormauth', $drivers))
 		{
 			// get the tablename
 			\Config::load('ormauth', true);
 			$table = \Config::get('ormauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('ormauth');
 
 			// add the actions field to the permission and permission through tables
 			\DBUtil::add_fields($table.'_permissions', array(
@@ -33,21 +44,24 @@ class Auth_Add_Authactions
 				'actions' => array('type' => 'text', 'null' => true, 'after' => 'perms_id'),
 			));
 		}
+
+		// reset any DBUtil connection set
+		$this->dbconnection(false);
 	}
 
 	function down()
 	{
-		// get the driver used
-		\Config::load('auth', true);
-
-		$drivers = \Config::get('auth.driver', array());
-		is_array($drivers) or $drivers = array($drivers);
+		// get the drivers defined
+		$drivers = normalize_driver_types();
 
 		if (in_array('Ormauth', $drivers))
 		{
 			// get the tablename
 			\Config::load('ormauth', true);
 			$table = \Config::get('ormauth.table_name', 'users');
+
+			// make sure the correct connection is used
+			$this->dbconnection('ormauth');
 
 			\DBUtil::drop_fields($table.'_permissions', array(
 				'actions',
@@ -61,6 +75,40 @@ class Auth_Add_Authactions
 			\DBUtil::drop_fields($table.'_role_permissions', array(
 				'actions',
 			));
+		}
+
+		// reset any DBUtil connection set
+		$this->dbconnection(false);
+	}
+
+	/**
+	 * check if we need to override the db connection for auth tables
+	 */
+	protected function dbconnection($type = null)
+	{
+		static $connection;
+
+		switch ($type)
+		{
+			// switch to the override connection
+			case 'simpleauth':
+			case 'ormauth':
+				if ($connection = \Config::get($type.'.db_connection', null))
+				{
+					\DBUtil::set_connection($connection);
+				}
+				break;
+
+			// switch back to the configured migration connection, or the default one
+			case false:
+				if ($connection)
+				{
+					\DBUtil::set_connection(\Config::get('migrations.connection', null));
+				}
+				break;
+
+			default:
+				// noop
 		}
 	}
 }

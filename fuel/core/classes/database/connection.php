@@ -1,22 +1,25 @@
 <?php
 /**
- * Database connection wrapper. All database object instances are referenced
- * by a name. Queries are typically handled by [Database_Query], rather than
- * using the database object directly.
+ * Part of the Fuel framework.
  *
- * @package    Fuel/Database
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2010 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package    Fuel
+ * @version    1.8
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2016 Fuel Development Team
+ * @copyright  2008 - 2009 Kohana Team
+ * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
-
-
 abstract class Database_Connection
 {
+	/**
+	 * @var string Cache of the name of the readonly connection
+	 */
+	protected static $_readonly = array();
+
 	/**
 	 * @var  array  Database instances
 	 */
@@ -33,11 +36,15 @@ abstract class Database_Connection
 	 *     // Create a custom configured instance
 	 *     $db = static::instance('custom', $config);
 	 *
-	 * @param   string   instance name
-	 * @param   array    configuration parameters
+	 * @param   string $name     instance name
+	 * @param   array  $config   configuration parameters
+	 * @param   bool   $writable when replication is enabled, whether to return the master connection
+	 *
 	 * @return  Database_Connection
+	 *
+	 * @throws \FuelException
 	 */
-	public static function instance($name = null, array $config = null)
+	public static function instance($name = null, array $config = null, $writable = true)
 	{
 		\Config::load('db', true);
 		if ($name === null)
@@ -46,17 +53,23 @@ abstract class Database_Connection
 			$name = \Config::get('db.active');
 		}
 
+		if ( ! $writable and ($readonly = \Config::get('db.'.$name.'.readonly', false)))
+		{
+			! isset(static::$_readonly[$name]) and static::$_readonly[$name] = \Arr::get($readonly, array_rand($readonly));
+			$name = static::$_readonly[$name];
+		}
+
 		if ( ! isset(static::$instances[$name]))
 		{
 			if ($config === null)
 			{
 				// Load the configuration for this database
-				$config = \Config::get("db.{$name}");
+				$config = \Config::get('db.'.$name);
 			}
 
 			if ( ! isset($config['type']))
 			{
-				throw new \FuelException("Database type not defined in {$name} configuration");
+				throw new \FuelException('Database type not defined in "'.$name.'" configuration or "'.$name.'" configuration does not exist');
 			}
 
 			// Set the driver class name
@@ -85,6 +98,19 @@ abstract class Database_Connection
 	protected $_instance;
 
 	/**
+	 *
+	 * @var bool $_in_transation allows transactions
+	 */
+	protected $_in_transaction = false;
+
+	/**
+	 *
+	 * @var int Transaction nesting depth counter.
+	 * Should be modified AFTER a driver has changed the level successfully
+	 */
+	protected $_transaction_depth = 0;
+
+	/**
 	 * @var  resource  Raw server connection
 	 */
 	protected $_connection;
@@ -95,11 +121,17 @@ abstract class Database_Connection
 	protected $_config;
 
 	/**
+	 * @var  Database_Schema  Instance of the database schema class
+	 */
+	protected $_schema;
+
+	/**
 	 * Stores the database configuration locally and name the instance.
 	 *
 	 * [!!] This method cannot be accessed directly, you must use [static::instance].
 	 *
-	 * @return  void
+	 * @param string $name
+	 * @param array  $config
 	 */
 	protected function __construct($name, array $config)
 	{
@@ -108,6 +140,12 @@ abstract class Database_Connection
 
 		// Store the config locally
 		$this->_config = $config;
+
+		// Set up a generic schema processor if needed
+		if ( ! $this->_schema)
+		{
+			$this->_schema = new \Database_Schema($name, $this);
+		}
 
 		// Store the database instance
 		static::$instances[$name] = $this;
@@ -167,7 +205,7 @@ abstract class Database_Connection
 	 *     $db->set_charset('utf8');
 	 *
 	 * @throws  Database_Exception
-	 * @param   string   character set name
+	 * @param   string $charset character set name
 	 * @return  void
 	 */
 	abstract public function set_charset($charset);
@@ -181,14 +219,95 @@ abstract class Database_Connection
 	 *     // Make a SELECT query and use "Model_User" for the results
 	 *     $db->query(static::SELECT, 'SELECT * FROM users LIMIT 1', 'Model_User');
 	 *
-	 * @param   integer  static::SELECT, static::INSERT, etc
-	 * @param   string   SQL query
-	 * @param   mixed    result object class, true for stdClass, false for assoc array
+	 * @param   integer $type      static::SELECT, static::INSERT, etc
+	 * @param   string  $sql       SQL query
+	 * @param   mixed   $as_object result object class, true for stdClass, false for assoc array
+	 *
 	 * @return  object   Database_Result for SELECT queries
 	 * @return  array    list (insert id, row count) for INSERT queries
 	 * @return  integer  number of affected rows for all other queries
 	 */
 	abstract public function query($type, $sql, $as_object);
+
+	/**
+	 * Create a new [Database_Query_Builder_Select]. Each argument will be
+	 * treated as a column. To generate a `foo AS bar` alias, use an array.
+	 *
+	 *     // SELECT id, username
+	 *     $query = $db->select('id', 'username');
+	 *
+	 *     // SELECT id AS user_id
+	 *     $query = $db->select(array('id', 'user_id'));
+	 *
+	 * @param   mixed   column name or array($column, $alias) or object
+	 * @param   ...
+	 * @return  Database_Query_Builder_Select
+	 */
+	public function select(array $args = null)
+	{
+		$instance = new \Database_Query_Builder_Select($args);
+		return $instance->set_connection($this);
+	}
+
+	/**
+	 * Create a new [Database_Query_Builder_Insert].
+	 *
+	 *     // INSERT INTO users (id, username)
+	 *     $query = $db->insert('users', array('id', 'username'));
+	 *
+	 * @param   string  table to insert into
+	 * @param   array   list of column names or array($column, $alias) or object
+	 * @return  Database_Query_Builder_Insert
+	 */
+	public function insert($table = null, array $columns = null)
+	{
+		$instance = new \Database_Query_Builder_Insert($table, $columns);
+		return $instance->set_connection($this);
+	}
+
+	/**
+	 * Create a new [Database_Query_Builder_Update].
+	 *
+	 *     // UPDATE users
+	 *     $query = $db->update('users');
+	 *
+	 * @param   string  table to update
+	 * @return  Database_Query_Builder_Update
+	 */
+	public function update($table = null)
+	{
+		$instance = new \Database_Query_Builder_Update($table);
+		return $instance->set_connection($this);
+	}
+
+	/**
+	 * Create a new [Database_Query_Builder_Delete].
+	 *
+	 *     // DELETE FROM users
+	 *     $query = $db->delete('users');
+	 *
+	 * @param   string  table to delete from
+	 * @return  Database_Query_Builder_Delete
+	 */
+	public function delete($table = null)
+	{
+		$instance = new \Database_Query_Builder_Delete($table);
+		return $instance->set_connection($this);
+	}
+
+	/**
+	 * Database schema operations
+	 *
+	 *     // CREATE DATABASE database CHARACTER SET utf-8 DEFAULT utf-8
+	 *     $query = $db->schema('create_database', array('database', 'utf-8'));
+
+	 * @param   string  table to delete from
+	 * @return  Database_Query_Builder_Delete
+	 */
+	public function schema($operation, array $params = array())
+	{
+		return call_user_func_array(array($this->_schema, $operation), $params);
+	}
 
 	/**
 	 * Count the number of records in the last query, without LIMIT or OFFSET applied.
@@ -211,7 +330,7 @@ abstract class Database_Connection
 			if (stripos($sql, 'LIMIT') !== false)
 			{
 				// Remove LIMIT from the SQL
-				$sql = preg_replace('/\sLIMIT\s+[^a-z]+/i', ' ', $sql);
+				$sql = preg_replace('/\sLIMIT\s+[^a-z\)]+/i', ' ', $sql);
 			}
 
 			if (stripos($sql, 'OFFSET') !== false)
@@ -220,9 +339,14 @@ abstract class Database_Connection
 				$sql = preg_replace('/\sOFFSET\s+\d+/i', '', $sql);
 			}
 
+			if (stripos($sql, 'ORDER BY') !== false)
+			{
+				// Remove ORDER BY clauses from the SQL to improve count query performance
+				$sql = preg_replace('/ORDER BY (.+?)(?=LIMIT|GROUP|PROCEDURE|INTO|FOR|LOCK|\)|$)/mi', '', $sql);
+			}
+
 			// Get the total rows from the last query executed
-			$result = $this->query
-			(
+			$result = $this->query(
 				\DB::SELECT,
 				'SELECT COUNT(*) AS '.$this->quote_identifier('total_rows').' '.
 				'FROM ('.$sql.') AS '.$this->quote_table('counted_results'),
@@ -237,9 +361,10 @@ abstract class Database_Connection
 	}
 
 	/**
-	 * Per connection cache controlle setter/getter
+	 * Per connection cache controller setter/getter
 	 *
-	 * @param   bool   $bool  wether to enable it [optional]
+	 * @param   bool   $bool  whether to enable it [optional]
+	 *
 	 * @return  mixed  cache boolean when getting, current instance when setting.
 	 */
 	public function caching($bool = null)
@@ -258,7 +383,8 @@ abstract class Database_Connection
 	 *     // Get the total number of records in the "users" table
 	 *     $count = $db->count_records('users');
 	 *
-	 * @param   mixed    table name string or array(query, alias)
+	 * @param   mixed $table table name string or array(query, alias)
+	 *
 	 * @return  integer
 	 */
 	public function count_records($table)
@@ -275,13 +401,13 @@ abstract class Database_Connection
 	 *
 	 *     $db->datatype('char');
 	 *
-	 * @param   string  SQL data type
+	 * @param   string $type SQL data type
+	 *
 	 * @return  array
 	 */
 	public function datatype($type)
 	{
-		static $types = array
-		(
+		static $types = array(
 			// SQL-92
 			'bit'                           => array('type' => 'string', 'exact' => true),
 			'bit varying'                   => array('type' => 'string'),
@@ -335,7 +461,9 @@ abstract class Database_Connection
 		);
 
 		if (isset($types[$type]))
+		{
 			return $types[$type];
+		}
 
 		return array();
 	}
@@ -350,7 +478,8 @@ abstract class Database_Connection
 	 *     // Get all user-related tables
 	 *     $tables = $db->list_tables('user%');
 	 *
-	 * @param   string   table to search for
+	 * @param   string $like table to search for
+	 *
 	 * @return  array
 	 */
 	abstract public function list_tables($like = null);
@@ -365,8 +494,9 @@ abstract class Database_Connection
 	 *     // Get all name-related columns
 	 *     $columns = $db->list_columns('users', '%name%');
 	 *
-	 * @param   string  table to get columns from
-	 * @param   string  column to search for
+	 * @param   string $table table to get columns from
+	 * @param   string $like  column to search for
+	 *
 	 * @return  array
 	 */
 	abstract public function list_columns($table, $like = null);
@@ -377,7 +507,8 @@ abstract class Database_Connection
 	 *     // Returns: array('CHAR', '6')
 	 *     list($type, $length) = $db->_parse_type('CHAR(6)');
 	 *
-	 * @param   string
+	 * @param string $type
+	 *
 	 * @return  array   list containing the type and length, if any
 	 */
 	protected function _parse_type($type)
@@ -405,6 +536,8 @@ abstract class Database_Connection
 	 *
 	 *     $prefix = $db->table_prefix();
 	 *
+	 * @param string $table
+	 *
 	 * @return  string
 	 */
 	public function table_prefix($table = null)
@@ -429,8 +562,10 @@ abstract class Database_Connection
 	 * [Database_Query] objects will be compiled and converted to a sub-query.
 	 * All other objects will be converted using the `__toString` method.
 	 *
-	 * @param   mixed   any value to quote
+	 * @param   mixed $value any value to quote
+	 *
 	 * @return  string
+	 *
 	 * @uses    static::escape
 	 */
 	public function quote($value)
@@ -487,8 +622,10 @@ abstract class Database_Connection
 	 *
 	 *     $table = $db->quote_table($table);
 	 *
-	 * @param   mixed   table name or array(table, alias)
+	 * @param   mixed $value table name or array(table, alias)
+	 *
 	 * @return  string
+	 *
 	 * @uses    static::quote_identifier
 	 * @uses    static::table_prefix
 	 */
@@ -551,7 +688,7 @@ abstract class Database_Connection
 		if (is_array($value))
 		{
 			// Separate the column and alias
-			list ($value, $alias) = $value;
+			list($value, $alias) = $value;
 
 			return $value.' AS '.$this->quote_identifier($alias);
 		}
@@ -578,8 +715,10 @@ abstract class Database_Connection
 	 * [Database_Query] objects will be compiled and converted to a sub-query.
 	 * All other objects will be converted using the `__toString` method.
 	 *
-	 * @param   mixed   any identifier
+	 * @param   mixed $value any identifier
+	 *
 	 * @return  string
+	 *
 	 * @uses    static::table_prefix
 	 */
 	public function quote_identifier($value)
@@ -609,24 +748,21 @@ abstract class Database_Connection
 		elseif (is_array($value))
 		{
 			// Separate the column and alias
-			list ($value, $alias) = $value;
+			list($value, $alias) = $value;
 
 			return $this->quote_identifier($value).' AS '.$this->quote_identifier($alias);
 		}
 
-		if (strpos($value, '"') !== false)
+		if (preg_match('/^(["\']).*\1$/m', $value))
 		{
-			// Quote the column in FUNC("ident") identifiers
-			return preg_replace('/"(.+?)"/e', '$this->quote_identifier("$1")', $value);
-		}
-		elseif (preg_match("/^'(.*)?'$/", $value))
-		{
-			// return quoted values as-is
 			return $value;
 		}
-		elseif (strpos($value, '.') !== false)
+
+		if (strpos($value, '.') !== false)
 		{
 			// Split the identifier into the individual parts
+			// This is slightly broken, because a table or column name
+			// (or user-defined alias!) might legitimately contain a period.
 			$parts = explode('.', $value);
 
 			if ($prefix = $this->table_prefix())
@@ -642,10 +778,12 @@ abstract class Database_Connection
 			// Quote each of the parts
 			return implode('.', array_map(array($this, __FUNCTION__), $parts));
 		}
-		else
-		{
-			return $this->_identifier.$value.$this->_identifier;
-		}
+
+		// That you can simply escape the identifier by doubling
+		// it is a built-in assumption which may not be valid for
+		// all connection types!  However, it's true for MySQL,
+		// SQLite, Postgres and other ANSI SQL-compliant DBs.
+		return $this->_identifier.str_replace($this->_identifier, $this->_identifier.$this->_identifier, $value).$this->_identifier;
 	}
 
 	/**
@@ -654,7 +792,8 @@ abstract class Database_Connection
 	 *
 	 *     $value = $db->escape('any string');
 	 *
-	 * @param   string   value to quote
+	 * @param   string $value value to quote
+	 *
 	 * @return  string
 	 */
 	abstract public function escape($value);
@@ -664,36 +803,181 @@ abstract class Database_Connection
 	 *
 	 *     $db->in_transaction();
 	 *
-	 * @return  bool
+	 * @return bool
 	 */
-	abstract public function in_transaction();
+	public function in_transaction()
+	{
+		return $this->_in_transaction;
+	}
 
 	/**
-	 * Begins a transaction on instance
+	 * Begins a nested transaction on instance
 	 *
 	 *     $db->start_transaction();
 	 *
-	 * @return  bool
+	 * @return bool
 	 */
-	abstract public function start_transaction();
+	public function start_transaction()
+	{
+		$result = true;
+
+		if ($this->_transaction_depth == 0)
+		{
+			if ($this->driver_start_transaction())
+			{
+				$this->_in_transaction = true;
+			}
+			else
+			{
+				$result = false;
+			}
+		}
+		else
+		{
+			$result = $this->set_savepoint($this->_transaction_depth);
+			// If savepoint is not supported it is not an error
+			isset($result) or $result = true;
+		}
+
+		$result and $this->_transaction_depth ++;
+
+		return $result;
+	}
 
 	/**
-	 * Commits all pending transactional queries
+	 * Commits nested transaction
 	 *
 	 *     $db->commit_transaction();
 	 *
-	 * @return  bool
+	 * @return bool
 	 */
-	abstract public function commit_transaction();
+	public function commit_transaction()
+	{
+		// Fake call of the commit
+		if ($this->_transaction_depth <= 0)
+		{
+			return false;
+		}
+
+		if ($this->_transaction_depth - 1)
+		{
+			$result = $this->release_savepoint($this->_transaction_depth - 1);
+			// If savepoint is not supported it is not an error
+			! isset($result) and $result = true;
+		}
+		else
+		{
+			$this->_in_transaction = false;
+			$result = $this->driver_commit();
+		}
+
+		$result and $this->_transaction_depth --;
+
+		return $result;
+	}
 
 	/**
-	 * Rollsback all pending transactional queries
+	 * Rollsback nested pending transaction queries.
+	 * Rollback to the current level uses SAVEPOINT,
+	 * it does not work if current RDBMS does not support them.
+	 * In this case system rollbacks all queries and closes the transaction
 	 *
 	 *     $db->rollback_transaction();
 	 *
-	 * @return  bool
+	 * @param bool $rollback_all:
+	 *  true  - rollback everything and close transaction;
+	 *  false - rollback only current level
+	 *
+	 * @return bool
 	 */
-	abstract public function rollback_transaction();
+	public function rollback_transaction($rollback_all = true)
+	{
+		if ($this->_transaction_depth > 0)
+		{
+			if($rollback_all or $this->_transaction_depth == 1)
+			{
+				if($result = $this->driver_rollback())
+				{
+					$this->_transaction_depth = 0;
+					$this->_in_transaction = false;
+				}
+			}
+			else
+			{
+				$result = $this->rollback_savepoint($this->_transaction_depth - 1);
+				// If savepoint is not supported it is not an error
+				isset($result) or $result = true;
+
+				$result and $this->_transaction_depth -- ;
+			}
+		}
+		else
+		{
+			$result = false;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Begins a transaction on the driver level
+	 *
+	 * @return bool
+	 */
+	abstract protected function driver_start_transaction();
+
+	/**
+	 * Commits all pending transactional queries on the driver level
+	 *
+	 * @return bool
+	*/
+	abstract protected function driver_commit();
+
+	/**
+	 * Rollback all pending transactional queries on the driver level
+	 *
+	 * @return bool
+	*/
+	abstract protected function driver_rollback();
+
+	/**
+	 * Sets savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function set_savepoint($name)
+	{
+		return null;
+	}
+
+	/**
+	 * Release savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function release_savepoint($name)
+	{
+		return null;
+	}
+
+	/**
+	 * Rollback savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function rollback_savepoint($name)
+	{
+		return null;
+	}
 
 	/**
 	 * Returns the raw connection object for custom method access
@@ -707,5 +991,18 @@ abstract class Database_Connection
 		// Make sure the database is connected
 		$this->_connection or $this->connect();
 		return $this->_connection;
+	}
+
+	/**
+	 * Returns whether or not we have a valid database connection object
+	 *
+	 *     $db->has_connection()
+	 *
+	 * @return  bool
+	 */
+	public function has_connection()
+	{
+		// return the status of the connection
+		return $this->_connection ? true : false;
 	}
 }

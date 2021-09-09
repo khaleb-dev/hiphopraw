@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -31,6 +31,7 @@ class Test_Fieldset extends TestCase
 		$rp = new \ReflectionProperty($request, 'main');
 		$rp->setAccessible(true);
 		$rp->setValue($request, $request);
+		\Request::active($request);
 	}
 
 	public function tearDown()
@@ -82,7 +83,7 @@ class Test_Fieldset extends TestCase
 		));
 		$ops = array('male', 'female');
 		$form->add('gender', '', array(
-			'options' => $ops, 'type' => 'radio', 'value' => 1
+			'options' => $ops, 'type' => 'radio', 'value' => 1,
 		));
 
 		$output = $form->build();

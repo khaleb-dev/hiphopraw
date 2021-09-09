@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -21,7 +21,6 @@ namespace Fuel\Core;
  */
 class Upload
 {
-
 	/* ---------------------------------------------------------------------------
 	 * ERROR CODE CONSTANTS
 	 * --------------------------------------------------------------------------- */
@@ -69,8 +68,6 @@ class Upload
 
 	/**
 	 * class initialisation, load the config and process $_FILES if needed
-	 *
-	 * @return	void
 	 */
 	public static function _init()
 	{
@@ -87,10 +84,27 @@ class Upload
 		$config['langCallback'] = '\\Upload::lang_callback';
 
 		// get an upload instance
-		static::$upload = new \FuelPHP\Upload\Upload($config);
+		if (class_exists('Fuel\Upload\Upload'))
+		{
+			static::$upload = new \Fuel\Upload\Upload($config);
+		}
 
-		// and load the uploaded files
-		static::$upload->processFiles();
+		// 1.6.1 fallback
+		elseif (class_exists('FuelPHP\Upload\Upload'))
+		{
+			static::$upload = new \FuelPHP\Upload\Upload($config);
+		}
+
+		else
+		{
+			throw new \FuelException('Can not load \Fuel\Upload\Upload. Did you run composer to install it?');
+		}
+
+		// if auto-process is not enabled, load the uploaded files
+		if ( ! $config['auto_process'])
+		{
+			static::$upload->processFiles();
+		}
 	}
 
 	// ---------------------------------------------------------------------------
@@ -98,7 +112,7 @@ class Upload
 	/**
 	 * return the Upload instance
 	 *
-	 * @return	\FuelPHP\Upload\Upload
+	 * @return	\Upload
 	 */
 	public static function instance()
 	{
@@ -125,8 +139,8 @@ class Upload
 	 * Move callback function, custom method to move an uploaded file. In Fuel 1.x
 	 * this method is used for FTP uploads only
 	 *
-	 * @param  string  $file  The FQFN of the file to move
-	 * @param  string  $file  The FQFN of the file destination
+	 * @param  string  $from  The FQFN of the file to move
+	 * @param  string  $to    The FQFN of the file destination
 	 *
 	 * @return  bool  Result of the move operation
 	 */
@@ -157,6 +171,7 @@ class Upload
 	/**
 	 * Get the list of validated files
 	 *
+	 * @param	mixed	$index
 	 * @return	array	list of uploaded files that are validated
 	 */
 	public static function get_files($index = null)
@@ -202,6 +217,7 @@ class Upload
 	/**
 	 * Get the list of non-validated files
 	 *
+	 * @param	mixed	$index
 	 * @return	array	list of uploaded files that failed to validate
 	 */
 	public static function get_errors($index = null)
@@ -254,15 +270,15 @@ class Upload
 	 *
 	 * Registers a Callback for a given event
 	 *
-	 * @param	string	The name of the event
-	 * @param	mixed	callback information
+	 * @param	string	$event		The name of the event
+	 * @param	mixed	$callback	callback information
 	 *
 	 * @return	void
 	 */
 	public static function register($event, $callback)
 	{
 		// make sure we're setting the correct events
-		$event = str_replace(array('before', 'after', 'validate'), array('before_save', 'after_save', 'after_validate'), $event);
+		$event = str_replace(array('before', 'after', 'validate'), array('before_save', 'after_save', 'after_validation'), $event);
 
 		static::$upload->register($event, $callback);
 	}
@@ -272,6 +288,7 @@ class Upload
 	/**
 	 * Process the uploaded files, and run the validation
 	 *
+	 * @param	array	$config
 	 * @return	void
 	 */
 	public static function process($config = array())
@@ -288,8 +305,8 @@ class Upload
 	/**
 	 * Upload files with FTP
 	 *
-	 * @param   string|array  The name of the config group to use, or a configuration array.
-	 * @param   bool          Automatically connect to this server.
+	 * @param   string|array  $config	The name of the config group to use, or a configuration array.
+	 * @param   bool          $connect	Automatically connect to this server.
 	 */
 	public static function with_ftp($config = 'default', $connect = true)
 	{
@@ -310,20 +327,50 @@ class Upload
 	/**
 	 * save uploaded file(s)
 	 *
-	 * @param	mixed	if int, $files element to move. if array, list of elements to move, if none, move all elements
-	 * @param	string	path to move to
 	 * @return	void
 	 */
 	public static function save()
 	{
-		$args = func_get_args();
+		// storage for arguments
+		$path = null;
+		$ids = array();
 
+		// do we have any arguments
+		if (func_num_args())
+		{
+			// process them
+			foreach (func_get_args() as $arg)
+			{
+				if (is_string($arg))
+				{
+					$path = $arg;
+				}
+				elseif(is_numeric($arg))
+				{
+					in_array($arg, $ids) or $ids[] = $arg;
+				}
+				elseif(is_array($arg))
+				{
+					$ids = array_merge($ids, $arg);
+				}
+			}
+		}
+
+		// now process the files
+		$counter = 0;
 		foreach (static::$upload->getValidFiles() as $file)
 		{
-			if(isset($args[1])) {
-				$file->setConfig('path', $args[1]);
+			// do we want to process this file?
+			if ( ! empty($ids) and ! in_array($counter++, $ids))
+			{
+				// nope
+				continue;
 			}
 
+			// was a custom path defined?
+			$path and $file->setConfig('path', $path);
+
+			// save the file
 			$file->save();
 		}
 	}

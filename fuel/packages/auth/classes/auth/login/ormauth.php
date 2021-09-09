@@ -1,13 +1,13 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Auth;
@@ -26,10 +26,10 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 	public static function _init()
 	{
 		// load the auth config
-		\Config::load('ormauth', true, true, true);
+		\Config::load('ormauth', true);
 
 		// deal with invalid column selections
-		if ($columns = \Config::get('ormauth.table_columns', array()) == array('*') or ! is_array($columns))
+		if (($columns = \Config::get('ormauth.table_columns', array())) == array('*') or ! is_array($columns))
 		{
 			\Config::set('ormauth.table_columns', array());
 		}
@@ -171,6 +171,9 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 			// and rotate the session id, we've elevated rights
 			\Session::instance()->rotate();
 
+			// register so Auth::logout() can find us
+			Auth::_register_verified($this);
+
 			return true;
 		}
 
@@ -192,6 +195,8 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 		if (\Config::get('ormauth.guest_login', true))
 		{
 			$this->user = \Model\Auth_User::query()
+				->select(\Config::get('ormauth.table_columns', array()))
+				->related('metadata')
 				->where('id', '=', 0)
 				->get_one();
 		}
@@ -217,7 +222,7 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 	 * @param   Array
 	 * @return  bool
 	 */
-	public function create_user($username, $password, $email,$stage_name,$facebook_link, $group = 1,  Array $profile_fields = array())
+	public function create_user($username, $password, $email, $group = 1, Array $profile_fields = array())
 	{
 		// prep the password
 		$password = trim($password);
@@ -233,7 +238,6 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 
 		// check if we already have an account with this email address or username
 		$duplicate = \Model\Auth_User::query()
-			->select(\Config::get('ormauth.table_columns', array()))
 			->where('username', '=', $username)
 			->or_where('email', '=', $email)
 			->get_one();
@@ -267,8 +271,6 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 			'username'        => (string) $username,
 			'password'        => $this->hash_password((string) $password),
 			'email'           => $email,
-            'stage_name'      => $stage_name,
-			'facebook_link'   => $facebook_link,
 			'group_id'        => (int) $group,
 			'last_login'      => 0,
 			'previous_login'  => 0,
@@ -278,11 +280,8 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 			'updated_at'      => 0,
 		));
 
-		// we don't use profile fields, store the data in the metadata table instead
-		foreach($profile_fields as $field => $value)
-		{
-			$user->metadata[] = \Model\Auth_Metadata::forge(array('key' => $field, 'value' => $value));
-		}
+		// load all additional data, passed as profile fields
+		$user->from_array($profile_fields);
 
 		// save the new user record
 		try
@@ -313,7 +312,6 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 
 		// get the current user record
 		$current_values = \Model\Auth_User::query()
-			->select(\Config::get('ormauth.table_columns', array()))
 			->where('username', '=', $username)
 			->get_one();
 
@@ -358,7 +356,6 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 			}
 
 			$matches = \Model\Auth_User::query()
-				->select(\Config::get('ormauth.table_columns', array()))
 				->where('email', '=', $email)
 				->where('id', '!=', $current_values->id)
 				->get_one();
@@ -458,7 +455,6 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 	{
 		// get the user object
 		$user = \Model\Auth_User::query()
-			->select(\Config::get('ormauth.table_columns', array()))
 			->where('username', '=', $username)
 			->get_one();
 
@@ -496,19 +492,16 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 		// get the user object
 		$user = \Model\Auth_User::query()
 			->related('metadata')
-			->select(\Config::get('ormauth.table_columns', array()))
+			->related('providers')
 			->where('username', '=', $username)
 			->get_one();
 
 		// if it was found, delete it
 		if ($user)
 		{
-			return $user->delete();
+			return (bool) $user->delete();
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	/**
@@ -647,7 +640,10 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 	{
 		if (is_null($user))
 		{
-			$groups = $this->get_groups();
+			if ( ! is_array($groups = $this->get_groups()))
+			{
+				return false;
+			}
 			$user = reset($groups);
 		}
 		return parent::has_access($condition, $driver, $user);
@@ -698,7 +694,7 @@ class Auth_Login_Ormauth extends \Auth_Login_Driver
 		{
 			return $this->force_login($user_id);
 		}
-//var_dump(static::$remember_me);die();
+
 		// force a logout
 		$this->logout();
 

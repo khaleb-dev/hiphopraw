@@ -3,20 +3,17 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
-
-
 class File_Area
 {
-
 	/**
 	 * @var	string	path to basedir restriction, null for no restriction
 	 */
@@ -72,10 +69,12 @@ class File_Area
 	/**
 	 * Handler factory for given path
 	 *
-	 * @param	string				path to file or directory
-	 * @param	array				optional config
+	 * @param	string				$path		path to file or directory
+	 * @param	array				$config		optional config
+	 * @param	array				$content
 	 * @return	File_Handler_File
-	 * @throws	FileAccessException		when outside basedir restriction or disallowed file extension
+	 * @throws	\FileAccessException			when outside basedir restriction or disallowed file extension
+	 * @throws  \OutsideAreaException
 	 */
 	public function get_handler($path, array $config = array(), $content = array())
 	{
@@ -135,9 +134,10 @@ class File_Area
 	/**
 	 * Translate relative path to real path, throws error when operation is not allowed
 	 *
-	 * @param	string
+	 * @param	string	$path
 	 * @return	string
-	 * @throws	FileAccessException	when outside basedir restriction or disallowed file extension
+	 * @throws	\FileAccessException	when outside basedir restriction or disallowed file extension
+	 * @throws	\OutsideAreaException
 	 */
 	public function get_path($path)
 	{
@@ -178,7 +178,7 @@ class File_Area
 	 *
 	 * @param	string
 	 * @return	string
-	 * @throws	LogicException	when no url is set or no basedir is set and file is outside DOCROOT
+	 * @throws	\LogicException	when no url is set or no basedir is set and file is outside DOCROOT
 	 */
 	public function get_url($path)
 	{
@@ -197,7 +197,7 @@ class File_Area
 			throw new \LogicException('File operation not allowed: cannot create file url whithout a basedir and file outside DOCROOT.');
 		}
 
-		return rtrim($this->url, '/').'/'.ltrim(str_replace(DS, '/', substr($path, strlen($basedir))),'/');
+		return rtrim($this->url, '/').'/'.ltrim(str_replace(DS, '/', substr($path, strlen($basedir))), '/');
 	}
 
 	/* -------------------------------------------------------------------------------------
@@ -275,5 +275,3 @@ class File_Area
 		return \File::get_size($path, $this);
 	}
 }
-
-

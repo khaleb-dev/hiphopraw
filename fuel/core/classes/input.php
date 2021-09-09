@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -35,14 +35,14 @@ class Input
 	protected static $detected_ext = null;
 
 	/**
-	 * @var  $input  All of the input (GET, POST, PUT, DELETE)
+	 * @var  array  $input  All of the input (GET, POST, PUT, DELETE, PATCH)
 	 */
 	protected static $input = null;
 
 	/**
-	 * @var  $put_delete  All of the put or delete vars
+	 * @var  array  $put_patch_delete  All of the put or delete vars
 	 */
-	protected static $put_delete = null;
+	protected static $put_patch_delete = null;
 
 	/**
 	 * @var  $php_input  Cache for the php://input stream
@@ -62,6 +62,8 @@ class Input
 	/**
 	 * Get the request body interpreted as JSON.
 	 *
+	 * @param   mixed  $index
+	 * @param   mixed  $default
 	 * @return  array  parsed request body content.
 	 */
 	public static function json($index = null, $default = null)
@@ -73,6 +75,8 @@ class Input
 	/**
 	 * Get the request body interpreted as XML.
 	 *
+	 * @param   mixed  $index
+	 * @param   mixed  $default
 	 * @return  array  parsed request body content.
 	 */
 	public static function xml($index = null, $default = null)
@@ -96,6 +100,7 @@ class Input
 	 * Detects and returns the current URI based on a number of different server
 	 * variables.
 	 *
+	 * @throws \FuelException
 	 * @return  string
 	 */
 	public static function uri()
@@ -107,7 +112,7 @@ class Input
 
 		if (\Fuel::$is_cli)
 		{
-			if ($uri = \Cli::option('uri') !== null)
+			if (($uri = \Cli::option('uri')) !== null)
 			{
 				static::$detected_uri = $uri;
 			}
@@ -134,7 +139,7 @@ class Input
 			// Fall back to parsing the REQUEST URI
 			if (isset($_SERVER['REQUEST_URI']))
 			{
-				$uri = $_SERVER['REQUEST_URI'];
+				$uri = strpos($_SERVER['SCRIPT_NAME'], $_SERVER['REQUEST_URI']) !== 0 ? $_SERVER['REQUEST_URI'] : '';
 			}
 			else
 			{
@@ -145,7 +150,7 @@ class Input
 			$base_url = parse_url(\Config::get('base_url'), PHP_URL_PATH);
 			if ($uri != '' and strncmp($uri, $base_url, strlen($base_url)) === 0)
 			{
-				$uri = substr($uri, strlen($base_url));
+				$uri = substr($uri, strlen($base_url) - 1);
 			}
 
 			// If we are using an index file (not mod_rewrite) then remove it
@@ -162,6 +167,9 @@ class Input
 				$uri = substr($uri, 1);
 			}
 
+			// decode the uri, and put any + back (does not mean a space in the url path)
+			$uri = str_replace("\r", '+', urldecode(str_replace('+', "\r", $uri)));
+
 			// Lets split the URI up in case it contains a ?.  This would
 			// indicate the server requires 'index.php?' and that mod_rewrite
 			// is not being used.
@@ -171,8 +179,14 @@ class Input
 			if ( ! empty($matches))
 			{
 				$uri = $matches[1];
-				$_SERVER['QUERY_STRING'] = $matches[2];
-				parse_str($matches[2], $_GET);
+
+				// only reconstruct $_GET if we didn't have a query string
+				if (empty($_SERVER['QUERY_STRING']))
+				{
+					$_SERVER['QUERY_STRING'] = $matches[2];
+					parse_str($matches[2], $_GET);
+					$_GET = \Security::clean($_GET);
+				}
 			}
 		}
 
@@ -190,11 +204,12 @@ class Input
 			if ( ! empty($ext))
 			{
 				// if it has a slash in it, it's a URI segment with a dot in it
-				if (strpos($ext,'/') === false)
+				if (strpos($ext, '/') === false)
 				{
 					static::$detected_ext = ltrim($ext, '.');
 
-					if (\Config::get('routing.strip_extension', true))
+					$strip = \Config::get('routing.strip_extension', true);
+					if ($strip === true or (is_array($strip) and in_array($ext, $strip)))
 					{
 						$uri = $path;
 					}
@@ -223,7 +238,8 @@ class Input
 	/**
 	 * Get the public ip address of the user.
 	 *
-	 * @return  string
+	 * @param   string $default
+	 * @return  array|string
 	 */
 	public static function ip($default = '0.0.0.0')
 	{
@@ -233,13 +249,22 @@ class Input
 	/**
 	 * Get the real ip address of the user.  Even if they are using a proxy.
 	 *
-	 * @param	string	the default to return on failure
-	 * @param	bool	exclude private and reserved IPs
+	 * @param	string	$default           the default to return on failure
+	 * @param	bool	$exclude_reserved  exclude private and reserved IPs
 	 * @return  string  the real ip address of the user
 	 */
 	public static function real_ip($default = '0.0.0.0', $exclude_reserved = false)
 	{
-		$server_keys = array('HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'REMOTE_ADDR');
+		static $server_keys = null;
+
+		if (empty($server_keys))
+		{
+			$server_keys = array('HTTP_CLIENT_IP', 'REMOTE_ADDR');
+			if (\Config::get('security.allow_x_headers', false))
+			{
+				$server_keys = array_merge(array('HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_X_FORWARDED_FOR'), $server_keys);
+			}
+		}
 
 		foreach ($server_keys as $key)
 		{
@@ -273,7 +298,11 @@ class Input
 	 */
 	public static function protocol()
 	{
-		if (static::server('HTTPS') == 'on' or static::server('HTTPS') == 1 or static::server('SERVER_PORT') == 443)
+		if (static::server('HTTPS') == 'on' or
+			static::server('HTTPS') == 1 or
+			static::server('SERVER_PORT') == 443 or
+			(\Config::get('security.allow_x_headers', false) and static::server('HTTP_X_FORWARDED_PROTO') == 'https') or
+			(\Config::get('security.allow_x_headers', false) and static::server('HTTP_X_FORWARDED_PORT') == 443))
 		{
 			return 'https';
 		}
@@ -294,6 +323,7 @@ class Input
 	/**
 	 * Return's the referrer
 	 *
+	 * @param   string $default
 	 * @return  string
 	 */
 	public static function referrer($default = '')
@@ -304,6 +334,7 @@ class Input
 	/**
 	 * Return's the input method used (GET, POST, DELETE, etc.)
 	 *
+	 * @param   string $default
 	 * @return  string
 	 */
 	public static function method($default = 'GET')
@@ -315,12 +346,20 @@ class Input
 		}
 
 		// if called before a request is active, fall back to the global server setting
-		return \Input::server('HTTP_X_HTTP_METHOD_OVERRIDE', \Input::server('REQUEST_METHOD', $default));
+		if (\Config::get('security.allow_x_headers', false))
+		{
+			return static::server('HTTP_X_HTTP_METHOD_OVERRIDE', static::server('REQUEST_METHOD', $default));
+		}
+		else
+		{
+			return static::server('REQUEST_METHOD', $default);
+		}
 	}
 
 	/**
 	 * Return's the user agent
 	 *
+	 * @param   $default
 	 * @return  string
 	 */
 	public static function user_agent($default = '')
@@ -354,8 +393,8 @@ class Input
 	/**
 	 * Fetch an item from the POST array
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function post($index = null, $default = null)
@@ -366,34 +405,47 @@ class Input
 	/**
 	 * Fetch an item from the php://input for put arguments
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function put($index = null, $default = null)
 	{
-		static::$put_delete === null and static::hydrate();
-		return (func_num_args() === 0) ? static::$put_delete : \Arr::get(static::$put_delete, $index, $default);
+		static::$put_patch_delete === null and static::hydrate();
+		return (func_num_args() === 0) ? static::$put_patch_delete : \Arr::get(static::$put_patch_delete, $index, $default);
+	}
+
+	/**
+	 * Fetch an item from the php://input for patch arguments
+	 *
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
+	 * @return  string|array
+	 */
+	public static function patch($index = null, $default = null)
+	{
+		static::$put_patch_delete === null and static::hydrate();
+		return (func_num_args() === 0) ? static::$put_patch_delete : \Arr::get(static::$put_patch_delete, $index, $default);
 	}
 
 	/**
 	 * Fetch an item from the php://input for delete arguments
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function delete($index = null, $default = null)
 	{
-		static::$put_delete === null and static::hydrate();
-		return (is_null($index) and func_num_args() === 0) ? static::$put_delete : \Arr::get(static::$put_delete, $index, $default);
+		static::$put_patch_delete === null and static::hydrate();
+		return (is_null($index) and func_num_args() === 0) ? static::$put_patch_delete : \Arr::get(static::$put_patch_delete, $index, $default);
 	}
 
 	/**
 	 * Fetch an item from the FILE array
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function file($index = null, $default = null)
@@ -402,10 +454,10 @@ class Input
 	}
 
 	/**
-	 * Fetch an item from either the GET, POST, PUT or DELETE array
+	 * Fetch an item from either the GET, POST, PUT, PATCH or DELETE array
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function param($index = null, $default = null)
@@ -417,8 +469,8 @@ class Input
 	/**
 	 * Fetch an item from the COOKIE array
 	 *
-	 * @param    string  The index key
-	 * @param    mixed   The default value
+	 * @param    string  $index    The index key
+	 * @param    mixed   $default  The default value
 	 * @return   string|array
 	 */
 	public static function cookie($index = null, $default = null)
@@ -429,13 +481,51 @@ class Input
 	/**
 	 * Fetch an item from the SERVER array
 	 *
-	 * @param   string  The index key
-	 * @param   mixed   The default value
+	 * @param   string  $index    The index key
+	 * @param   mixed   $default  The default value
 	 * @return  string|array
 	 */
 	public static function server($index = null, $default = null)
 	{
 		return (func_num_args() === 0) ? $_SERVER : \Arr::get($_SERVER, strtoupper($index), $default);
+	}
+
+	/**
+	 * Fetch a item from the HTTP request headers
+	 *
+	 * @param   mixed $index
+	 * @param   mixed $default
+	 * @return  array
+	 */
+	public static function headers($index = null, $default = null)
+	{
+		static $headers = null;
+
+		// do we need to fetch the headers?
+		if ($headers === null)
+		{
+			// deal with fcgi or nginx installs
+			if ( ! function_exists('getallheaders'))
+			{
+				$server = \Arr::filter_prefixed(static::server(), 'HTTP_', true);
+
+				foreach ($server as $key => $value)
+				{
+					$key = join('-', array_map('ucfirst', explode('_', strtolower($key))));
+
+					$headers[$key] = $value;
+				}
+
+				$value = static::server('Content_Type', static::server('Content-Type')) and $headers['Content-Type'] = $value;
+				$value = static::server('Content_Length', static::server('Content-Length')) and $headers['Content-Length'] = $value;
+			}
+			else
+			{
+				$headers = getallheaders();
+			}
+		}
+
+		return empty($headers) ? $default : ((func_num_args() === 0) ? $headers : \Arr::get(array_change_key_case($headers), strtolower($index), $default));
 	}
 
 	/**
@@ -447,11 +537,30 @@ class Input
 	{
 		static::$input = array_merge($_GET, $_POST);
 
-		if (\Input::method() == 'PUT' or \Input::method() == 'DELETE')
+		if (static::method() == 'PUT' or static::method() == 'PATCH' or static::method() == 'DELETE')
 		{
 			static::$php_input === null and static::$php_input = file_get_contents('php://input');
-			parse_str(static::$php_input, static::$put_delete);
-			static::$input = array_merge(static::$input, static::$put_delete);
+			if (strpos(static::headers('Content-Type'), 'www-form-urlencoded') > 0 and \Config::get('security.form-double-urlencoded', false))
+			{
+				static::$php_input = urldecode(static::$php_input);
+			}
+			parse_str(static::$php_input, static::$put_patch_delete);
+			static::$input = array_merge(static::$input, static::$put_patch_delete);
 		}
+		else
+		{
+			static::$put_patch_delete = array();
+		}
+	}
+
+	/**
+	 * Return's the query string
+	 *
+	 * @param   string $default
+	 * @return  string
+	 */
+	public static function query_string($default = '')
+	{
+		return static::server('QUERY_STRING', $default);
 	}
 }

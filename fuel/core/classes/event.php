@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -57,31 +57,13 @@ abstract class Event
 		return static::$instances[$name];
 	}
 
-	// --------------------------------------------------------------------
-
-	/**
-	 * method called by register_shutdown_event
-	 *
-	 * @access	public
-	 * @param	void
-	 * @return	void
-	 */
-	public static function shutdown()
-	{
-		$instance = static::instance();
-		if ($instance->has_events('shutdown'))
-		{
-			// trigger the shutdown events
-			$instance->trigger('shutdown', '', 'none', true);
-		}
-	}
-
 	/**
 	 * Static call forwarder
 	 *
 	 * @param   string  $func  method name
 	 * @param   array   $args  passed arguments
-	 * @return
+	 * @return  mixed
+	 * @throws  \BadMethodCallException
 	 */
 	public static function __callStatic($func, $args)
 	{
@@ -89,7 +71,7 @@ abstract class Event
 
 		if (method_exists($instance, $func))
 		{
-			return call_user_func_array(array($instance, $func), $args);
+			return call_fuel_func_array(array($instance, $func), $args);
 		}
 
 		throw new \BadMethodCallException('Call to undefined method: '.get_called_class().'::'.$func);

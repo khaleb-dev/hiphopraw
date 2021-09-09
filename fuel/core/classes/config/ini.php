@@ -7,6 +7,9 @@ namespace Fuel\Core;
  */
 class Config_Ini extends \Config_File
 {
+	/**
+	 * @var  string  the extension used by this ini file parser
+	 */
 	protected $ext = '.ini';
 
 	/**
@@ -24,8 +27,9 @@ class Config_Ini extends \Config_File
 	/**
 	 * Returns the formatted config file contents.
 	 *
-	 * @param   array   $content  config array
+	 * @param   array   $contents config array
 	 * @return  string  formatted config file contents
+	 * @throws  \ConfigException
 	 */
 	protected function export_format($contents)
 	{

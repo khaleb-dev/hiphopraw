@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -33,14 +33,21 @@ return array(
 	'default' => array(
 		'type'        => 'pdo',
 		'connection'  => array(
+			'dsn'        => '',
+			'hostname'   => '',
+			'username'   => null,
+			'password'   => null,
+			'database'   => '',
 			'persistent' => false,
 			'compress'   => false,
 		),
 		'identifier'   => '`',
 		'table_prefix' => '',
 		'charset'      => 'utf8',
+		'collation'    => false,
 		'enable_cache' => true,
 		'profiling'    => false,
+		'readonly'     => false,
 	),
 
 	/**
@@ -50,17 +57,21 @@ return array(
 	'default' => array(
 		'type'        => 'mysqli',
 		'connection'  => array(
+			'dsn'        => '',
 			'hostname'   => '',
-			'username'   => '',
-			'password'   => '',
+			'username'   => null,
+			'password'   => null,
 			'database'   => '',
 			'persistent' => false,
+			'compress'   => false,
 		),
 		'identifier'   => '`',
 		'table_prefix' => '',
 		'charset'      => 'utf8',
+		'collation'    => false,
 		'enable_cache' => true,
 		'profiling'    => false,
+		'readonly'     => false,
 	),
 	 */
 
@@ -72,7 +83,8 @@ return array(
 			'hostname'  => '127.0.0.1',
 			'port'      => 6379,
 			'timeout'	=> null,
-		)
+			'database'  => 0,
+		),
 	),
 
 );

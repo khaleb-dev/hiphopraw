@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -38,6 +38,11 @@ class Test_Pagination extends TestCase
 		$rp->setValue($this->request, $this->request);
 	}
 
+	protected function setUp()
+	{
+		$this->old_base_url = Config::get('base_url');
+	}
+
 	public function tearDown()
 	{
 		// remove the fake uri
@@ -60,6 +65,9 @@ class Test_Pagination extends TestCase
 		$rp = new \ReflectionProperty($request, 'active');
 		$rp->setAccessible(true);
 		$rp->setValue($request, false);
+
+		// ensure base_url is reset even if an exception occurs
+		Config::set('base_url', $this->old_base_url);
 	}
 
 /**********************************
@@ -129,9 +137,6 @@ class Test_Pagination extends TestCase
 		$test = $_make_link->invoke($pagination, 1);
 		$expected = 'http://docs.fuelphp.com/welcome/index/1';
 		$this->assertEquals($expected, $test);
-
-		// reset base_url
-		Config::set('base_url', null);
 	}
 
 	public function test_uri_segment_set_pagination_url_after_forging_fail()
@@ -218,6 +223,146 @@ class Test_Pagination extends TestCase
 		$expected = 4;
 		$this->assertEquals($expected, $test);
 	}
+
+	/**
+	 * raw render
+	 *
+	 */
+	public function test_pagination_raw_render()
+	{
+		// set Request::$main & $active
+		$this->set_request('welcome/index/5');
+
+		$this->set_uri_segment_config();
+		$pagination = Pagination::forge(__METHOD__, $this->config);
+
+		$expected = array(
+			'previous' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/4",
+				'title' => "&laquo;",
+				'type' => "previous",
+			),
+			0 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/3",
+				'title' => 3,
+				'type' => "regular",
+			),
+			1 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/4",
+				'title' => 4,
+				'type' => "regular",
+			),
+			2 => array(
+				'uri' => "#",
+				'title' => 5,
+				'type' => "active",
+			),
+			3 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/6",
+				'title' => 6,
+				'type' => "regular",
+			),
+			4 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/7",
+				'title' => 7,
+				'type' => "regular",
+			),
+			'next' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/6",
+				'title' => "&raquo;",
+				'type' => "next",
+			),
+		);
+
+		// default link offset of 50%, active is the middle link
+		$test = $pagination->render(true);
+		$this->assertEquals($expected, $test);
+
+		$expected = array(
+			'previous' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/4",
+				'title' => "&laquo;",
+				'type' => "previous",
+			),
+			0 => array(
+				'uri' => "#",
+				'title' => 5,
+				'type' => "active",
+			),
+			1 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/6",
+				'title' => 6,
+				'type' => "regular",
+			),
+			2 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/7",
+				'title' => 7,
+				'type' => "regular",
+			),
+			3 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/8",
+				'title' => 8,
+				'type' => "regular",
+			),
+			4 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/9",
+				'title' => 9,
+				'type' => "regular",
+			),
+			'next' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/6",
+				'title' => "&raquo;",
+				'type' => "next",
+			),
+		);
+
+		$pagination->link_offset = 0;  // 0%, active is the first link
+		$test = $pagination->render(true);
+		$this->assertEquals($expected, $test);
+
+		$expected = array(
+			'previous' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/4",
+				'title' => "&laquo;",
+				'type' => "previous",
+			),
+			0 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/1",
+				'title' => 1,
+				'type' => "regular",
+			),
+			1 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/2",
+				'title' => 2,
+				'type' => "regular",
+			),
+			2 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/3",
+				'title' => 3,
+				'type' => "regular",
+			),
+			3 => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/4",
+				'title' => 4,
+				'type' => "regular",
+			),
+			4 => array(
+				'uri' => "#",
+				'title' => 5,
+				'type' => "active",
+			),
+			'next' => array(
+				'uri' => "http://docs.fuelphp.com/welcome/index/6",
+				'title' => "&raquo;",
+				'type' => "next",
+			),
+		);
+
+		$pagination->link_offset = 100;  // 100%, active is the last link
+		$test = $pagination->render(true);
+		$this->assertEquals($expected, $test);
+	}
+
 	/**
 	 * first page
 	 *
@@ -237,7 +382,7 @@ class Test_Pagination extends TestCase
 
 		$output = $pagination->pages_render();
 		$output = str_replace(array("\n", "\t"), "", $output);
-		$expected = '<span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/welcome/index/2">2</a></span><span><a href="http://docs.fuelphp.com/welcome/index/3">3</a></span><span><a href="http://docs.fuelphp.com/welcome/index/4">4</a></span><span><a href="http://docs.fuelphp.com/welcome/index/5">5</a></span><span><a href="http://docs.fuelphp.com/welcome/index/6">6</a></span>';
+		$expected = '<span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/welcome/index/2">2</a></span><span><a href="http://docs.fuelphp.com/welcome/index/3">3</a></span><span><a href="http://docs.fuelphp.com/welcome/index/4">4</a></span><span><a href="http://docs.fuelphp.com/welcome/index/5">5</a></span>';
 		$this->assertEquals($expected, $output);
 
 		$output = $pagination->next();
@@ -247,7 +392,7 @@ class Test_Pagination extends TestCase
 
 		$output = $pagination->render();
 		$output = str_replace(array("\n", "\t"), "", $output);
-		$expected = '<div class="pagination"><span class="previous-inactive"><a href="#" rel="prev">&laquo;</a></span><span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/welcome/index/2">2</a></span><span><a href="http://docs.fuelphp.com/welcome/index/3">3</a></span><span><a href="http://docs.fuelphp.com/welcome/index/4">4</a></span><span><a href="http://docs.fuelphp.com/welcome/index/5">5</a></span><span><a href="http://docs.fuelphp.com/welcome/index/6">6</a></span><span class="next"><a href="http://docs.fuelphp.com/welcome/index/2" rel="next">&raquo;</a></span></div>';
+		$expected = '<div class="pagination"><span class="previous-inactive"><a href="#" rel="prev">&laquo;</a></span><span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/welcome/index/2">2</a></span><span><a href="http://docs.fuelphp.com/welcome/index/3">3</a></span><span><a href="http://docs.fuelphp.com/welcome/index/4">4</a></span><span><a href="http://docs.fuelphp.com/welcome/index/5">5</a></span><span class="next"><a href="http://docs.fuelphp.com/welcome/index/2" rel="next">&raquo;</a></span></div>';
 		$this->assertEquals($expected, $output);
 	}
 
@@ -371,11 +516,11 @@ class Test_Pagination extends TestCase
 		$_make_link->setAccessible(true);
 
 		$test = $_make_link->invoke($pagination, 1);
-		$expected = '/welcome/index/1?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = '/welcome/index/1?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 
 		$test = $_make_link->invoke($pagination, 99);
-		$expected = '/welcome/index/99?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = '/welcome/index/99?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 	}
 
@@ -395,11 +540,11 @@ class Test_Pagination extends TestCase
 		$_make_link->setAccessible(true);
 
 		$test = $_make_link->invoke($pagination, 1);
-		$expected = '/welcome/index/1?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = '/welcome/index/1?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 
 		$test = $_make_link->invoke($pagination, 99);
-		$expected = '/welcome/index/99?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = '/welcome/index/99?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 	}
 
@@ -470,9 +615,6 @@ class Test_Pagination extends TestCase
 		$test = $_make_link->invoke($pagination, 1);
 		$expected = 'http://docs.fuelphp.com/?p=1';
 		$this->assertEquals($expected, $test);
-
-		// reset base_url
-		Config::set('base_url', null);
 	}
 
 	public function test_query_string_get_total_pages()
@@ -507,7 +649,7 @@ class Test_Pagination extends TestCase
 
 		$output = $pagination->pages_render();
 		$output = str_replace(array("\n", "\t"), "", $output);
-		$expected = '<span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/?p=2">2</a></span><span><a href="http://docs.fuelphp.com/?p=3">3</a></span><span><a href="http://docs.fuelphp.com/?p=4">4</a></span><span><a href="http://docs.fuelphp.com/?p=5">5</a></span><span><a href="http://docs.fuelphp.com/?p=6">6</a></span>';
+		$expected = '<span class="active"><a href="#">1</a></span><span><a href="http://docs.fuelphp.com/?p=2">2</a></span><span><a href="http://docs.fuelphp.com/?p=3">3</a></span><span><a href="http://docs.fuelphp.com/?p=4">4</a></span><span><a href="http://docs.fuelphp.com/?p=5">5</a></span>';
 		$this->assertEquals($expected, $output);
 
 		$output = $pagination->next();
@@ -560,11 +702,11 @@ class Test_Pagination extends TestCase
 		$_make_link->setAccessible(true);
 
 		$test = $_make_link->invoke($pagination, 1);
-		$expected = 'welcome/index/?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2&p=1';
+		$expected = 'welcome/index/?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2&amp;p=1';
 		$this->assertEquals($expected, $test);
 
 		$test = $_make_link->invoke($pagination, 99);
-		$expected = 'welcome/index/?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2&p=99';
+		$expected = 'welcome/index/?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2&amp;p=99';
 		$this->assertEquals($expected, $test);
 	}
 
@@ -583,11 +725,11 @@ class Test_Pagination extends TestCase
 		$_make_link->setAccessible(true);
 
 		$test = $_make_link->invoke($pagination, 1);
-		$expected = 'http://docs.fuelphp.com/?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2&p=1';
+		$expected = 'http://docs.fuelphp.com/?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2&amp;p=1';
 		$this->assertEquals($expected, $test);
 
 		$test = $_make_link->invoke($pagination, 99);
-		$expected = 'http://docs.fuelphp.com/?foo=bar&fuel%5B0%5D=php1&fuel%5B1%5D=php2&p=99';
+		$expected = 'http://docs.fuelphp.com/?foo=bar&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2&amp;p=99';
 		$this->assertEquals($expected, $test);
 	}
 
@@ -606,11 +748,11 @@ class Test_Pagination extends TestCase
 		$_make_link->setAccessible(true);
 
 		$test = $_make_link->invoke($pagination, 1);
-		$expected = 'http://docs.fuelphp.com/?foo=bar&p=1&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = 'http://docs.fuelphp.com/?foo=bar&amp;p=1&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 
 		$test = $_make_link->invoke($pagination, 99);
-		$expected = 'http://docs.fuelphp.com/?foo=bar&p=99&fuel%5B0%5D=php1&fuel%5B1%5D=php2';
+		$expected = 'http://docs.fuelphp.com/?foo=bar&amp;p=99&amp;fuel%5B0%5D=php1&amp;fuel%5B1%5D=php2';
 		$this->assertEquals($expected, $test);
 	}
 }

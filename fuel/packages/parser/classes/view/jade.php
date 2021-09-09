@@ -1,68 +1,106 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Parser;
 
-use Everzet\Jade;
+use Everzet\Jade as Everzet;
+use Tale\Jade as Tale;
 
 class View_Jade extends \View
 {
-
-	protected static $_jade;
-	protected static $_cache;
-
-	protected function process_file($file_override = false)
-	{
-		$file = $file_override ?: $this->file_name;
-		static::cache_init($file);
-
-		$file = static::parser()->cache($file);
-		return parent::process_file($file);
-	}
-
+	/**
+	 * @InheritDoc
+	 */
 	public $extension = 'jade';
 
 	/**
 	 * Returns the Parser lib object
 	 *
-	 * @return  Jade\Parser
+	 * @return  Everzet\Jade
 	 */
-	public static function parser()
+	protected function everzet_parser($cachepath)
 	{
-		if ( ! empty(static::$_parser))
+		// create a parser object
+		$parser = new Everzet\Parser(new Everzet\Lexer\Lexer());
+
+		// create a dumper object
+		$dumper = new Everzet\Dumper\PHPDumper();
+		$dumper->registerVisitor('tag', new Everzet\Visitor\AutotagsVisitor());
+		$dumper->registerFilter('javascript', new Everzet\Filter\JavaScriptFilter());
+		$dumper->registerFilter('cdata', new Everzet\Filter\CDATAFilter());
+		$dumper->registerFilter('php', new Everzet\Filter\PHPFilter());
+		$dumper->registerFilter('style', new Everzet\Filter\CSSFilter());
+
+		// return the Jade parser
+		return new Everzet\Jade($parser, $dumper, $cachepath);
+	}
+
+	/**
+	 * Returns the Parser lib object
+	 *
+	 * @return  Tale\Jade
+	 */
+	protected function tale_parser($cachepath)
+	{
+		// get the config
+		$config = \Config::get('parser.View_Jade', array());
+
+		// add the cache path for this template
+		$config['cachePath'] = $cachepath;
+
+		// create a renderer instance
+		return new Tale\Renderer($config);
+	}
+
+	/**
+	 * @InheritDoc
+	 */
+	protected function process_file($file_override = false)
+	{
+		// determine the filename
+		$file = $file_override ?: $this->file_name;
+
+		// render the template using the Everzet implementation
+		if (class_exists('Everzet\\Jade\\Jade'))
 		{
-			return static::$_parser;
+			// render the template
+			$file = $this->everzet_parser($this->cache_init($file))->cache($file);
+			$result = parent::process_file($file);
 		}
 
-		$parser = new Jade\Parser(new Jade\Lexer\Lexer());
-		$dumper = new Jade\Dumper\PHPDumper();
-		$dumper->registerVisitor('tag', new Jade\Visitor\AutotagsVisitor());
-		$dumper->registerFilter('javascript', new Jade\Filter\JavaScriptFilter());
-		$dumper->registerFilter('cdata', new Jade\Filter\CDATAFilter());
-		$dumper->registerFilter('php', new Jade\Filter\PHPFilter());
-		$dumper->registerFilter('style', new Jade\Filter\CSSFilter());
+		// render the template using the Tale implementation
+		elseif (class_exists('Tale\\Jade\\Renderer'))
+		{
+			// render the template
+			$result = $this->jade_parser($this->cache_init($file))->render($file, $data = $this->get_data());
 
-		static::$_jade = new Jade\Jade($parser, $dumper, static::$_cache);
+			// disable sanitization on objects that support it
+			$this->unsanitize($data);
+		}
 
-		return static::$_jade;
+		// no known renderer found
+		else
+		{
+			throw new \FuelException("No supported Jade renderer found. Please check the documentation");
+		}
+
+		return $result;
 	}
 
 	// Jade stores cached templates as the filename in plain text,
 	// so there is a high chance of name collisions (ex: index.jade).
 	// This function attempts to create a unique directory for each
 	// compiled template.
-	public function cache_init($file_path)
+	protected function cache_init($file_path)
 	{
 		$cache_key = md5($file_path);
 		$cache_path = \Config::get('parser.View_Jade.cache_dir', null)
@@ -73,9 +111,7 @@ class View_Jade extends \View
 			mkdir($cache_path, 0777, true);
 		}
 
-		static::$_cache = $cache_path;
+		return $cache_path;
 	}
 
 }
-
-/* end of file jade.php */

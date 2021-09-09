@@ -1,50 +1,55 @@
 <?php
 /**
- * PDO database connection.
+ * Part of the Fuel framework.
  *
- * @package    Fuel/Database
- * @category   Drivers
- * @author     Kohana Team
- * @copyright  (c) 2008-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package    Fuel
+ * @version    1.8
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2016 Fuel Development Team
+ * @copyright  2008 - 2009 Kohana Team
+ * @link       http://fuelphp.com
+ *
  */
 
 namespace Fuel\Core;
 
-
 class Database_PDO_Connection extends \Database_Connection
 {
 	/**
-	 * @var  \PDO  Raw server connection
+	 * @var  \PDO  $_connection  raw server connection
 	 */
 	protected $_connection;
 
 	/**
-	 * @var  string  PDO uses no quoting by default for identifiers
+	 * @var  string  $_identifier  PDO uses no quoting by default for identifiers
 	 */
 	protected $_identifier = '';
 
 	/**
-	 * @var  bool  Allows transactions
+	 * @param string $name
+	 * @param array  $config
 	 */
-	protected $_in_transaction = false;
-
-	/**
-	 * @var  string  Which kind of DB is used
-	 */
-	public $_db_type = '';
-
 	protected function __construct($name, array $config)
 	{
+		// construct a custom schema driver
+//		$this->_schema = new \Database_Drivername_Schema($name, $this);
+
+		// call the parent consructor
 		parent::__construct($name, $config);
 
-		if (isset($this->_config['identifier']))
+		if (isset($config['identifier']))
 		{
 			// Allow the identifier to be overloaded per-connection
 			$this->_identifier = (string) $this->_config['identifier'];
 		}
 	}
 
+	/**
+	 * Connects to the database
+	 *
+	 * @throws \Database_Exception
+	 */
 	public function connect()
 	{
 		if ($this->_connection)
@@ -52,89 +57,117 @@ class Database_PDO_Connection extends \Database_Connection
 			return;
 		}
 
-		// Extract the connection parameters, adding required variabels
-		extract($this->_config['connection'] + array(
-			'dsn'        => '',
-			'username'   => null,
-			'password'   => null,
-			'persistent' => false,
-			'compress'   => false,
-		));
-
-		// Clear the connection parameters for security
-		$this->_config['connection'] = array();
-
-		// determine db type
-		$_dsn_find_collon = strpos($dsn, ':');
-		$this->_db_type = $_dsn_find_collon ? substr($dsn, 0, $_dsn_find_collon) : null;
+		// make sure we have all connection parameters
+		$this->_config = array_merge(array(
+			'connection'  => array(
+				'dsn'        => '',
+				'hostname'   => '',
+				'username'   => null,
+				'password'   => null,
+				'database'   => '',
+				'persistent' => false,
+				'compress'   => false,
+			),
+			'identifier'   => '`',
+			'table_prefix' => '',
+			'charset'      => 'utf8',
+			'collation'    => false,
+			'enable_cache' => true,
+			'profiling'    => false,
+			'readonly'     => false,
+			'attrs'        => array(),
+		), $this->_config);
 
 		// Force PDO to use exceptions for all errors
-		$attrs = array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION);
+		$this->_config['attrs'] = array(
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+		);
 
-		if ( ! empty($persistent))
+		if ( ! empty($this->_config['connection']['persistent']))
 		{
 			// Make the connection persistent
-			$attrs[\PDO::ATTR_PERSISTENT] = true;
-		}
-
-		if (in_array(strtolower($this->_db_type), array('mysql', 'mysqli')) and $compress)
-		{
-			// Use client compression with mysql or mysqli (doesn't work with mysqlnd)
-			$attrs[\PDO::MYSQL_ATTR_COMPRESS] = true;
+			$this->_config['attrs'][\PDO::ATTR_PERSISTENT] = true;
 		}
 
 		try
 		{
 			// Create a new PDO connection
-			$this->_connection = new \PDO($dsn, $username, $password, $attrs);
+			$this->_connect();
 		}
 		catch (\PDOException $e)
 		{
-			$error_code = is_numeric($e->getCode()) ? $e->getCode() : 0;
-			throw new \Database_Exception($e->getMessage(), $error_code, $e);
-		}
-
-		if ( ! empty($this->_config['charset']))
-		{
-			// Set Charset for SQL Server connection
-			if (strtolower($this->driver_name()) == 'sqlsrv')
+			// and convert the exception in a database exception
+			if ( ! is_numeric($error_code = $e->getCode()))
 			{
-				$this->_connection->setAttribute(\PDO::SQLSRV_ATTR_ENCODING, \PDO::SQLSRV_ENCODING_SYSTEM);
+				if ($this->_connection)
+				{
+					$error_code = $this->_connection->errorinfo();
+					$error_code = $error_code[1];
+				}
+				else
+				{
+					$error_code = 0;
+				}
 			}
-			else
-			{
-				// Set the character set
-				$this->set_charset($this->_config['charset']);
-			}
+			throw new \Database_Exception(str_replace($this->_config['connection']['password'], str_repeat('*', 10), $e->getMessage()), $error_code, $e);
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function disconnect()
 	{
-		// Destroy the PDO object
+		// destroy the PDO object
 		$this->_connection = null;
+
+		// and reset the savepoint depth
+		$this->_transaction_depth = 0;
 
 		return true;
 	}
 
 	/**
 	 * Get the current PDO Driver name
+	 *
 	 * @return string
 	 */
 	public function driver_name()
 	{
+		// Make sure the database is connected
+		$this->_connection or $this->connect();
+
+		// Getting driver name
 		return $this->_connection->getAttribute(\PDO::ATTR_DRIVER_NAME);
 	}
 
+	/**
+	 * Set the charset
+	 *
+	 * @param string $charset
+	 */
 	public function set_charset($charset)
 	{
 		// Make sure the database is connected
 		$this->_connection or $this->connect();
 
-		// Execute a raw SET NAMES query
-		$this->_connection->exec('SET NAMES '.$this->quote($charset));
+		if ($charset)
+		{
+			$this->_connection->exec('SET NAMES '.$this->quote($charset));
+		}
 	}
 
+	/**
+	 * Query the database
+	 *
+	 * @param integer $type
+	 * @param string  $sql
+	 * @param mixed   $as_object
+	 *
+	 * @return mixed
+	 *
+	 * @throws \Database_Exception
+	 */
 	public function query($type, $sql, $as_object)
 	{
 		// Make sure the database is connected
@@ -168,12 +201,12 @@ class Database_PDO_Connection extends \Database_Connection
 					// Only log if no paths we defined, or we have a path match
 					if ($include or empty($paths))
 					{
-						$stacktrace[] = array('file' => Fuel::clean_path($page['file']), 'line' => $page['line']);
+						$stacktrace[] = array('file' => \Fuel::clean_path($page['file']), 'line' => $page['line']);
 					}
 				}
 			}
 
-			$benchmark = \Profiler::start("Database ({$this->_instance})", $sql, $stacktrace);
+			$benchmark = \Profiler::start($this->_instance, $sql, $stacktrace);
 		}
 
 		// run the query. if the connection is lost, try 3 times to reconnect
@@ -204,7 +237,19 @@ class Database_PDO_Connection extends \Database_Connection
 						isset($benchmark) and  \Profiler::delete($benchmark);
 
 						// and convert the exception in a database exception
-						$error_code = is_numeric($e->getCode()) ? $e->getCode() : 0;
+						if ( ! is_numeric($error_code = $e->getCode()))
+						{
+							if ($this->_connection)
+							{
+								$error_code = $this->_connection->errorinfo();
+								$error_code = $error_code[1];
+							}
+							else
+							{
+								$error_code = 0;
+							}
+						}
+
 						throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"', $error_code, $e);
 					}
 				}
@@ -213,7 +258,18 @@ class Database_PDO_Connection extends \Database_Connection
 				else
 				{
 					// and convert the exception in a database exception
-					$error_code = is_numeric($e->getCode()) ? $e->getCode() : 0;
+					if ( ! is_numeric($error_code = $e->getCode()))
+					{
+						if ($this->_connection)
+						{
+							$error_code = $this->_connection->errorinfo();
+							$error_code = $error_code[1];
+						}
+						else
+						{
+							$error_code = 0;
+						}
+					}
 					throw new \Database_Exception($e->getMessage().' with query: "'.$sql.'"', $error_code, $e);
 				}
 			}
@@ -244,7 +300,6 @@ class Database_PDO_Connection extends \Database_Connection
 				$result = $result->fetchAll(\PDO::FETCH_CLASS, 'stdClass');
 			}
 
-
 			// Return an iterator of results
 			return new \Database_Result_Cached($result, $sql, $as_object);
 		}
@@ -256,18 +311,35 @@ class Database_PDO_Connection extends \Database_Connection
 				$result->rowCount(),
 			);
 		}
-		else
+		elseif ($type === \DB::UPDATE or $type === \DB::DELETE)
 		{
 			// Return the number of rows affected
 			return $result->errorCode() === '00000' ? $result->rowCount() : -1;
 		}
+
+		return $result->errorCode() === '00000' ? true : false;
 	}
 
+	/**
+	 * List tables
+	 *
+	 * @param string $like
+	 *
+	 * @throws \FuelException
+	 */
 	public function list_tables($like = null)
 	{
 		throw new \FuelException('Database method '.__METHOD__.' is not supported by '.__CLASS__);
 	}
 
+	/**
+	 * List table columns
+	 *
+	 * @param string $table
+	 * @param string $like
+	 *
+	 * @return array
+	 */
 	public function list_columns($table, $like = null)
 	{
 		$this->_connection or $this->connect();
@@ -279,7 +351,10 @@ class Database_PDO_Connection extends \Database_Connection
 		! is_null($like) and $like = str_replace('%', '.*', $like);
 		foreach ($result as $row)
 		{
-			if ( ! is_null($like) and ! preg_match('#'.$like.'#', $row['Field'])) continue;
+			if ( ! is_null($like) and ! preg_match('#'.$like.'#', $row['Field']))
+			{
+				continue;
+			}
 			list($type, $length) = $this->_parse_type($row['Type']);
 
 			$column = $this->datatype($type);
@@ -343,6 +418,13 @@ class Database_PDO_Connection extends \Database_Connection
 		return $columns;
 	}
 
+	/**
+	 * Resolve a datatype
+	 *
+	 * @param integer $type
+	 *
+	 * @return array
+	 */
 	public function datatype($type)
 	{
 		// try to determine the datatype
@@ -352,47 +434,129 @@ class Database_PDO_Connection extends \Database_Connection
 		return empty($datatype) ? array('type' => 'string') : $datatype;
 	}
 
+	/**
+	 * Escape a value
+	 *
+	 * @param mixed $value
+	 *
+	 * @return string
+	 */
 	public function escape($value)
 	{
 		// Make sure the database is connected
 		$this->_connection or $this->connect();
 
 		$result = $this->_connection->quote($value);
+
 		// poor-mans workaround for the fact that not all drivers implement quote()
 		if (empty($result))
 		{
-			$result = "'".str_replace("'", "''", $value)."'";
+			if ( ! is_numeric($value))
+			{
+				$result = "'".str_replace("'", "''", $value)."'";
+			}
 		}
 		return $result;
 	}
 
+	/**
+	 * Retrieve error info
+	 *
+	 * @return array
+	 */
 	public function error_info()
 	{
 		return $this->_connection->errorInfo();
 	}
 
-	public function in_transaction()
+	/**
+	 * Create a new PDO instance
+	 *
+	 * @return  PDO
+	 */
+	protected function _connect()
 	{
-		return $this->_in_transaction;
+		$this->_connection = new \PDO(
+			$this->_config['connection']['dsn'],
+			$this->_config['connection']['username'],
+			$this->_config['connection']['password'],
+			$this->_config['attrs']
+		);
+
+		// set the DB charset if needed
+		$this->set_charset($this->_config['charset']);
 	}
 
-	public function start_transaction()
+	/**
+	 * Start a transaction
+	 *
+	 * @return bool
+	 */
+	protected function driver_start_transaction()
 	{
 		$this->_connection or $this->connect();
-		$this->_in_transaction = true;
 		return $this->_connection->beginTransaction();
 	}
 
-	public function commit_transaction()
+	/**
+	 * Commit a transaction
+	 *
+	 * @return bool
+	 */
+	protected function driver_commit()
 	{
-		$this->_in_transaction = false;
 		return $this->_connection->commit();
 	}
 
-	public function rollback_transaction()
+	/**
+	 * Rollback a transaction
+	 * @return bool
+	 */
+	protected function driver_rollback()
 	{
-		$this->_in_transaction = false;
 		return $this->_connection->rollBack();
+	}
+
+	/**
+	 * Sets savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function set_savepoint($name)
+	{
+		$result = $this->_connection->exec('SAVEPOINT LEVEL'.$name);
+		return $result !== false;
+	}
+
+	/**
+	 * Release savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function release_savepoint($name)
+	{
+		$result = $this->_connection->exec('RELEASE SAVEPOINT LEVEL'.$name);
+		return $result !== false;
+	}
+
+	/**
+	 * Rollback savepoint of the transaction
+	 *
+	 * @param string $name name of the savepoint
+	 * @return boolean true  - savepoint was set successfully;
+	 *                 false - failed to set savepoint;
+	 *                 null  - RDBMS does not support savepoints
+	 */
+	protected function rollback_savepoint($name)
+	{
+		$result = $this->_connection->exec('ROLLBACK TO SAVEPOINT LEVEL'.$name);
+		return $result !== false;
 	}
 
 }

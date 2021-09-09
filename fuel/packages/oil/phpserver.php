@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 // determine the file we're loading, we need to strip the query string for that
@@ -34,6 +32,6 @@ if (file_exists($file))
 else
 {
 	// route requests though the normal path
-	include($_SERVER['DOCUMENT_ROOT'].'/index.php');
+	$_SERVER['SCRIPT_NAME'] = __FILE__;
+	include $_SERVER['DOCUMENT_ROOT'].'/index.php';
 }
-

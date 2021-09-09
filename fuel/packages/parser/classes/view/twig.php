@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Parser;
@@ -28,7 +26,12 @@ class View_Twig extends \View
 	public static function _init()
 	{
 		parent::_init();
-		Twig_Autoloader::register();
+
+		// backward compatibility for Twig 1.x
+		if (class_exists('Twig_Autoloader'))
+		{
+			Twig_Autoloader::register();
+		}
 	}
 
 	protected function process_file($file_override = false)
@@ -64,7 +67,7 @@ class View_Twig extends \View
 
 		try
 		{
-			return static::parser()->loadTemplate($view_name)->render($local_data);
+			$result = static::parser()->loadTemplate($view_name)->render($local_data);
 		}
 		catch (\Exception $e)
 		{
@@ -72,6 +75,11 @@ class View_Twig extends \View
 			ob_end_clean();
 			throw $e;
 		}
+
+		$this->unsanitize($local_data);
+		$this->unsanitize($global_data);
+
+		return $result;
 	}
 
 	public $extension = 'twig';

@@ -1,13 +1,13 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Auth\Model;
@@ -20,6 +20,11 @@ class Auth_Userpermission extends \Orm\Model
 	protected static $_connection = null;
 
 	/**
+	 * @var  string  write connection to use
+	 */
+    protected static $_write_connection = null;
+
+	/**
 	 * @var  string  table name to overwrite assumption
 	 */
 	protected static $_table_name;
@@ -27,19 +32,20 @@ class Auth_Userpermission extends \Orm\Model
 	/**
 	 * @var  array  name or names of the primary keys
 	 */
-	protected static $_primary_key = array('user_id', 'perms_id');
+	protected static $_primary_key = array('id');
 
 	/**
 	 * @var array	model properties
 	 */
 	protected static $_properties = array(
-		'user_id',
-		'perms_id',
+		'id'              => array(),
+		'user_id'         => array(),
+		'perms_id'        => array(),
 		'actions'         => array(
-			'data_type'	  => 'serialize',
-			'default' 	  => array(),
-			'null'		  => false,
-			'form'  	  => array('type' => false),
+			'data_type'   => 'serialize',
+			'default'     => array(),
+			'null'        => false,
+			'form'        => array('type' => false),
 		),
 	);
 
@@ -48,7 +54,7 @@ class Auth_Userpermission extends \Orm\Model
 	 */
 	protected static $_observers = array(
 		'Orm\\Observer_Typing' => array(
-			'events' => array('after_load', 'before_save', 'after_save')
+			'events' => array('after_load', 'before_save', 'after_save'),
 		),
 	);
 
@@ -78,6 +84,9 @@ class Auth_Userpermission extends \Orm\Model
 
 		// set the connection this model should use
 		static::$_connection = \Config::get('ormauth.db_connection');
+
+		// set the write connection this model should use
+		static::$_write_connection = \Config::get('ormauth.db_write_connection') ?: static::$_connection;
 
 		// set the models table name
 		static::$_table_name = \Config::get('ormauth.table_name', 'users').'_user_permissions';

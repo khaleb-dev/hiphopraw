@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -18,7 +18,6 @@
  *
  * This will allow you to upgrade fuel without losing your custom config.
  */
-
 
 return array(
 
@@ -39,11 +38,9 @@ return array(
 
 		/**
 		 * Location from where the updated browscap file can be downloaded.
-		 *
-		 * Note: these are temporary links awaiting relaunch of the browscap project
 		 */
-		'url' => 'http://tempdownloads.browserscap.com/stream.asp?Lite_PHP_BrowsCapINI',  // only major browsers and search engines
-		//'url' => 'http://tempdownloads.browserscap.com/stream.asp?Full_PHP_BrowscapINI',  // complete file, approx. 3 times the lite version
+		'url' => 'http://browscap.org/stream?q=Lite_PHP_BrowsCapINI',     // only major browsers and search engines
+		//'url' => 'http://browscap.org/stream?q=Full_PHP_BrowsCapINI',   // complete file, approx. 3 times the lite version
 
 		/**
 		 * Method used to download the updated browscap file
@@ -53,6 +50,41 @@ return array(
 		 * possible values are: 'local', 'wrapper', 'curl'
 		 */
 		 'method' => 'wrapper',
+
+		/**
+		 * Optional http proxy configuration, will be used for both the 'wrapper' and 'curl' methods
+		 */
+		 'proxy' => array(
+
+			/**
+			 * hostname or IP address of your proxy
+			 *
+			 * Note: so "proxy.example.org" or "1.2.3.4", and not "http://proxy.example.org" !!!
+			 */
+			'host' => null,
+
+			/**
+			 * TCP port number the proxy listens at
+			 */
+			'port' => null,
+
+			/**
+			 * Authentication type to use
+			 *
+			 * 	Default: 'none'
+			 *
+			 * possible values are: 'none', 'basic', 'ntlm'
+			 *
+			 * Note that the 'wrapper' method only supports 'basic', all others are evaluated as 'none'!
+			 */
+			'auth' => 'none',
+
+			/**
+			 * If your proxy requires authentication, specify a username and password
+			 */
+			'username' => null,
+			'password' => null,
+		 ),
 
 		/**
 		 * Filename for the local browscap.ini file (for method 'local').
@@ -104,5 +136,3 @@ return array(
 	),
 
 );
-
-

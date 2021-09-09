@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Orm;
@@ -41,7 +39,7 @@ class HasMany extends Relation
 		$this->model_to = get_real_class($this->model_to);
 	}
 
-	public function get(Model $from)
+	public function get(Model $from, array $conditions = array())
 	{
 		$query = call_user_func(array($this->model_to, 'query'));
 		reset($this->key_to);
@@ -56,13 +54,10 @@ class HasMany extends Relation
 			next($this->key_to);
 		}
 
-		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
-		{
-			is_array($condition) or $condition = array($key, '=', $condition);
-			$query->where($condition);
-		}
+		$conditions = \Arr::merge($this->conditions, $conditions);
+		$query->_parse_where_array(\Arr::get($conditions, 'where', array()));
 
-		foreach (\Arr::get($this->conditions, 'order_by', array()) as $field => $direction)
+		foreach (\Arr::get($conditions, 'order_by', array()) as $field => $direction)
 		{
 			if (is_numeric($field))
 			{
@@ -108,6 +103,10 @@ class HasMany extends Relation
 				if ( ! $condition[0] instanceof \Fuel\Core\Database_Expression and strpos($condition[0], '.') === false)
 				{
 					$condition[0] = $alias_to.'.'.$condition[0];
+				}
+				if (count($condition) == 2) // From Query::_where()
+				{
+					$condition = array($condition[0], '=', $condition[1]);
 				}
 				is_string($condition[2]) and $condition[2] = \Db::quote($condition[2], $model['connection']);
 

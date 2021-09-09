@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -24,7 +24,6 @@ class SecurityException extends \DomainException {}
  */
 class Security
 {
-
 	/**
 	 * @var  string  the token as submitted in the cookie from the previous request
 	 */
@@ -54,12 +53,19 @@ class Security
 		static::$csrf_old_token = \Input::cookie(static::$csrf_token_key, false);
 
 		// if csrf automatic checking is enabled, and it fails validation, bail out!
-		if (\Config::get('security.csrf_autoload', true))
+		if (\Config::get('security.csrf_autoload', false))
 		{
 			$check_token_methods = \Config::get('security.csrf_autoload_methods', array('post', 'put', 'delete'));
 			if (in_array(strtolower(\Input::method()), $check_token_methods) and ! static::check_token())
 			{
-				throw new \SecurityException('CSRF validation failed, Possible hacking attempt detected!');
+				if (\Config::get('security.csrf_bad_request_on_fail', false))
+				{
+					throw new \HttpBadRequestException('CSRF validation failed, Possible hacking attempt detected!');
+				}
+				else
+				{
+					throw new \SecurityException('CSRF validation failed, Possible hacking attempt detected!');
+				}
 			}
 		}
 
@@ -82,13 +88,14 @@ class Security
 	 *
 	 * @param  string  $uri     uri to clean
 	 * @param  bool    $strict  whether to remove relative directories
+	 * @return array|mixed
 	 */
 	public static function clean_uri($uri, $strict = false)
 	{
 		$filters = \Config::get('security.uri_filter', array());
 		$filters = is_array($filters) ? $filters : array($filters);
 
-		$strict and $uri = preg_replace(array("/\.+\//", '/\/+/'), '/', $uri);
+		$strict and $uri = str_replace(array('//', '../'), '/', $uri);
 
 		return static::clean($uri, $filters);
 	}
@@ -105,56 +112,62 @@ class Security
 
 	/**
 	 * Generic variable clean method
+	 *
+	 * @param  mixed   $var
+	 * @param  mixed   $filters
+	 * @param  string  $type
+	 * @return array|mixed
 	 */
 	public static function clean($var, $filters = null, $type = 'security.input_filter')
 	{
-		is_null($filters) and $filters = \Config::get($type, array());
-		$filters = is_array($filters) ? $filters : array($filters);
-
-		foreach ($filters as $filter)
+		// deal with objects that can be sanitized
+		if ($var instanceOf \Sanitization)
 		{
-			// is this filter a callable local function?
-			if (is_string($filter) and is_callable('static::'.$filter))
-			{
-				$var = static::$filter($var);
-			}
+			$var->sanitize();
+		}
 
-			// is this filter a callable function?
-			elseif (is_callable($filter))
+		// deal with array's or array emulating objects
+		elseif (is_array($var) or ($var instanceOf \Traversable and $var instanceOf \ArrayAccess))
+		{
+			// recurse on array values
+			foreach($var as $key => $value)
 			{
-				if (is_array($var))
+				$var[$key] = static::clean($value, $filters, $type);
+			}
+		}
+
+		// deal with all other variable types
+		else
+		{
+			is_null($filters) and $filters = \Config::get($type, array());
+			$filters = is_array($filters) ? $filters : array($filters);
+
+			foreach ($filters as $filter)
+			{
+				// is this filter a callable local function?
+				if (is_string($filter) and is_callable('static::'.$filter))
 				{
-					foreach($var as $key => $value)
-					{
-						$var[$key] = call_user_func($filter, $value);
-					}
+					$var = static::$filter($var);
 				}
-				else
+
+				// is this filter a callable function?
+				elseif (is_callable($filter))
 				{
 					$var = call_user_func($filter, $var);
 				}
-			}
 
-			// assume it's a regex of characters to filter
-			else
-			{
-				if (is_array($var))
-				{
-					foreach($var as $key => $value)
-					{
-						$var[$key] = preg_replace('#['.$filter.']#ui', '', $value);
-					}
-				}
+				// assume it's a regex of characters to filter
 				else
 				{
 					$var = preg_replace('#['.$filter.']#ui', '', $var);
 				}
 			}
 		}
+
 		return $var;
 	}
 
-	public static function xss_clean($value)
+	public static function xss_clean($value, array $options = array())
 	{
 		if ( ! is_array($value))
 		{
@@ -163,7 +176,7 @@ class Security
 				import('htmlawed/htmlawed', 'vendor');
 			}
 
-			return htmLawed($value, array('safe' => 1, 'balanced' => 0));
+			return htmLawed($value, array_merge(array('safe' => 1, 'balanced' => 0), $options));
 		}
 
 		foreach ($value as $k => $v)
@@ -208,6 +221,12 @@ class Security
 		if (is_string($value))
 		{
 			$value = htmlentities($value, $flags, $encoding, $double_encode);
+		}
+		elseif (is_object($value) and $value instanceOf \Sanitization)
+		{
+			$value->sanitize();
+			return $value;
+
 		}
 		elseif (is_array($value) or ($value instanceof \Iterator and $value instanceof \ArrayAccess))
 		{
@@ -260,12 +279,12 @@ class Security
 	/**
 	 * Check CSRF Token
 	 *
-	 * @param   string  CSRF token to be checked, checks post when empty
+	 * @param   string  $value  CSRF token to be checked, checks post when empty
 	 * @return  bool
 	 */
 	public static function check_token($value = null)
 	{
-		$value = $value ?: \Input::post(static::$csrf_token_key, \Input::json(static::$csrf_token_key, 'fail'));
+		$value = $value ?: \Input::param(static::$csrf_token_key, \Input::json(static::$csrf_token_key, 'fail'));
 
 		// always reset token once it's been checked and still the same
 		if (static::fetch_token() == static::$csrf_old_token and ! empty($value))
@@ -300,17 +319,34 @@ class Security
 	 */
 	public static function generate_token()
 	{
-		$token_base = time() . uniqid() . \Config::get('security.token_salt', '') . mt_rand(0, mt_getrandmax());
-		if (function_exists('hash_algos') and in_array('sha512', hash_algos()))
+		// generate a random token base
+		if (function_exists('random_bytes'))
 		{
-			$token = hash('sha512', $token_base);
+			$token_base = \Config::get('security.token_salt', '') .random_bytes(64);
+		}
+		elseif (function_exists('openssl_random_pseudo_bytes'))
+		{
+			$token_base = \Config::get('security.token_salt', '') . openssl_random_pseudo_bytes(64);
 		}
 		else
 		{
-			$token = md5($token_base);
+			$token_base = time() . uniqid() . \Config::get('security.token_salt', '') . mt_rand(0, mt_getrandmax());
 		}
 
-		return $token;
+		// return the hashed token
+		if (function_exists('hash_algos'))
+		{
+			foreach (array('sha512', 'sha384', 'sha256', 'sha224', 'sha1', 'md5') as $hash)
+			{
+				if (in_array($hash, hash_algos()))
+				{
+					return hash($hash, $token_base);
+				}
+			}
+		}
+
+		// if all else fails
+		return md5($token_base);
 	}
 
 	protected static function set_token($reset = false)

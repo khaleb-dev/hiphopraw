@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.7
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Orm;
@@ -47,7 +45,7 @@ class BelongsTo extends Relation
 		$this->model_to = get_real_class($this->model_to);
 	}
 
-	public function get(Model $from)
+	public function get(Model $from, array $conditions = array())
 	{
 		$query = call_user_func(array($this->model_to, 'query'));
 		reset($this->key_to);
@@ -62,11 +60,9 @@ class BelongsTo extends Relation
 			next($this->key_to);
 		}
 
-		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
-		{
-			is_array($condition) or $condition = array($key, '=', $condition);
-			$query->where($condition);
-		}
+		$conditions = \Arr::merge($this->conditions, $conditions);
+		$query->_parse_where_array(\Arr::get($conditions, 'where', array()));
+
 		return $query->get_one();
 	}
 
@@ -74,17 +70,17 @@ class BelongsTo extends Relation
 	{
 		$alias_to = 't'.$alias_to_nr;
 		$model = array(
-			'model'        => $this->model_to,
-			'connection'   => call_user_func(array($this->model_to, 'connection')),
-			'table'        => array(call_user_func(array($this->model_to, 'table')), $alias_to),
-			'primary_key'  => call_user_func(array($this->model_to, 'primary_key')),
-			'join_type'    => \Arr::get($conditions, 'join_type') ?: \Arr::get($this->conditions, 'join_type', 'left'),
-			'join_on'      => array(),
-			'columns'      => $this->select($alias_to),
-			'rel_name'     => strpos($rel_name, '.') ? substr($rel_name, strrpos($rel_name, '.') + 1) : $rel_name,
-			'relation'     => $this,
-			'where'        => \Arr::get($conditions, 'where', array()),
-			'order_by'     => \Arr::get($conditions, 'order_by') ?: \Arr::get($this->conditions, 'order_by', array()),
+			'model'       => $this->model_to,
+			'connection'  => call_user_func(array($this->model_to, 'connection')),
+			'table'       => array(call_user_func(array($this->model_to, 'table')), $alias_to),
+			'primary_key' => call_user_func(array($this->model_to, 'primary_key')),
+			'join_type'   => \Arr::get($conditions, 'join_type') ?: \Arr::get($this->conditions, 'join_type', 'left'),
+			'join_on'     => array(),
+			'columns'     => $this->select($alias_to),
+			'rel_name'    => strpos($rel_name, '.') ? substr($rel_name, strrpos($rel_name, '.') + 1) : $rel_name,
+			'relation'    => $this,
+			'where'       => \Arr::get($conditions, 'where', array()),
+			'order_by'    => \Arr::get($conditions, 'order_by') ?: \Arr::get($this->conditions, 'order_by', array()),
 		);
 
 		reset($this->key_to);
@@ -101,6 +97,10 @@ class BelongsTo extends Relation
 				if ( ! $condition[0] instanceof \Fuel\Core\Database_Expression and strpos($condition[0], '.') === false)
 				{
 					$condition[0] = $alias_to.'.'.$condition[0];
+				}
+				if (count($condition) == 2) // From Query::_where()
+				{
+					$condition = array($condition[0], '=', $condition[1]);
 				}
 				is_string($condition[2]) and $condition[2] = \Db::quote($condition[2], $model['connection']);
 
@@ -205,7 +205,7 @@ class BelongsTo extends Relation
 
 	public function delete($model_from, $model_to, $parent_deleted, $cascade)
 	{
-		if ($parent_deleted)
+		if ( ! $parent_deleted)
 		{
 			return;
 		}

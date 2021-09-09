@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -36,7 +36,7 @@ return array(
 	 * on the fly via Theme::add_path($path) or Theme::add_paths(array($path1, $path2));
 	 */
 	'paths' => array(
-		DOCROOT.'themes',
+		APPPATH.'themes',
 	),
 
 	/**

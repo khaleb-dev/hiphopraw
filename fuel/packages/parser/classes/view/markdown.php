@@ -1,22 +1,19 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8.2
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Parser;
 
 class View_Markdown extends \View
 {
-
 	protected static $_parser;
 
 	protected function process_file($file_override = false)
@@ -27,7 +24,8 @@ class View_Markdown extends \View
 
 		if (\Config::get('parser.View_Markdown.allow_php', false))
 		{
-			$contents = static::pre_process('php', $file, $this->get_data());
+			$contents = static::pre_process('php', $file, $data = $this->get_data());
+			$this->unsanitize($data);
 		}
 		else
 		{
@@ -78,12 +76,9 @@ class View_Markdown extends \View
 		static $parser = null;
 		if (is_null($parser))
 		{
-			$parser_class = \MARKDOWN_PARSER_CLASS;
-			$parser = new $parser_class;
+			$parser = new \Michelf\MarkdownExtra();
 		}
 
 		return $parser;
 	}
 }
-
-// end of file mustache.php

@@ -1,27 +1,20 @@
 <?php
 /**
- * Database expressions can be used to add unescaped SQL fragments to a
- * [Database_Query_Builder] object.
+ * Part of the Fuel framework.
  *
- * For example, you can use an expression to generate a column alias:
- *
- *     // SELECT CONCAT(first_name, last_name) AS full_name
- *     $query = DB::select(array(DB::expr('CONCAT(first_name, last_name)'), 'full_name')));
- *
- * @package    Fuel/Database
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package    Fuel
+ * @version    1.8
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2016 Fuel Development Team
+ * @copyright  2008 - 2009 Kohana Team
+ * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
-
-
 class Database_Expression
 {
-
 	// Raw expression string
 	protected $_value;
 
@@ -30,7 +23,7 @@ class Database_Expression
 	 *
 	 *     $expression = new Database_Expression('COUNT(users.id)');
 	 *
-	 * @return  void
+	 * @param string $value  expression string
 	 */
 	public function __construct($value)
 	{

@@ -1,12 +1,12 @@
 <?php
 /**
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -40,9 +40,26 @@ class Log
 	);
 
 	/**
-	 * Initialize the class
+	 * create the monolog instance
 	 */
 	public static function _init()
+	{
+		static::$monolog = new \Monolog\Logger('fuelphp');
+		static::initialize();
+	}
+
+	/**
+	 * return the monolog instance
+	 */
+	public static function instance()
+	{
+		return static::$monolog;
+	}
+
+	/**
+	 * initialize the created the monolog instance
+	 */
+	public static function initialize()
 	{
 		// load the file config
 		\Config::load('file', true);
@@ -51,9 +68,21 @@ class Log
 		try
 		{
 			// determine the name and location of the logfile
-			$rootpath = \Config::get('log_path').date('Y').'/';
-			$filepath = \Config::get('log_path').date('Y/m').'/';
-			$filename = $filepath.date('d').'.php';
+			$path     = \Config::get('log_path', APPPATH.'logs'.DS);
+			$filename = \Config::get('log_file', null);
+
+			if(empty($filename))
+			{
+				$rootpath = $path.date('Y').DS;
+				$filepath = $path.date('Y/m').DS;
+				$filename = $filepath.date('d').'.php';
+			}
+			else
+			{
+				$rootpath = $path;
+				$filepath = $path;
+				$filename = $path.$filename;
+			}
 
 			// get the required folder permissions
 			$permission = \Config::get('file.chmod.folders', 0777);
@@ -74,7 +103,7 @@ class Log
 		catch (\Exception $e)
 		{
 			\Config::set('log_threshold', \Fuel::L_NONE);
-			throw new \FuelException('Unable to create or write to the log file. Please check the permissions on '.\Config::get('log_path'));
+			throw new \FuelException('Unable to create or write to the log file. Please check the permissions on '.\Config::get('log_path').'. ('.$e->getMessage().')');
 		}
 
 		if ( ! filesize($filename))
@@ -84,23 +113,11 @@ class Log
 		}
 		fclose($handle);
 
-		// create the monolog instance
-		static::$monolog = new \Monolog\Logger('fuelphp');
-
 		// create the streamhandler, and activate the handler
 		$stream = new \Monolog\Handler\StreamHandler($filename, \Monolog\Logger::DEBUG);
 		$formatter = new \Monolog\Formatter\LineFormatter("%level_name% - %datetime% --> %message%".PHP_EOL, "Y-m-d H:i:s");
 		$stream->setFormatter($formatter);
 		static::$monolog->pushHandler($stream);
-	}
-
-	/**
-	 * Return the monolog instance
-	 */
-	public static function instance()
-	{
-		// return the created instance
-		return static::$monolog;
 	}
 
 	/**
@@ -151,17 +168,16 @@ class Log
 		return static::write(\Fuel::L_ERROR, $msg, $method);
 	}
 
-
 	/**
 	 * Write Log File
 	 *
 	 * Generally this function will be called using the global log_message() function
 	 *
-	 * @access	public
-	 * @param	int|string	the error level
-	 * @param	string	the error message
-	 * @param	string	information about the method
+	 * @param	int|string	$level		the error level
+	 * @param	string		$msg		the error message
+	 * @param	string		$method		information about the method
 	 * @return	bool
+	 * @throws	\FuelException
 	 */
 	public static function write($level, $msg, $method = null)
 	{
@@ -225,7 +241,7 @@ class Log
 		}
 
 		// log the message
-		static::$monolog->log($level, (empty($method) ? '' : $method.' - ').$msg);
+		static::instance()->log($level, (empty($method) ? '' : $method.' - ').$msg);
 
 		return true;
 	}

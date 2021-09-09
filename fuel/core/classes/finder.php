@@ -3,10 +3,10 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
@@ -125,10 +125,10 @@ class Finder
 	 *   (-1):    Prepend to the start of the search path
 	 *   (index): The path will get inserted AFTER the given index
 	 *
-	 * @param   string|array  $path  The path to add
-	 * @param   int     $pos   The position to add the path
+	 * @param   string|array  $paths  The path to add
+	 * @param   int           $pos    The position to add the path
 	 * @return  $this
-	 * @throws  OutOfBoundsException
+	 * @throws  \OutOfBoundsException
 	 */
 	public function add_path($paths, $pos = null)
 	{
@@ -141,7 +141,7 @@ class Finder
 		{
 			if ($pos === null)
 			{
-				array_push($this->paths, $this->prep_path($path));
+				$this->paths[] = $this->prep_path($path);
 			}
 			elseif ($pos === -1)
 			{
@@ -195,7 +195,7 @@ class Finder
 
 		foreach ($paths as $path)
 		{
-			array_push($this->flash_paths, $this->prep_path($path));
+			$this->flash_paths[] = $this->prep_path($path);
 		}
 
 		return $this;
@@ -256,8 +256,8 @@ class Finder
 	 * loaded search paths (e.g. the cascading file system).  This is useful
 	 * for things like finding all the config files in all the search paths.
 	 *
-	 * @param   string  The directory to look in
-	 * @param   string  The file filter
+	 * @param   string  $directory  The directory to look in
+	 * @param   string  $filter     The file filter
 	 * @return  array   the array of files
 	 */
 	public function list_files($directory = null, $filter = '*.php')
@@ -277,9 +277,10 @@ class Finder
 		$found = array();
 		foreach ($paths as $path)
 		{
-			if (($f = glob($path.$directory.DS.$filter)) !== false)
+			$files = new \GlobIterator(rtrim($path.$directory, DS).DS.$filter);
+			foreach($files as $file)
 			{
-				$found = array_merge($f, $found);
+				$found[] = $file->getPathname();
 			}
 		}
 
@@ -301,18 +302,36 @@ class Finder
 		$found = $multiple ? array() : false;
 
 		// absolute path requested?
-		if ($file[0] === '/' or (isset($file[1]) and $file[1] === ':'))
+		if ($file[0] === '/' or substr($file, 1, 2) === ':\\')
 		{
+			// if the base file does not exist, stick the extension to the back of it
+			if ( ! is_file($file))
+			{
+				$file .= $ext;
+			}
 			if ( ! is_file($file))
 			{
 				// at this point, found would be either empty array or false
 				return $found;
 			}
-
 			return $multiple ? array($file) : $file;
 		}
 
-		$cache_id = $multiple ? 'M.' : 'S.';
+		// determine the cache prefix
+		if ($multiple)
+		{
+			// make sure cache is not used if the loaded package and module list is changed
+			$cachekey = '';
+			class_exists('Module', false) and $cachekey .= implode('|', \Module::loaded());
+			$cachekey .= '|';
+			class_exists('Package', false) and $cachekey .= implode('|', \Package::loaded());
+			$cache_id = md5($cachekey).'.';
+		}
+		else
+		{
+			$cache_id = 'S.';
+		}
+
 		$paths = array();
 
 		// If a filename contains a :: then it is trying to be found in a namespace.
@@ -443,9 +462,10 @@ class Finder
 	 *
 	 * This method is from KohanaPHP's Kohana class.
 	 *
-	 * @param  string  the cache name
-	 * @param  array   the data to cache (if non given it returns)
-	 * @param  int     the number of seconds for the cache too live
+	 * @param  string  $name      the cache name
+	 * @param  array   $data      the data to cache (if non given it returns)
+	 * @param  int     $lifetime  the number of seconds for the cache too live
+	 * @return bool|null
 	 */
 	protected function cache($name, $data = null, $lifetime = null)
 	{
@@ -468,7 +488,14 @@ class Finder
 				if ((time() - filemtime($dir.$file)) < $lifetime)
 				{
 					// Return the cache
-					return unserialize(file_get_contents($dir.$file));
+					try
+					{
+						return unserialize(file_get_contents($dir.$file));
+					}
+					catch (\Exception $e)
+					{
+						// Cache exists but could not be read, ignore it
+					}
 				}
 				else
 				{
@@ -486,7 +513,7 @@ class Finder
 			}
 
 			// Cache not found
-			return NULL;
+			return null;
 		}
 
 		if ( ! is_dir($dir))
@@ -510,15 +537,19 @@ class Finder
 				{
 					chmod($dir.$file, \Config::get('file.chmod.files', 0666));
 				}
-				catch (\Exception $e)
+				catch (\PhpErrorException $e)
 				{
-					// we probably don't have permission, lets hope rights are ok
+					// if we get something else then a chmod error, bail out
+					if (substr($e->getMessage(), 0, 8) !== 'chmod():')
+					{
+						throw new $e;
+					}
 				}
 			}
 
 			return $result;
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			// Failed to write cache
 			return false;

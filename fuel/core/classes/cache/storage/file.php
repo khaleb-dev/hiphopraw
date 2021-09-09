@@ -3,20 +3,17 @@
  * Part of the Fuel framework.
  *
  * @package    Fuel
- * @version    1.6
+ * @version    1.8
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2013 Fuel Development Team
+ * @copyright  2010 - 2016 Fuel Development Team
  * @link       http://fuelphp.com
  */
 
 namespace Fuel\Core;
 
-
-
 class Cache_Storage_File extends \Cache_Storage_Driver
 {
-
 	/**
 	 * @const  string  Tag used for opening & closing cache properties
 	 */
@@ -60,7 +57,6 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 		// determine the file cache path
 		static::$path = !empty($this->config['path'])
 			? $this->config['path'] : \Config::get('cache_dir', APPPATH.'cache'.DS);
-		
 
 		if ( ! is_dir(static::$path) || ! is_writable(static::$path))
 		{
@@ -78,7 +74,7 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	{
 		foreach($dependencies as $dep)
 		{
-			if (file_exists($file = static::$path.str_replace('.', DS, $dep).'.cache'))
+			if (is_file($file = static::$path.str_replace('.', DS, $dep).'.cache'))
 			{
 				$filemtime = filemtime($file);
 				if ($filemtime === false || $filemtime > $this->created)
@@ -86,9 +82,9 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 					return false;
 				}
 			}
-			elseif (file_exists($dep))
+			elseif (is_file($dep))
 			{
-				$filemtime = filemtime($file);
+				$filemtime = filemtime($dep);
 				if ($filemtime === false || $filemtime > $this->created)
 				{
 					return false;
@@ -108,7 +104,7 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	 */
 	public function delete()
 	{
-		if (file_exists($file = static::$path.$this->identifier_to_path($this->identifier).'.cache'))
+		if (is_file($file = static::$path.$this->identifier_to_path($this->identifier).'.cache'))
 		{
 			unlink($file);
 			$this->reset();
@@ -118,39 +114,54 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	/**
 	 * Purge all caches
 	 *
-	 * @param   limit purge to subsection
+	 * @param   string  $section  limit purge to subsection
 	 * @return  bool
 	 */
 	public function delete_all($section)
 	{
+		// get the cache root path and prep the requested section
 		$path = rtrim(static::$path, '\\/').DS;
-		$section = static::identifier_to_path($section).DS;
+		$section = $section === null ? '' : static::identifier_to_path($section).DS;
 
+		// if the path does not exist, bail out immediately
+		if ( ! is_dir($path.$section))
+		{
+			return true;
+		}
+
+		// get all files in this section
 		$files = \File::read_dir($path.$section, -1, array('\.cache$' => 'file'));
 
-		$delete = function($path, $files) use(&$delete, &$section)
+		// closure to recusively delete the files
+		$delete = function($folder, $files) use(&$delete, $path)
 		{
-			$path = rtrim($path, '\\/').DS;
+			$folder = rtrim($folder, '\\/').DS;
 
 			foreach ($files as $dir => $file)
 			{
 				if (is_numeric($dir))
 				{
-					if ( ! $result = \File::delete($path.$file))
+					if ( ! $result = \File::delete($folder.$file))
 					{
 						return $result;
 					}
 				}
 				else
 				{
-					if ( ! $result = ($delete($path.$dir, $file) and rmdir($path.$dir)))
+					if ( ! $result = ($delete($folder.$dir, $file)))
 					{
 						return $result;
 					}
 				}
 			}
 
-			$section !== '' and rmdir($path);
+			// if we're processing a sub directory
+			if ($folder != $path)
+			{
+				// remove the folder if no more files are left
+				$files = \File::read_dir($folder);
+				empty($files) and rmdir($folder);
+			}
 
 			return true;
 		};
@@ -185,7 +196,7 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 			'created'          => $this->created,
 			'expiration'       => $this->expiration,
 			'dependencies'     => $this->dependencies,
-			'content_handler'  => $this->content_handler
+			'content_handler'  => $this->content_handler,
 		);
 		$properties = '{{'.self::PROPS_TAG.'}}'.json_encode($properties).'{{/'.self::PROPS_TAG.'}}';
 
@@ -196,7 +207,7 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	 * Remove the prepended cache properties and save them in class properties
 	 *
 	 * @param   string
-	 * @throws  UnexpectedValueException
+	 * @throws \UnexpectedValueException
 	 */
 	protected function unprep_contents($payload)
 	{
@@ -241,7 +252,7 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 			{
 				// recursively create the directory. we can't use mkdir permissions or recursive
 				// due to the fact that mkdir is restricted by the current users umask
-				$basepath = rtrim(static::$path,DS);
+				$basepath = rtrim(static::$path, DS);
 				$chmod = \Config::get('file.chmod.folders', 0775);
 				foreach ($subdirs as $dir)
 				{
@@ -281,8 +292,11 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 		// truncate the file
 		ftruncate($handle, 0);
 
-		// write the session data
+		// write the cache data
 		fwrite($handle, $payload);
+
+		// flush any pending output
+		fflush($handle);
 
 		//release the lock
 		flock($handle, LOCK_UN);
@@ -303,30 +317,34 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	 */
 	protected function _get()
 	{
+		$payload = false;
+
 		$id_path = $this->identifier_to_path( $this->identifier );
 		$file = static::$path.$id_path.'.cache';
-		if ( ! file_exists($file))
+
+		// normalize the file
+		$file = realpath($file);
+
+		// make sure it exists
+		if (is_file($file))
 		{
-			return false;
+			$handle = fopen($file, 'r');
+			if ($handle)
+			{
+				// wait for a lock
+				while( ! flock($handle, LOCK_SH));
+
+				// read the cache data
+				$payload = file_get_contents($file);
+
+				//release the lock
+				flock($handle, LOCK_UN);
+
+				// close the file
+				fclose($handle);
+
+			}
 		}
-
-		$handle = fopen($file, 'r');
-		if ( ! $handle)
-		{
-			return false;
-		}
-
-		// wait for a lock
-		while( ! flock($handle, LOCK_SH));
-
-		// read the session data
-		$payload = fread($handle, filesize($file));
-
-		//release the lock
-		flock($handle, LOCK_UN);
-
-		// close the file
-		fclose($handle);
 
 		try
 		{
@@ -343,8 +361,8 @@ class Cache_Storage_File extends \Cache_Storage_Driver
 	/**
 	 * validate a driver config value
 	 *
-	 * @param   string  name of the config variable to validate
-	 * @param   mixed   value
+	 * @param   string  $name  name of the config variable to validate
+	 * @param   mixed   $value
 	 * @return  mixed
 	 */
 	protected function _validate_config($name, $value)
