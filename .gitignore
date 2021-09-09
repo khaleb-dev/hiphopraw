@@ -11,27 +11,25 @@ desktop.ini
 *.sublime-workspace
 *.swp
 fuel/app/logs/*/*/*
-
 fuel/app/cache/*/*
 build
 nbproject/
 .idea
 docs/
 
-fuel/app/logs/ffmpeg.log.*
 fuel/app/config/crypt.php
-public/dev/assets/videos/
-public/dev/uploads/
-public/assets/videos/
+fuel/app/logs/ffmpeg.log.*
 public/uploads/
-
-public/featured_videos/
 
 fuel/app/config/development/db.php
 fuel/app/config/development/migrations.php
 
+public/dev/assets/videos/
+public/dev/uploads/
+public/assets/videos/
+public/featured_videos/
+
 fuel/app/config/local/
 public/.htaccess-local
-/fuel/app/config/local
-fuel/app/config/development/migrations.php
+
 

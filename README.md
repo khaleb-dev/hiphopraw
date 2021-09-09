@@ -14,3 +14,26 @@ to select a winner.
 vidoes.
 * In order to view the videos you will not be required to join the website.
 * The contest will have a bracket structure for the video contest.
+
+
+Project update/setup
+`composer self-update`
+`composer update --prefer-dist`
+
+$ rm -rf fuel/core/ docs/
+$ rm -rf fuel/packages/auth/ fuel/packages/email/ fuel/packages/oil/
+$ rm -rf fuel/packages/orm/ fuel/packages/parser/ fuel/vendor/
+
+DB migration
+$ php oil refine migrate
+$ php oil refine migrate:current
+$ php oil refine migrate:up
+$ php oil refine migrate:down
+$ php oil refine migrate --version=10
+
+Module based DB migration
+$ php oil refine migrate -all
+$ php oil refine migrate --modules=module1,module2 --packages=package1
+$ php oil refine migrate:up --packages=package1
+$ php oil refine migrate:down --modules=module1,module2 --default
+$ php oil refine migrate --version=10
